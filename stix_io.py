@@ -64,6 +64,14 @@ def InitNewEnvironment(projectpath):
         if not (os.path.exists(folder)):
             os.mkdir(folder)
 
+def NewProject():
+    ppath = tk.filedialog.askdirectory(initialdir="/", title="Please select the folder of your new STIX2 project.")
+    if ppath:
+        InitNewEnvironment(ppath)
+        tk.messagebox.showinfo("New Project", "Your new project has been created and set as active.")
+        return True
+    else:
+        return False
 
 def OpenProject():
     ppath = tk.filedialog.askdirectory(initialdir="/", title="Please select the folder of your STIX2 project.")

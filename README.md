@@ -2,7 +2,7 @@
 This is a frontend for the STIX™ (2.0) language.
 
 
-# Dependencies
+### Dependencies
 Pillow-PIL
 
 stix2

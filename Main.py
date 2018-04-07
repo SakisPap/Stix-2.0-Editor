@@ -2,7 +2,7 @@ import tkinter as tk
 from ObjectsPage import Objects
 from PIL import Image, ImageTk
 import os
-from stix_io import OpenProject, LoadEnvironment, readfile, ImportFile, ExportProject, OpenInExplorer
+from stix_io import OpenProject, LoadEnvironment, readfile, ImportFile, ExportProject, OpenInExplorer, NewProject
 from tkinter import messagebox
 
 
@@ -36,8 +36,8 @@ menubar = tk.Menu(root, foreground="black", background="#AED1D6", activebackgrou
 
 # create more pulldown menus
 editmenu = tk.Menu(menubar, tearoff=0)
-editmenu.add_command(label="New Project...", command= lambda : [objects_page.place(x=0,y=0) , objects_page.grab_set(), enableOptions()])
-editmenu.add_command(label="Open Existing Project", command= lambda: [(objects_page.place(x=0,y=0), objects_page.grab_set(), objects_page.enlistall()) if OpenProject() else print(""), enableOptions()])
+editmenu.add_command(label="New Project...", command= lambda : [(objects_page.place(x=0,y=0) , objects_page.grab_set(), enableOptions()) if NewProject() else print("")])
+editmenu.add_command(label="Open Existing Project", command= lambda: [(objects_page.place(x=0,y=0), objects_page.grab_set(), objects_page.enlistall(), enableOptions()) if OpenProject() else print("")])
 editmenu.add_command(label="Load Previously Opened Project", command= lambda: [LoadEnvironment(readfile(os.path.join(os.path.dirname(os.path.abspath(__file__)), "last"))) ,objects_page.place(x=0,y=0) , objects_page.enlistall(), enableOptions()])
 editmenu.add_separator()
 editmenu.add_command(label="Import", command=lambda: [ImportFile()])

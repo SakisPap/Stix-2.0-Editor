@@ -1,7 +1,6 @@
 import tkinter as tk
 import os
 from PIL import Image, ImageTk
-from Test import attack_pattern_maker
 from stix_io import filestobundle
 from stix_io import LoadEnvironment
 import json

@@ -13,7 +13,7 @@ from stix2elevator import *
 from stix2elevator.options import *
 
 
-print("branchtest")
+
 def itemtofile(item):
     if item.get("type") == "relationship":
         filename=item.get("type")+"/"+item.get("id")+".json"

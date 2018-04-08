@@ -48,10 +48,6 @@ def setlastproject(ppath):
     file.write(ppath)
     file.close()
 
-def bundletofile(bundle):
-    file = open("ZITA_ONOMA"+".json", "w") #FileSaveDialogue
-    file.write(str(bundle))
-
 def getFolderArray():
     return ['attack-pattern', 'campaign', 'course-of-action', 'identity', 'indicator', 'intrusion-set', 'malware', 'observed-data', 'report', 'threat-actor', 'tool', 'vulnerability', 'relationship']
 

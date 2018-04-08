@@ -34,7 +34,19 @@ def itemtofile(item):
         else:
             return "False"
 
+def getcfgfolder():
+    return os.path.join(os.path.expanduser("~"), "STIX2Editor")
 
+def checkcfgfolder():
+    cfgfolder=getcfgfolder()
+    if not (os.path.exists(cfgfolder)):
+        os.makedirs(cfgfolder)
+
+def setlastproject(ppath):
+    lastfile=os.path.join(getcfgfolder(),"last.cfg")
+    file = open(lastfile, "w")
+    file.write(ppath)
+    file.close()
 
 def bundletofile(bundle):
     file = open("ZITA_ONOMA"+".json", "w") #FileSaveDialogue
@@ -69,6 +81,7 @@ def NewProject():
     if ppath:
         InitNewEnvironment(ppath)
         tk.messagebox.showinfo("New Project", "Your new project has been created and set as active.")
+        setlastproject(ppath)
         return True
     else:
         return False
@@ -77,8 +90,23 @@ def OpenProject():
     ppath = tk.filedialog.askdirectory(initialdir="/", title="Please select the folder of your STIX2 project.")
     if ppath:
         LoadEnvironment(ppath)
+        setlastproject(ppath)
         return True
     else:
+        return False
+
+def LoadPrevious():
+    prevfile=os.path.join(getcfgfolder(), "last.cfg")
+    if (os.path.isfile(prevfile)):
+        lastpath=readfile(prevfile)
+        if(os.path.exists(lastpath)):
+            LoadEnvironment(lastpath)
+            return True
+        else:
+            tk.messagebox.showwarning("Error", "Previously opened project path seems removed. Load was unsuccessful.")
+            return False
+    else:
+        tk.messagebox.showwarning("Error", "It appears no valid STIX2 Project has been opened yet.")
         return False
 
 

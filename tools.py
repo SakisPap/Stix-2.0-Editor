@@ -4,7 +4,7 @@ from tkinter import messagebox
 from stix2elevator import *
 from stix2elevator.options import *
 import stix2
-from stix_io import filetoitem,itemtofile
+from stix_io import filetoitem,itemtofile,InitNewEnvironment
 
 def Elevate():
     #disclaminer, show once add config ...
@@ -27,7 +27,7 @@ def Elevate():
             tk.messagebox.showwarning("Error", "Selected file does not seem to be a valid STIX1 object. Import failed.")
 
 
-def BundleImport():
+def BundleManage(mode):
     #check if we are into a project
     bundle=tk.filedialog.askopenfilename(initialdir="/", title="Please select a STIX2 Bundle file to import.",
                                           filetypes=[("json files (STIX2)", "*.json")])
@@ -38,8 +38,19 @@ def BundleImport():
             tk.messagebox.showwarning("Error", "Selected STIX2 object is not a Bundle.")
             return
         else:
-            for o in stix2bundle.get("objects"):
-                itemtofile(o)
-            tk.messagebox.showinfo("Success", "Selected Bundle was successfully imported into current project.")
+            if (mode=="import"):
+                for o in stix2bundle.get("objects"):
+                    itemtofile(o)
+                tk.messagebox.showinfo("Success", "Selected Bundle was successfully imported into current project.")
+            else:#mode=="extract"
+                dest = tk.filedialog.askdirectory(initialdir="/",
+                                                  title="Please select a folder to extract the Bundle to.")
+                if dest:
+                    backupcwd = os.getcwd()
+                    InitNewEnvironment(dest)
+                    for o in stix2bundle.get("objects"):
+                        itemtofile(o)
+                    os.chdir(backupcwd)
+                    tk.messagebox.showinfo("Success", "Selected Bundle was successfully extracted to the selected directory.")
     except:
         tk.messagebox.showwarning("Error", "This does not seem to be a valid STIX2 object. Import failed.")

@@ -26,7 +26,6 @@ def itemtofile(item):
     else:
         ans = tk.messagebox.askyesno("Overwrite?", "A Stix object with the same name and type already exists. \n Would you like to replace it?")
         if ans ==  True:
-            os.remove(filename)
             file = open(filename, "w")
             file.write(str(item))
             file.close()

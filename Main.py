@@ -4,6 +4,7 @@ from PIL import Image, ImageTk
 import os
 from stix_io import OpenProject, LoadEnvironment, readfile, ImportFile, ExportProject, OpenInExplorer, NewProject, checkcfgfolder, LoadPrevious
 from tkinter import messagebox
+from tools import Elevate
 
 
 def enableOptions():
@@ -53,6 +54,11 @@ helpmenu.add_command(label="About")
 helpmenu.add_command(label="Contact")
 helpmenu.add_command(label="Report Bugs")
 menubar.add_cascade(label="Help", menu=helpmenu)
+
+toolsmenu = tk.Menu(menubar, tearoff=0)
+toolsmenu.add_command(label="Convert STIX1 item to STIX2...", command=lambda : [Elevate()])
+toolsmenu.add_command(label="Bundle Management...")
+menubar.add_cascade(label="Tools", menu=toolsmenu)
 
 # display the menu
 root.config(menu=menubar)

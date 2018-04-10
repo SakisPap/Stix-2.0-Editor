@@ -109,19 +109,6 @@ def OpenInExplorer():
     os.startfile(os.getcwd())
 
 
-def Elevator(file):
-    fpath = tk.filedialog.askopenfilename(initialdir="/", title="Please select a STIX1 xml file to elevate.",
-                                          filetypes=(("xml files (STIX1)", "*.xml")))  # 1 arxeio mono
-    if fpath:
-        try:
-            initialize_options()
-            stix1obj = elevate_file(file)
-            # messagebox pou na rwatei an 8a ginei import sto project h oxi klp 8aexei kai save as
-            itemtofile(stix1obj)
-        except:
-            tk.messagebox.showwarning("Error", file + " does not seem to be a valid STIX1 object. Import failed.")
-
-
 def ImportFile():
     fpath=tk.filedialog.askopenfilenames(initialdir = "/",title = "Please select a STIX2 file to import.",filetypes = (("json files (STIX2)","*.json"),("xml files (STIX1)","*.xml")))
     if fpath:
@@ -132,16 +119,25 @@ def ImportFile():
                 try:
                     stix2obj=stix2.parse(filetoitem(file))
                     type=stix2obj.get("type")
-                    shutil.copy2(file,type)
-                    imports+=1
+                    if not (type=="bundle"):
+                        shutil.copy2(file,type)
+                        imports+=1
+                    else:
+                        tk.messagebox.showwarning("Error",file + " is a Bundle. Please use Bundle Management from Tools to import it.")
                 except:
                     tk.messagebox.showwarning("Error",file + " does not seem to be a valid STIX2 object. Import failed.")
             else:
                 try:
                     initialize_options()
                     stix1obj=elevate_file(file)
-                    itemtofile(stix1obj)
-                    imports+=1
+                    type = stix1obj.get("type")
+                    if not (type == "bundle"):
+                        itemtofile(stix1obj)
+                        imports += 1
+                    else:
+                        tk.messagebox.showwarning("Error",
+                                                  file + " is a Bundle. Please use Bundle Management from Tools to import it.")
+
                 except:
                     tk.messagebox.showwarning("Error",file + " does not seem to be a valid STIX1 object. Import failed.")
         tk.messagebox.showinfo("Imports", "There have been "+str(imports)+" successful imports.")

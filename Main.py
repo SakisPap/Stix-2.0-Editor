@@ -65,6 +65,13 @@ root.config(menu=menubar)
 
 objects_page = Objects(root)
 #objects_page.place(x=0,y=0)
+
+display_type = tk.IntVar()
+optionsmenu = tk.Menu(menubar, tearoff=0)
+optionsmenu.add_checkbutton(label="Display type", onvalue=1, offvalue=0, variable=display_type, command=lambda:(objects_page.display_type.set(display_type.get()), objects_page.updatelist(objects_page.object)) if objects_page.object!="nothing" else print(""))
+optionsmenu.add_separator()
+menubar.add_cascade(label="Options", menu=optionsmenu)
+
 helpmenu.grab_release()
 
 

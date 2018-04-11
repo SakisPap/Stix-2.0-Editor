@@ -78,6 +78,10 @@ class Objects(tk.Frame):
 
         self.widgets()
 
+        self.display_type = tk.IntVar()
+        self.full_list= []
+
+
 
 
     def widgets(self):
@@ -216,6 +220,7 @@ class Objects(tk.Frame):
 
     #---List object specific
     def updatelist(self, object):
+        print(self.display_type.get())
         self.listbox.delete(0, tk.END)
         if object!="relationship":
             for itemname in filestoarr2obj(object):

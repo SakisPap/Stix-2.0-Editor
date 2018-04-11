@@ -259,11 +259,10 @@ def getkeys(stix2obj):
         keys.append(key)
     return keys
 
-def filesto2obj(object):
-    for folder in getFolderArray():
-        for file in getFilesJsonExt(folder):
-            stix2obj = stix2.parse(filetoitem(folder + "/" + file))
-            if stix2obj.get("name") == object:
-               return stix2obj
+def filesto2obj(type,object):
+    for file in getFilesJsonExt(type):
+        stix2obj = stix2.parse(filetoitem(type + "/" + file))
+        if stix2obj.get("name") == object:
+            return stix2obj
 
 

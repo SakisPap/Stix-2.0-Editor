@@ -473,8 +473,12 @@ class Objects(tk.Frame):
 
     def edit(self):
         name = self.listbox.get(tk.ACTIVE)
-        name = name.split(": ")
-        stix2object = filesto2obj(name[1])
+        if(self.display_type) or (self.object=="nothing"):
+            name = name.split(": ")
+            stix2object = filesto2obj(name[0],name[1])
+        else:
+            name = name
+            stix2object = filesto2obj(self.object,name)
         keys = getkeys(stix2object)
 
         for item in self.widget_list:

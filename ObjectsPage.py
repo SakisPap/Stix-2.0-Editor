@@ -78,7 +78,8 @@ class Objects(tk.Frame):
 
         self.widgets()
 
-        self.display_type = tk.IntVar()
+        #self.display_type = tk.IntVar()
+        self.display_type=False
         self.full_list= []
 
 
@@ -201,14 +202,14 @@ class Objects(tk.Frame):
         self.add_button.configure(state=tk.DISABLED)
         self.edit_button = tk.Button(self.listBody, text="Edit",font=("OpenSans", 12, "bold"), fg="white", bg="#FF9500", relief=tk.FLAT, highlightthickness=0, height=3, command=lambda : self.editor(self.masterBody, self.object, 1))
         self.edit_button.pack(side=tk.LEFT, fill=tk.X, expand=True)
-        self.delete_button = tk.Button(self.listBody, text="Delete", font=("OpenSans", 12, "bold"), fg="white", bg="#FF3B30", relief=tk.FLAT, highlightthickness=0, height=3, command=lambda : [delete(self.listbox.get(self.listbox.curselection())), self.updatelist(self.object)if self.object != "nothing" else self.enlistall()])
+        self.delete_button = tk.Button(self.listBody, text="Delete", font=("OpenSans", 12, "bold"), fg="white", bg="#FF3B30", relief=tk.FLAT, highlightthickness=0, height=3, command=lambda : [delete(self.object,self.listbox.get(self.listbox.curselection())), self.updatelist(self.object)if self.object != "nothing" else self.enlistall()])
         self.delete_button.pack(side=tk.LEFT, fill=tk.X, expand=True)
 
 
 
 
 #--------------LISTING FOR MAIN PAGE----------------------------------
-    #---Enlist all objects in project
+    #---Enlist all objects in project, exclusively run when project is opened or show all is clicked
     def enlistall(self):
         self.listbox.delete(0, tk.END)
         for itemname in filestoarr2():
@@ -220,14 +221,17 @@ class Objects(tk.Frame):
 
     #---List object specific
     def updatelist(self, object):
-        print(self.display_type.get())
         self.listbox.delete(0, tk.END)
         if object!="relationship":
-            for itemname in filestoarr2obj(object):
-                self.listbox.insert(tk.END, itemname.get("type")+": "+itemname.get("name"))
+            if(self.display_type):
+                for itemname in filestoarr2obj(object):
+                    self.listbox.insert(tk.END, itemname.get("type")+": "+itemname.get("name"))
+            else:
+                for itemname in filestoarr2obj(object):
+                    self.listbox.insert(tk.END, itemname.get("name"))
         else:
             for itemname in filestoarr2obj(object):
-                self.listbox.insert(tk.END, itemname.get("type")+": "+itemname.get("id"))
+                self.listbox.insert(tk.END, itemname.get("id"))
 
 #--------------------------------------------------------------------
 

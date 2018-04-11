@@ -222,11 +222,16 @@ def filestobundle():     #prepei kai logika 8a exoume idi chdir()
 
 
 #---------------------DELETE OBJECT INFASTRUCTURE---------------
-def delete(string):
-     temparr=string.split(": ")
-     ans=tk.messagebox.askquestion("Confirm", "Are you sure that you want to delete "+ temparr[1]+" ?")
-     if (ans=="yes"):
-        os.remove(temparr[0]+"/"+temparr[1]+".json")
+def delete(type,string):
+    if ":" in string:
+         temparr=string.split(": ")
+         ans=tk.messagebox.askquestion("Confirm", "Are you sure that you want to delete "+ temparr[1]+" ?")
+         if (ans=="yes"):
+            os.remove(temparr[0]+"/"+temparr[1]+".json")
+    else:#name only
+        ans = tk.messagebox.askquestion("Confirm", "Are you sure that you want to delete " + string + " ?")
+        if (ans == "yes"):
+            os.remove(type + "/" + string + ".json")
 #---------------------------------------------------------------
 
 

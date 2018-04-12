@@ -79,7 +79,7 @@ class Objects(tk.Frame):
         self.widgets()
 
         #self.display_type = tk.IntVar()
-        self.display_type=False
+        self.display_type=tk.BooleanVar()
         self.full_list= []
 
 
@@ -223,7 +223,7 @@ class Objects(tk.Frame):
     def updatelist(self, object):
         self.listbox.delete(0, tk.END)
         if object!="relationship":
-            if(self.display_type):
+            if(self.display_type.get()):
                 for itemname in filestoarr2obj(object):
                     self.listbox.insert(tk.END, itemname.get("type")+": "+itemname.get("name"))
             else:
@@ -477,7 +477,7 @@ class Objects(tk.Frame):
 
     def edit(self):
         name = self.listbox.get(tk.ACTIVE)
-        if(self.display_type) or (self.object=="nothing"):
+        if(self.display_type.get()) or (self.object=="nothing"):
             name = name.split(": ")
             stix2object = filesto2obj(name[0],name[1])
         else:

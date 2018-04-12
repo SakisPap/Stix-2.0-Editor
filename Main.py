@@ -5,6 +5,7 @@ import os
 from stix_io import OpenProject, LoadEnvironment, readfile, ImportFile, ExportProject, OpenInExplorer, NewProject, checkcfgfolder, LoadPrevious
 from tkinter import messagebox
 from tools import Elevate
+import pickle
 
 
 def enableOptions():
@@ -16,6 +17,19 @@ def disableOptions():
     editmenu.entryconfig("Import", state=tk.DISABLED)
     editmenu.entryconfig("Export Project", state=tk.DISABLED)
     editmenu.entryconfig("Open in Explorer", state=tk.DISABLED)
+
+def picklesave(temp):
+    sav = open("sav.dat", "wb")
+    pickle.dump(temp, sav)
+    sav.close()
+
+def options_command():
+    picklesave(displaytype.get())
+    objects_page.display_type.set(displaytype.get())
+    if objects_page.object != "nothing":
+        objects_page.updatelist(objects_page.object)
+
+
 
 
 root = tk.Tk()
@@ -66,9 +80,24 @@ root.config(menu=menubar)
 objects_page = Objects(root)
 #objects_page.place(x=0,y=0)
 
-display_type = tk.IntVar()
+
+
+displaytype = tk.BooleanVar()
+
+try:
+    sav = open("sav.dat","rb")
+    temp = pickle.load(sav)
+    sav.close()
+    print("open-dis " + str(temp))
+except:
+    picklesave(True)
+    temp=True
+    print("i am in here")
+
+displaytype.set(temp)
+objects_page.display_type.set(temp)
 optionsmenu = tk.Menu(menubar, tearoff=0)
-optionsmenu.add_checkbutton(label="Display type", onvalue=1, offvalue=0, variable=display_type, command=lambda:(objects_page.display_type.set(display_type.get()), objects_page.updatelist(objects_page.object)) if objects_page.object!="nothing" else print(""))
+optionsmenu.add_checkbutton(label="Display type", onvalue=True, offvalue=False, variable=displaytype, command=lambda : options_command())
 optionsmenu.add_separator()
 menubar.add_cascade(label="Options", menu=optionsmenu)
 

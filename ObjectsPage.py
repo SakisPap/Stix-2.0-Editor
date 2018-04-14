@@ -81,6 +81,9 @@ class Objects(tk.Frame):
 
         self.display_type=tk.BooleanVar()
         self.sortby=tk.StringVar()
+        self.viewby=tk.StringVar()
+        self.sortby="alph"
+        self.viewby="id"
         self.full_list= []
 
 
@@ -213,10 +216,14 @@ class Objects(tk.Frame):
     #---Enlist all objects in project, exclusively run when project is opened or show all is clicked
     def enlistall(self):
         sortby = self.sortby
+        viewby = self.viewby
         self.listbox.delete(0, tk.END)
         for itemname in filestoarr2(sortby):
             if itemname.get("type") != "relationship":
-                self.listbox.insert(tk.END, itemname.get("type")+": "+itemname.get("name"))
+                if(viewby=="name"):
+                    self.listbox.insert(tk.END, itemname.get("type")+": "+itemname.get("name"))
+                else:
+                    self.listbox.insert(tk.END, itemname.get("id"))
             else:
                 self.listbox.insert(tk.END, itemname.get("id"))
 
@@ -224,14 +231,19 @@ class Objects(tk.Frame):
     #---List object specific
     def updatelist(self, object):
         sortby=self.sortby
+        viewby=self.viewby
         self.listbox.delete(0, tk.END)
         if object!="relationship":
-            if(self.display_type.get()):
-                for itemname in filestoarr2obj(object,sortby):
-                    self.listbox.insert(tk.END, itemname.get("type")+": "+itemname.get("name"))
+            if(viewby=="name"):
+                if(self.display_type.get()):
+                    for itemname in filestoarr2obj(object,sortby):
+                        self.listbox.insert(tk.END, itemname.get("type")+": "+itemname.get("name"))
+                else:
+                    for itemname in filestoarr2obj(object,sortby):
+                        self.listbox.insert(tk.END, itemname.get("name"))
             else:
-                for itemname in filestoarr2obj(object,sortby):
-                    self.listbox.insert(tk.END, itemname.get("name"))
+                for itemname in filestoarr2obj(object, sortby):
+                    self.listbox.insert(tk.END, itemname.get("id"))
         else:
             for itemname in filestoarr2obj(object,sortby):
                 self.listbox.insert(tk.END, itemname.get("id"))

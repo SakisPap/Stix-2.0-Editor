@@ -297,9 +297,14 @@ def getkeys(stix2obj):
     return keys
 
 def filesto2obj(type,object):
-    for file in getFilesJsonExt(type):
+    for file in getFilesJsonExt(type,"alph"):
         stix2obj = stix2.parse(filetoitem(type + "/" + file))
         if stix2obj.get("name") == object:
             return stix2obj
 
-
+def filesto2objid(id):
+    for folder in getFolderArray():
+        for file in getFilesJsonExt(folder,"alph"):
+            stix2obj = stix2.parse(filetoitem(folder+ "/" + file))
+            if stix2obj.get("id") == id:
+                return stix2obj

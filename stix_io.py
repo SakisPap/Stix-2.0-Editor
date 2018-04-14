@@ -205,10 +205,10 @@ def filestoarr():
      return items
 
 
-def filestoarr2():
+def filestoarr2(sortby):
     items = []
     for folder in getFolderArray():
-        for file in getFilesJsonExt(folder):
+        for file in getFilesJsonExt(folder,sortby):
             stix2obj = stix2.parse(filetoitem(folder + "/" + file))
             items.append(stix2obj)
     return items
@@ -219,7 +219,6 @@ def filestoarr2obj(object,sort):
         stix2obj = stix2.parse(filetoitem(object + "/" + file))
         if stix2obj.get("type") == object:
             items.append(stix2obj)
-    #items.sort(key=lambda x: os.path.getmtime(object + "/" + str(x) + ".json"), reverse=True)  # Last modified descending!
     return items
 
 def filestobundle():     #prepei kai logika 8a exoume idi chdir()

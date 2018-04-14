@@ -212,8 +212,9 @@ class Objects(tk.Frame):
 #--------------LISTING FOR MAIN PAGE----------------------------------
     #---Enlist all objects in project, exclusively run when project is opened or show all is clicked
     def enlistall(self):
+        sortby = self.sortby
         self.listbox.delete(0, tk.END)
-        for itemname in filestoarr2():
+        for itemname in filestoarr2(sortby):
             if itemname.get("type") != "relationship":
                 self.listbox.insert(tk.END, itemname.get("type")+": "+itemname.get("name"))
             else:
@@ -222,7 +223,7 @@ class Objects(tk.Frame):
 
     #---List object specific
     def updatelist(self, object):
-        sortby=self.sortby.get()
+        sortby=self.sortby
         self.listbox.delete(0, tk.END)
         if object!="relationship":
             if(self.display_type.get()):

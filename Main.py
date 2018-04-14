@@ -29,6 +29,7 @@ from stix_io import OpenProject, LoadEnvironment, readfile, ImportFile, ExportPr
 from tkinter import messagebox
 from tools import Elevate
 import pickle
+import webbrowser
 
 
 def enableOptions():
@@ -52,6 +53,50 @@ def options_command():
     if objects_page.object != "nothing":
         objects_page.updatelist(objects_page.object)
 
+def about_window():
+    window = tk.Toplevel(root, relief=tk.FLAT, highlightthickness=0)
+    window.geometry("445x175")
+    window.resizable(width=False, height=False)
+    window.title("About")
+    window.attributes('-topmost', 'true')
+    window.grab_set()
+
+    text = tk.Label(window, text="\nSTIX 2.0 UoM Editor  Copyright (C) 2018  InfoSec Research Group UoM\n\n"
+                         "Contact: placeholder@gmail.com\n\n"
+                         "Under GNU GPL v3 license.\n")
+    text.pack()
+    image = tk.Button(window, image=gpl_img, relief=tk.FLAT, cursor="hand2", command=lambda : [webbrowser.open("https://www.gnu.org/licenses/gpl-3.0.en.html"), window.attributes('-topmost', 'false')])
+    image.pack()
+
+
+def contact_window():
+    window = tk.Toplevel(root, relief=tk.FLAT, highlightthickness=0)
+    window.geometry("200x210")
+    window.resizable(width=False, height=False)
+    window.title("Contact")
+    window.attributes('-topmost', 'true')
+    window.grab_set()
+
+    labelframe = tk.LabelFrame(window, text="Andreas Stavropoulos", font=("OpenSans", 9, "bold"))
+    #cname = tk.Label(labelframe, text="\nAndreas Stavropoulos")
+    cmail = tk.Label(labelframe, text="\ndre@gmail.com")
+    chyper = tk.Label(labelframe, text="Linkedin\n", cursor="hand2", fg="blue")
+    chyper.bind("<Button-1>", lambda _: [webbrowser.open_new("https://www.youtube.com/watch?v=dQw4w9WgXcQ"), window.attributes('-topmost', 'false')])
+    #cname.pack()
+    cmail.pack()
+    chyper.pack()
+    labelframe.pack(pady=10, padx=10, fill="both", expand="yes")
+
+    labelframe2 = tk.LabelFrame(window, text="Sakis Papageorgiou", font=("OpenSans", 9, "bold"))
+    #cname2 = tk.Label(window, text="\nSakis Papageorgiou")
+    cmail2 = tk.Label(labelframe2, text="\nsakispap95@gmail.com")
+    chyper2 = tk.Label(labelframe2, text="Linkedin\n", cursor="hand2", fg="blue")
+    chyper2.bind("<Button-1>", lambda _: [webbrowser.open_new("http://linkedin.com/in/sakis-papageorgiou-5b2517151"), window.attributes('-topmost', 'false')])
+    #cname2.pack()
+    cmail2.pack()
+    chyper2.pack()
+    labelframe2.pack(pady=10, padx=10, fill="both", expand="yes")
+
 
 
 
@@ -68,6 +113,10 @@ img = Image.open(os.path.abspath("images/welcome_page.png"))
 welcome_page = ImageTk.PhotoImage(img)
 welcomeLabel = tk.Label(root, image= welcome_page, bg="#AED1D6")
 welcomeLabel.pack()
+
+img = Image.open(os.path.abspath("images/gpl_image.png"))
+gpl_img = ImageTk.PhotoImage(img)
+
 
 # create a toplevel menu
 menubar = tk.Menu(root, foreground="black", background="#AED1D6", activebackground='#004c99', activeforeground='white')
@@ -87,8 +136,8 @@ disableOptions()
 menubar.add_cascade(label="File", menu=editmenu)
 
 helpmenu = tk.Menu(menubar, tearoff=0)
-helpmenu.add_command(label="About")
-helpmenu.add_command(label="Contact")
+helpmenu.add_command(label="About", command=lambda : about_window())
+helpmenu.add_command(label="Contact", command=lambda : contact_window())
 helpmenu.add_command(label="Report Bugs")
 menubar.add_cascade(label="Help", menu=helpmenu)
 
@@ -125,6 +174,11 @@ optionsmenu.add_separator()
 menubar.add_cascade(label="Options", menu=optionsmenu)
 
 helpmenu.grab_release()
+
+
+
+
+
 
 
 checkcfgfolder()

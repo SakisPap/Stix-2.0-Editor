@@ -78,8 +78,9 @@ class Objects(tk.Frame):
 
         self.widgets()
 
-        #self.display_type = tk.IntVar()
+
         self.display_type=tk.BooleanVar()
+        self.sortby=tk.StringVar()
         self.full_list= []
 
 
@@ -221,16 +222,17 @@ class Objects(tk.Frame):
 
     #---List object specific
     def updatelist(self, object):
+        sortby=self.sortby.get()
         self.listbox.delete(0, tk.END)
         if object!="relationship":
             if(self.display_type.get()):
-                for itemname in filestoarr2obj(object):
+                for itemname in filestoarr2obj(object,sortby):
                     self.listbox.insert(tk.END, itemname.get("type")+": "+itemname.get("name"))
             else:
-                for itemname in filestoarr2obj(object):
+                for itemname in filestoarr2obj(object,sortby):
                     self.listbox.insert(tk.END, itemname.get("name"))
         else:
-            for itemname in filestoarr2obj(object):
+            for itemname in filestoarr2obj(object,sortby):
                 self.listbox.insert(tk.END, itemname.get("id"))
 
 #--------------------------------------------------------------------

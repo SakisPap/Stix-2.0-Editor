@@ -59,8 +59,18 @@ def getFilesJson(path, lm):#Xwris to extension plz   lm=0 -> alplhabetical
         return temp
 
 
-def getFilesJsonExt(path):#Me to extension
-        return [x for x in os.listdir(path) if x.endswith(".json")] #Den paizoun symbolic links swsta? Alliws vale resolve kai meta stem
+def getFilesJsonExt(path,sortby):#Me to extension
+        temp = [x for x in os.listdir(path) if x.endswith(".json")]
+        if (sortby=="alph"):
+            return temp
+        elif (sortby=="alphdesc"):
+            return reversed(temp)
+        elif (sortby=="lm"):
+            temp.sort(key=lambda x: os.path.getmtime(path + "/" + str(x)))  # Last modified ascending!
+            return temp
+        elif (sortby=="lmdesc"):
+            temp.sort(key=lambda x: os.path.getmtime(path + "/" + str(x)),reverse=True)  # Last modified ascending!
+            return temp
 
 
 def InitNewEnvironment(projectpath):
@@ -203,13 +213,13 @@ def filestoarr2():
             items.append(stix2obj)
     return items
 
-def filestoarr2obj(object):
+def filestoarr2obj(object,sort):
     items = []
-    for folder in getFolderArray():
-        for file in getFilesJsonExt(folder):
-            stix2obj = stix2.parse(filetoitem(folder + "/" + file))
-            if stix2obj.get("type") == object:
-                items.append(stix2obj)
+    for file in getFilesJsonExt(object,sort):
+        stix2obj = stix2.parse(filetoitem(object + "/" + file))
+        if stix2obj.get("type") == object:
+            items.append(stix2obj)
+    #items.sort(key=lambda x: os.path.getmtime(object + "/" + str(x) + ".json"), reverse=True)  # Last modified descending!
     return items
 
 def filestobundle():     #prepei kai logika 8a exoume idi chdir()

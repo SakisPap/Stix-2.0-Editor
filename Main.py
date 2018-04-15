@@ -62,7 +62,7 @@ def about_window():
     window.grab_set()
 
     text = tk.Label(window, text="\nSTIX 2.0 UoM Editor  Copyright (C) 2018  InfoSec Research Group UoM\n\n"
-                         "Contact: placeholder@gmail.com\n\n"
+                         "Contact: stix2ed.team@gmail.com\n\n"
                          "Under GNU GPL v3 license.\n")
     text.pack()
     image = tk.Button(window, image=gpl_img, relief=tk.FLAT, cursor="hand2", command=lambda : [webbrowser.open("https://www.gnu.org/licenses/gpl-3.0.en.html"), window.attributes('-topmost', 'false')])
@@ -79,7 +79,7 @@ def contact_window():
 
     labelframe = tk.LabelFrame(window, text="Andreas Stavropoulos", font=("OpenSans", 9, "bold"))
     #cname = tk.Label(labelframe, text="\nAndreas Stavropoulos")
-    cmail = tk.Label(labelframe, text="\ndre@gmail.com")
+    cmail = tk.Label(labelframe, text="\nantrsta@hotmail.com")
     chyper = tk.Label(labelframe, text="Linkedin\n", cursor="hand2", fg="blue")
     chyper.bind("<Button-1>", lambda _: [webbrowser.open_new("https://www.youtube.com/watch?v=dQw4w9WgXcQ"), window.attributes('-topmost', 'false')])
     #cname.pack()

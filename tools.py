@@ -28,6 +28,11 @@ from stix2elevator import *
 from stix2elevator.options import *
 import stix2
 from stix_io import filetoitem,itemtofile,InitNewEnvironment
+import urllib
+from urllib.parse import *
+from urllib.request import *
+from urllib.response import *
+
 
 def Elevate():
     #disclaminer, show once add config ...
@@ -77,3 +82,15 @@ def BundleManage(mode):
                     tk.messagebox.showinfo("Success", "Selected Bundle was successfully extracted to the selected directory.")
     except:
         tk.messagebox.showwarning("Error", "This does not seem to be a valid STIX2 object. Import failed.")
+
+
+def bugreport(parent, msg):
+    try:
+        message = urllib.parse.quote_plus(msg)
+        req = urllib.request.Request("http://hubverifier.ddns.net/bugreport.php?bodyofmessage=" + message)
+        req.add_header("Content-type", "application/x-www-form-urlencoded")
+        urllib.request.urlopen(req)
+        tk.messagebox.showinfo("Success!", "Bug report submitted successfully.\nThank you very much for your involvement!", parent=parent)
+    except:
+        tk.messagebox.showerror("Error", "Failed to send bug report.\n Check your internet connection and try again later.", parent=parent)
+    parent.destroy()

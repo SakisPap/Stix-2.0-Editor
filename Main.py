@@ -27,7 +27,7 @@ from PIL import Image, ImageTk
 import os
 from stix_io import OpenProject, LoadEnvironment, readfile, ImportFile, ExportProject, OpenInExplorer, NewProject, checkcfgfolder, LoadPrevious
 from tkinter import messagebox
-from tools import Elevate
+from tools import Elevate, bugreport
 import pickle
 import webbrowser
 
@@ -100,6 +100,25 @@ def contact_window():
 
 
 
+def bugreport_window():
+    window = tk.Toplevel(root, relief=tk.FLAT, highlightthickness=0)
+    window.geometry("445x210")
+    window.resizable(width=False, height=False)
+    window.title("Report Bug")
+    window.attributes('-topmost', 'true')
+    window.grab_set()
+
+    label = tk.Label(window, text="Please describe the issue with as many details as possible,\nprovide your contact info if you want us to reach you back.")
+    label.pack(pady=5)
+    reportEntry = tk.Text(window, font=("OpenSans", 9), width=60, height=8, wrap=tk.WORD)
+    reportEntry.pack()
+
+    submit = tk.Button(window, text="Submit", command = lambda : [(label.config(text="Sending the report...\n", fg="black"), submit.config(text="Please wait..."), label.update(), submit.update(), bugreport(window, reportEntry.get("1.0", tk.END))) if not reportEntry.compare("end-1c", "==", "1.0") else label.config(text="Warning: You cannot submit an empty form!\n", fg="red")])
+    submit.pack(pady=10)
+
+
+
+
 root = tk.Tk()
 root.geometry("800x480")
 root.configure(background = "#AED1D6")
@@ -138,7 +157,7 @@ menubar.add_cascade(label="File", menu=editmenu)
 helpmenu = tk.Menu(menubar, tearoff=0)
 helpmenu.add_command(label="About", command=lambda : about_window())
 helpmenu.add_command(label="Contact", command=lambda : contact_window())
-helpmenu.add_command(label="Report Bugs")
+helpmenu.add_command(label="Report Bugs", command=lambda : bugreport_window())
 menubar.add_cascade(label="Help", menu=helpmenu)
 
 toolsmenu = tk.Menu(menubar, tearoff=0)

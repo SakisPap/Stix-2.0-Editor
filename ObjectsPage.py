@@ -465,36 +465,85 @@ class Objects(tk.Frame):
 
 
 
-        #-----------------Optional Tab-----------------------------------------------------
-        self.optLabel = tk.Label(self.editorFrame, text="▶ Show Optional", font=("OpenSans", 10), bg="#AED1D6",
+        #-----------------Autofill Tab-----------------------------------------------------
+        self.afLabel = tk.Label(self.editorFrame, text="▶ Show Autofill Properties", font=("OpenSans", 10), bg="#AED1D6",
                               fg="#314570")
-        self.optLabel.pack(side=tk.TOP, anchor=tk.W, padx=3)
-        self.optLabel.bind("<Button-1>", lambda _: optClick(self))
+        self.afLabel.pack(side=tk.TOP, anchor=tk.W, padx=3)
+        self.afLabel.bind("<Button-1>", lambda _: afClick(self))
 
-        self.optionalFrame = tk.Frame(self.editorFrame, bg="#AED1D6")
+        self.afFrame = tk.Frame(self.editorFrame, bg="#AED1D6")
 
 
-        self.optFlag = True
+        self.afFlag = True
 
-        def optClick(self):
-            if self.optFlag == True:
-                self.optLabel.configure(text="▼ Hide Optional")
-                self.optFlag = not self.optFlag
-                self.optionalFrame.pack(fill=tk.BOTH)
+        def afClick(self):
+            if self.afFlag == True:
+                self.afLabel.configure(text="▼ Hide Autofill Properties")
+                self.afFlag = not self.afFlag
+                self.afFrame.pack(fill=tk.BOTH)
             else:
-                self.optLabel.configure(text="▶ Show Optional")
-                self.optFlag = not self.optFlag
-                self.optionalFrame.pack_forget()
+                self.afLabel.configure(text="▶ Show Autofill Properties")
+                self.afFlag = not self.afFlag
+                self.afFrame.pack_forget()
 
 
-        #------------------OPTIONAL EDITOR FRAME WIDGETS----------------------------------------------
-        #---Description---
-        self.descriptionLabel = tk.Label(self.optionalFrame, text="Description:", font=("OpenSans", 12),bg="#AED1D6")
-        self.descriptionLabel.grid(row=0, column=0, sticky=tk.E, padx=5)
-        self.descriptionEntry = tk.Text(self.optionalFrame, font=("OpenSans", 12), width=60, height=2, wrap=tk.WORD)
-        self.descriptionEntry.grid(row=0, column=1, sticky=tk.W, pady=5)
+        #------------------AUTOFILL EDITOR FRAME WIDGETS--------------WARNING!!! Add disclaimer! Use at own risk--------------------------------
+        self.idLabel=tk.Label(self.afFrame, text="ID:", font=("OpenSans", 12),bg="#AED1D6")
+        self.idLabel.grid(row=0, column=0, sticky=tk.E, padx=5)
+        self.idEntry = tk.Entry(self.afFrame, font=("OpenSans", 12), width=64)
+        self.idEntry.grid(row=0, column=1, sticky=tk.W, pady=5)
 
-        #------------------------please populate ...........................
+        self.createdLabel = tk.Label(self.afFrame, text="Created:", font=("OpenSans", 12), bg="#AED1D6")
+        self.createdLabel.grid(row=1, column=0, sticky=tk.E, padx=5)
+        self.createdEntry = tk.Entry(self.afFrame, font=("OpenSans", 12))
+        self.createdEntry.grid(row=1, column=1, sticky=tk.W, pady=5)
+
+        self.modifiedLabel = tk.Label(self.afFrame, text="Modified:", font=("OpenSans", 12), bg="#AED1D6")
+        self.modifiedLabel.grid(row=2, column=0, sticky=tk.E, padx=5)
+        self.modifiedEntry = tk.Entry(self.afFrame, font=("OpenSans", 12))
+        self.modifiedEntry.grid(row=2, column=1, sticky=tk.W, pady=5)
+
+
+        #--------------------GLOBAL OPTIONALS-------------------------------------------------------------------------------------------------------------
+        self.goLabel = tk.Label(self.editorFrame, text="▶ Show Global Optionals", font=("OpenSans", 10),
+                                bg="#AED1D6",
+                                fg="#314570")
+        self.goLabel.pack(side=tk.TOP, anchor=tk.W, padx=3)
+        self.goLabel.bind("<Button-1>", lambda _: goClick(self))
+
+        self.goFrame = tk.Frame(self.editorFrame, bg="#AED1D6")
+
+        self.goFlag = True
+
+        def goClick(self):
+            if self.goFlag == True:
+                self.goLabel.configure(text="▼ Hide Global Optionals")
+                self.goFlag = not self.goFlag
+                self.goFrame.pack(fill=tk.BOTH)
+            else:
+                self.goLabel.configure(text="▶ Show Global Optionals")
+                self.goFlag = not self.goFlag
+                self.goFrame.pack_forget()
+
+        # ------------------Global optional frame widgets----------------------------------
+        self.created_by_refLabel = tk.Label(self.goFrame, text="Created by Reference:", font=("OpenSans", 12), bg="#AED1D6")
+        self.created_by_refLabel.grid(row=0, column=0, sticky=tk.E, padx=5)
+        self.created_by_refButton = tk.Button(self.goFrame, font=("OpenSans", 12), text="Select Identity...")#Add toplevel and function!
+        self.created_by_refButton.grid(row=0, column=1, sticky=tk.W, pady=5)
+
+        self.revokedCheckButton=tk.Checkbutton(self.goFrame, text="Revoked?", font=("OpenSans", 12), bg="#AED1D6")#Add revoked management
+        self.revokedCheckButton.grid(row=1,column=0,sticky=tk.E, padx=5)
+
+        self.external_referencesLabel = tk.Label(self.goFrame, text="External References:", font=("OpenSans", 12), bg="#AED1D6")#Add external reference management
+        self.external_referencesLabel.grid(row=2, column=0, sticky=tk.E, padx=5)
+        self.external_referencesButton = tk.Button(self.goFrame, font=("OpenSans",12), text="Add...")
+        self.external_referencesButton.grid(row=2, column=1, sticky=tk.W, pady=5)
+
+
+        #add markings, object_marking_refs and granualr markings
+
+
+
 
 
 

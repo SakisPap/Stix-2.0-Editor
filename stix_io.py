@@ -42,12 +42,13 @@ def itemtofile(item):
         filename=item.get("type")+"/"+item.get("id")+".json"
     else:
         filename=item.get("type")+"/"+item.get("name")+".json"
+
     if not (os.path.isfile(filename)):
         file = open(filename, "w")
         file.write(str(item))
         file.close()
     else:
-        ans = tk.messagebox.askyesno("Overwrite?", "A Stix object with the same name and type already exists. \n Would you like to replace it?")
+        ans = tk.messagebox.askyesno("Confirm Update?", item.get("type") + " " + item.get("name") +" was last modified at " +str(item.get("modified")) + "\n Would you like to update it?")
         if ans ==  True:
             file = open(filename, "w")
             file.write(str(item))

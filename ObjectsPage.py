@@ -704,6 +704,9 @@ class Objects(tk.Frame):
                     item[0].insert(tk.END, stix2object[item[1]])
                 except:
                     item[0].set(stix2object[item[1]])
+
+        self.editmode=True
+        self.oname=self.nameEntry.get()
 #-----------------------------------------------------EDIT-END-----------------------------------------------------------------
 
 
@@ -711,6 +714,7 @@ class Objects(tk.Frame):
     #This gets called upon frame submit---
     def callback(self):
         object = self.object
+
 
         dict = {}
         for item in self.widget_list:
@@ -724,13 +728,40 @@ class Objects(tk.Frame):
                 tk.messagebox.showwarning("Error", "Entries marked with '*' cannot be left blank!", parent = self.editorFrame)
                 return
 
-
-        flag, debug = getattr(sys.modules[__name__], "%s_maker" % object.replace("-", "_"))(**dict)
-        print(debug)
-        if flag=="True":
-            tk.messagebox.showinfo("Object Creation Successfull!", object + " " + self.nameEntry.get() + " created seccessfully!", parent = self.editorFrame)
-            pass
-        self.editorFrame.destroy()
+        if not self.editmode:
+            flag, debug = getattr(sys.modules[__name__], "%s_maker" % object.replace("-", "_"))(**dict)
+            print(debug)
+            if flag=="True":
+                tk.messagebox.showinfo("Object Creation Successfull!", object + " " + self.nameEntry.get() + " created seccessfully!", parent = self.editorFrame)
+                pass
+            self.editorFrame.destroy()
+        else:
+            if (self.oname!=self.nameEntry.get()):
+                ans=tk.messagebox.askyesno("Warning", "You have modified the name of the object. As a result, all data will be stored into another object and not into the current one. Would you like to revert the name back to default?")
+                if(ans):
+                    self.nameEntry.delete(0,tk.END)
+                    self.nameEntry.insert(0, self.oname)
+                else:
+                    ans2=tk.messagebox.askyesno("Replication", "Would you like to create a new object with the current properties?")
+                    if(ans2):
+                        flag, debug = getattr(sys.modules[__name__], "%s_maker" % object.replace("-", "_"))(**dict)
+                        print(debug)
+                        tk.messagebox.showinfo("Object Replication Successfull!",
+                                                   object + " " + self.nameEntry.get() + " was created seccessfully, while "+ self.oname + " was left intact.",
+                                                   parent=self.editorFrame)
+                        self.editmode=False
+                        pass
+                        self.editorFrame.destroy()
+            else:
+                flag, debug = getattr(sys.modules[__name__], "%s_maker" % object.replace("-", "_"))(**dict)
+                print(debug)
+                if flag == "True":
+                    tk.messagebox.showinfo("Object Edit Successfull!",
+                                           object + " " + self.nameEntry.get() + " was edited seccessfully!",
+                                           parent=self.editorFrame)
+                    self.editmode=False
+                    pass
+                self.editorFrame.destroy()
 
 
 

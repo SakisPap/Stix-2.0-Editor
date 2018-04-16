@@ -396,6 +396,7 @@ class Objects(tk.Frame):
             self.widget_list.append([self.nameEntry, "name"])
             eRow+=1
 
+
         if object == "identity":
             self.identity_classLabel = tk.Label(self.mandatoryFrame, text="*Identity Class:", font=("OpenSans", 12))
             self.identity_classLabel.grid(row=eRow, column=0, sticky=tk.E, padx=5)
@@ -458,6 +459,125 @@ class Objects(tk.Frame):
 
             eRow+=1
 
+        ###########OBJECT SPECIFIC OPTIONALS----------#############################################OBJECT SPECIFIC OPTIONALS----------##################################
+        #description (featured in all excpt)
+        if(object!="observed-data"):
+            self.descriptionLabel = tk.Label(self.mandatoryFrame, text="Description:", font=("OpenSans", 12))
+            self.descriptionLabel.grid(row=eRow, column=0, sticky=tk.E, padx=5)
+            self.descriptionEntry = tk.Entry(self.mandatoryFrame, font=("OpenSans", 12), width=60)
+            self.descriptionEntry.grid(row=eRow, column=1, sticky=tk.W, pady=5)
+            self.widget_list.append([self.descriptionEntry,"description"])
+            eRow+=1
+
+        #kill chain phases
+        if(object=="attack-pattern" or object=="indicator" or object=="malware" or object=="tool"):
+            self.kill_chain_phasesLabel = tk.Label(self.mandatoryFrame, text="Kill Chain Phases:", font=("OpenSans", 12)) #Management!!
+            self.kill_chain_phasesLabel.grid(row=eRow, column=0, sticky=tk.E, padx=5)
+            self.kill_chain_phasesButton = tk.Button(self.mandatoryFrame, font = ("OpenSans", 12), text="Add...")
+            self.kill_chain_phasesButton.grid(row=eRow, column=1, sticky=tk.W, pady=5)
+            #ADD TOPLEVEL AND KILL CHAIN PHASE MANAGEMENT!!!!!
+            eRow+=1
+
+        #aliases - arr string
+        if (object=="campaign" or object=="intrusion-set" or object=="threat-actor"):
+            self.aliasesLabel = tk.Label(self.mandatoryFrame, text="Aliases:", font=("OpenSans", 12))
+            self.aliasesLabel.grid(row=eRow, column=0, sticky=tk.E, padx=5)
+            self.aliasesEntry = tk.Entry(self.mandatoryFrame, font=("OpenSans", 12))
+            self.aliasesEntry.grid(row=eRow, column=1, sticky=tk.W, pady=5)
+            self.widget_list.append([self.aliasesEntry, "aliases"])
+            eRow+=1
+
+        #first_seen ts
+        if (object=="campaign" or object=="intrusion-set"):
+            self.first_seenLabel = tk.Label(self.mandatoryFrame, text="First Seen:", font=("OpenSans", 12))
+            self.first_seenLabel.grid(row=eRow, column=0, sticky=tk.E, padx=5)
+            self.first_seenEntry = tk.Entry(self.mandatoryFrame, font=("OpenSans", 12))
+            self.first_seenEntry.grid(row=eRow, column=1, sticky=tk.W, pady=5)
+            self.widget_list.append([self.first_seenEntry, "first_seen"])
+            eRow += 1
+
+        # last_seen ts
+        if (object == "campaign" or object == "intrusion-set"):
+            self.last_seenLabel = tk.Label(self.mandatoryFrame, text="Last Seen:", font=("OpenSans", 12))
+            self.last_seenLabel.grid(row=eRow, column=0, sticky=tk.E, padx=5)
+            self.last_seenEntry = tk.Entry(self.mandatoryFrame, font=("OpenSans", 12))
+            self.last_seenEntry.grid(row=eRow, column=1, sticky=tk.W, pady=5)
+            self.widget_list.append([self.last_seenEntry, "last_seen"])
+            eRow += 1
+
+        # objective str
+        if(object=="campaign"):
+            self.objectiveLabel = tk.Label(self.mandatoryFrame, text="Objective:", font=("OpenSans", 12))
+            self.objectiveLabel.grid(row=eRow, column=0, sticky=tk.E, padx=5)
+            self.objectiveEntry = tk.Entry(self.mandatoryFrame, font=("OpenSans", 12))
+            self.objectiveEntry.grid(row=eRow, column=1, sticky=tk.W, pady=5)
+            self.widget_list.append([self.objectiveEntry, "objective"])
+            eRow += 1
+
+
+        if(object=="identity"):
+            # IDENTITY industry-sector-ov
+            ##ADD LATER
+            #Sectors
+
+            self.contant_informationLabel = tk.Label(self.mandatoryFrame, text="Contant Information:", font=("OpenSans", 12))
+            self.contant_informationLabel.grid(row=eRow, column=0, sticky=tk.E, padx=5)
+            self.contant_informationEntry = tk.Entry(self.mandatoryFrame, font=("OpenSans", 12))
+            self.contant_informationEntry.grid(row=eRow, column=1, sticky=tk.W, pady=5)
+            self.widget_list.append([self.contant_informationEntry, "contact_information"])
+            eRow += 1
+
+        if(object=="indicator"):
+            self.valid_untilLabel = tk.Label(self.mandatoryFrame, text="Valid Until:", font=("OpenSans", 12))
+            self.valid_untilLabel.grid(row=eRow, column=0, sticky=tk.E, padx=5)
+            self.valid_untilEntry = tk.Entry(self.mandatoryFrame, font=("OpenSans", 12))
+            self.valid_untilEntry.grid(row=eRow, column=1, sticky=tk.W, pady=5)
+            self.widget_list.append([self.valid_untilEntry, "valid_until"])
+            eRow += 1
+
+        if(object=="intrusion-set" or object=="threat-actor"):
+            #GOALS, array str
+            self.goalsLabel = tk.Label(self.mandatoryFrame, text="Goals:", font=("OpenSans", 12))
+            self.goalsLabel.grid(row=eRow, column=0, sticky=tk.E, padx=5)
+            self.goalsEntry = tk.Entry(self.mandatoryFrame, font=("OpenSans", 12))
+            self.goalsEntry.grid(row=eRow, column=1, sticky=tk.W, pady=5)
+            self.widget_list.append([self.goalsEntry, "goals"])
+            eRow += 1
+
+            self.resource_levelLabel = tk.Label(self.mandatoryFrame, text="Resource Level:", font=("OpenSans", 12))
+            self.resource_levelLabel.grid(row=eRow, column=0, sticky=tk.E, padx=5)
+            self.resource_levelVar = tk.StringVar()
+            self.resource_levelVar.set("Select...")
+            self.resource_levelOption = tk.OptionMenu(self.mandatoryFrame, self.resource_levelVar, "individual", "club", "contest", "team", "organization", "government")
+            self.resource_levelOption.grid(row=eRow, column=1, sticky=tk.W, pady=5)
+            self.widget_list.append([self.resource_levelVar, "resource_level"])
+
+            self.primary_motivationLabel = tk.Label(self.mandatoryFrame, text="Primary Motivation:", font=("OpenSans", 12))
+            self.primary_motivationLabel.grid(row=eRow, column=0, sticky=tk.E, padx=5)
+            self.primary_motivationVar = tk.StringVar()
+            self.primary_motivationVar.set("Select...")
+            self.primary_motivationOption = tk.OptionMenu(self.mandatoryFrame, self.primary_motivationVar, "accidental", "coercion", "dominance", "ideology", "notoriety", "organizational-gain", "personal-gain",
+"personal-satisfaction", "revenge", "unpredictable")
+            self.primary_motivationOption.grid(row=eRow, column=1, sticky=tk.W, pady=5)
+            self.widget_list.append([self.primary_motivationVar, "primary_motivation"])
+
+            #ADD SECONDARY MOTIVATIONS!
+
+        if(object=="threat-actor"):
+            #... add later
+            print("")
+
+        if(object=="tool"):
+            self.tool_versionLabel = tk.Label(self.mandatoryFrame, text="Tool Version:", font=("OpenSans", 12))
+            self.tool_versionLabel.grid(row=eRow, column=0, sticky=tk.E, padx=5)
+            self.tool_versionEntry = tk.Entry(self.mandatoryFrame, font=("OpenSans", 12))
+            self.tool_versionEntry.grid(row=eRow, column=1, sticky=tk.W, pady=5)
+            self.widget_list.append([self.tool_versionEntry, "tool_version"])
+            eRow += 1
+
+
+
+
         #OPEN EDITOR IN EDIT MODE
         if self.type_of_editor == 1:
             self.edit()
@@ -492,6 +612,7 @@ class Objects(tk.Frame):
         self.idLabel.grid(row=0, column=0, sticky=tk.E, padx=5)
         self.idEntry = tk.Entry(self.afFrame, font=("OpenSans", 12), width=64)
         self.idEntry.grid(row=0, column=1, sticky=tk.W, pady=5)
+        self.widget_list.append([self.idEntry, "id"])
 
         self.createdLabel = tk.Label(self.afFrame, text="Created:", font=("OpenSans", 12), bg="#AED1D6")
         self.createdLabel.grid(row=1, column=0, sticky=tk.E, padx=5)

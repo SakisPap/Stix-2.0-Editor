@@ -400,13 +400,13 @@ class Objects(tk.Frame):
         if object == "identity":
             self.identity_classLabel = tk.Label(self.mandatoryFrame, text="*Identity Class:", font=("OpenSans", 12))
             self.identity_classLabel.grid(row=eRow, column=0, sticky=tk.E, padx=5)
-            self.identity_classVariable = tk.StringVar()
+            self.identity_classVar = tk.StringVar()
             #---default---
-            self.identity_classVariable.set("Select...")
-            self.identity_classOption = tk.OptionMenu(self.mandatoryFrame, self.identity_classVariable, "individual", "group", "organization", "class", "unknown")
+            self.identity_classVar.set("")
+            self.identity_classOption = tk.OptionMenu(self.mandatoryFrame, self.identity_classVar, "individual", "group", "organization", "class", "unknown")
             self.identity_classOption.grid(row=eRow, column=1, sticky=tk.W, pady=5)
 
-            self.widget_list.append([self.identity_classVariable, "identity_class"])
+            self.widget_list.append([self.identity_classVar, "identity_class"])
             eRow+=1
 
         if object == "indicator" or object == "malware" or object == "report" or object == "threat-actor" or object == "tool":
@@ -547,15 +547,16 @@ class Objects(tk.Frame):
             self.resource_levelLabel = tk.Label(self.mandatoryFrame, text="Resource Level:", font=("OpenSans", 12))
             self.resource_levelLabel.grid(row=eRow, column=0, sticky=tk.E, padx=5)
             self.resource_levelVar = tk.StringVar()
-            self.resource_levelVar.set("Select...")
+            self.resource_levelVar.set("")
             self.resource_levelOption = tk.OptionMenu(self.mandatoryFrame, self.resource_levelVar, "individual", "club", "contest", "team", "organization", "government")
             self.resource_levelOption.grid(row=eRow, column=1, sticky=tk.W, pady=5)
             self.widget_list.append([self.resource_levelVar, "resource_level"])
+            eRow += 1
 
             self.primary_motivationLabel = tk.Label(self.mandatoryFrame, text="Primary Motivation:", font=("OpenSans", 12))
             self.primary_motivationLabel.grid(row=eRow, column=0, sticky=tk.E, padx=5)
             self.primary_motivationVar = tk.StringVar()
-            self.primary_motivationVar.set("Select...")
+            self.primary_motivationVar.set("")
             self.primary_motivationOption = tk.OptionMenu(self.mandatoryFrame, self.primary_motivationVar, "accidental", "coercion", "dominance", "ideology", "notoriety", "organizational-gain", "personal-gain",
 "personal-satisfaction", "revenge", "unpredictable")
             self.primary_motivationOption.grid(row=eRow, column=1, sticky=tk.W, pady=5)

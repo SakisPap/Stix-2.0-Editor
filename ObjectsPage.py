@@ -108,6 +108,7 @@ class Objects(tk.Frame):
         self.sortby="lm"
         self.viewby="name"
         self.full_list= []
+        self.editmode=False
 
 
 

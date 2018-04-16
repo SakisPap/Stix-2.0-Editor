@@ -105,8 +105,8 @@ class Objects(tk.Frame):
         self.display_type=tk.BooleanVar()
         self.sortby=tk.StringVar()
         self.viewby=tk.StringVar()
-        self.sortby="alph"
-        self.viewby="id"
+        self.sortby="lm"
+        self.viewby="name"
         self.full_list= []
 
 
@@ -618,7 +618,7 @@ class Objects(tk.Frame):
         #---- add the semi-list to the right list
         self.listboxRight.delete(0, tk.END)
         for item in semi_list:
-            for itemname in filestoarr2obj(item):
+            for itemname in filestoarr2obj(item,"alph"):
                 self.listboxRight.insert(tk.END, itemname.get("type")+": "+itemname.get("name"))
 
 
@@ -697,7 +697,7 @@ class Objects(tk.Frame):
         # ---- add the semi-list to the right list
         self.listboxRight.delete(0, tk.END)
         for item in complete_list:
-            for itemname in filestoarr2obj(item):
+            for itemname in filestoarr2obj(item,"alph"):
                 self.listboxRight.insert(tk.END, itemname.get("type") + ": " + itemname.get("name"))
 
 
@@ -788,7 +788,7 @@ class Objects(tk.Frame):
         # ----List All in Left List-------
         # -----------LISTING FOR RELATIONSHIP TAB-----------------------------
 
-        for itemname in filestoarr2():
+        for itemname in filestoarr2("alph"):
             if itemname.get("type")!= "relationship":
                 self.listboxLeft.insert(tk.END, itemname.get("type")+": "+itemname.get("name"))
             #stix2obj.get("type") + "-> " + stix2obj.get("name")

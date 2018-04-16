@@ -205,7 +205,7 @@ class Objects(tk.Frame):
 
 
         #Row=3
-        self.displayall_Button = tk.Button(self.gridBody, image=self.displayall_img, bg="#314570", activebackground="#314570", relief=tk.FLAT, height=77, width=77, highlightthickness=0, highlightbackground="#314570", command=lambda: [self.selector("nothing"), self.enlistall(), print(self.object), self.add_button.configure(state=tk.DISABLED)])
+        self.displayall_Button = tk.Button(self.gridBody, image=self.displayall_img, bg="#314570", activebackground="#314570", relief=tk.FLAT, height=77, width=77, highlightthickness=0, highlightbackground="#314570", command=lambda: [self.selector("nothing"), self.enlistall(), print(self.object), self.add_button.configure(state=tk.DISABLED), self.edit_button.configure(state=tk.DISABLED)])
         self.displayall_Button.grid(row=3, column=0, columnspan=2, padx=PADX, pady=PADY, sticky="nsew")
 
         self.relationship_Button = tk.Button(self.gridBody, image=self.relationship_img, bg="#314570", activebackground="#314570", relief=tk.FLAT, height=77, width=77, highlightthickness=0, highlightbackground="#314570", command=lambda: self.selector("relationship"))
@@ -230,6 +230,7 @@ class Objects(tk.Frame):
         self.add_button.configure(state=tk.DISABLED)
         self.edit_button = tk.Button(self.listBody, text="Edit",font=("OpenSans", 12, "bold"), fg="white", bg="#FF9500", relief=tk.FLAT, highlightthickness=0, height=3, command=lambda : self.editor(self.masterBody, self.object, 1))
         self.edit_button.pack(side=tk.LEFT, fill=tk.X, expand=True)
+        self.edit_button.configure(state=tk.DISABLED)
         self.delete_button = tk.Button(self.listBody, text="Delete", font=("OpenSans", 12, "bold"), fg="white", bg="#FF3B30", relief=tk.FLAT, highlightthickness=0, height=3, command=lambda : [delete(self.object,self.listbox.get(self.listbox.curselection())), self.updatelist(self.object)if self.object != "nothing" else self.enlistall()])
         self.delete_button.pack(side=tk.LEFT, fill=tk.X, expand=True)
 
@@ -279,6 +280,7 @@ class Objects(tk.Frame):
         self.add_button.configure(state=tk.NORMAL)
         self.object=object
         self.add_button.configure(command=lambda: self.editor(self.masterBody, self.object, 0))
+        self.edit_button.configure(state=tk.NORMAL)
         if object=="attack-pattern":
             self.infoLabel.configure(text="Attack Pattern: A type of Tactics, Techniques, and Procedures (TTP) that describes ways threat actors attempt to compromise targets.")
             self.topLabel.config(text="Selected Object: Attack Pattern")

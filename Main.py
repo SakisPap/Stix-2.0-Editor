@@ -21,6 +21,7 @@ You should have received a copy of the GNU General Public License
 
 along with STIX 2.0 UoM Editor.  If not, see <http://www.gnu.org/licenses/>.
 '''
+
 import tkinter as tk
 from ObjectsPage import Objects
 from PIL import Image, ImageTk
@@ -42,16 +43,25 @@ def disableOptions():
     editmenu.entryconfig("Export Project", state=tk.DISABLED)
     editmenu.entryconfig("Open in Explorer", state=tk.DISABLED)
 
-def picklesave(temp):
+def picklesave(displaytype, sort, view):
     sav = open("sav.dat", "wb")
-    pickle.dump(temp, sav)
+    pickle.dump([displaytype, sort, view], sav)
     sav.close()
 
 def options_command():
-    picklesave(displaytype.get())
+    picklesave(displaytype.get(), sort.get(), view.get())
     objects_page.display_type.set(displaytype.get())
+    objects_page.viewby.set(view.get())
+    objects_page.sortby.set(sort.get())
     if objects_page.object != "nothing":
         objects_page.updatelist(objects_page.object)
+    else:
+        try:
+            objects_page.enlistall()
+        except:
+            print("exception in options_command possibly bc of filesystem not being loaded")
+
+
 
 def about_window():
     window = tk.Toplevel(root, relief=tk.FLAT, highlightthickness=0)
@@ -174,23 +184,60 @@ objects_page = Objects(root)
 
 
 displaytype = tk.BooleanVar()
+sort = tk.StringVar()
+view = tk.StringVar()
+
 
 try:
     sav = open("sav.dat","rb")
-    temp = pickle.load(sav)
+    displaytype1, sort1, view1 = pickle.load(sav)
+    displaytype.set(displaytype1)
+    sort.set(sort1)
+    view.set(view1)
     sav.close()
-    print("open-dis " + str(temp))
+    print("open-dis " + str(displaytype.get()))
+    print("open-dis " + str(sort.get()))
+    print("open-dis " + str(view.get()))
 except:
-    picklesave(True)
-    temp=True
+    picklesave(True, "alph", "name")
+    displaytype.set(True)
+    sort.set("alph")
+    view.set("name")
     print("i am in here")
 
-displaytype.set(temp)
-objects_page.display_type.set(temp)
+objects_page.display_type.set(displaytype.get())
+objects_page.viewby.set(view.get())
+objects_page.sortby.set(sort.get())
 optionsmenu = tk.Menu(menubar, tearoff=0)
-optionsmenu.add_checkbutton(label="Display type", onvalue=True, offvalue=False, variable=displaytype, command=lambda : options_command())
+viewbyMenu = tk.Menu(menubar)
+sortbyMenu = tk.Menu(menubar)
+
 optionsmenu.add_separator()
+optionsmenu.add_checkbutton(label="Display objects type", onvalue=True, offvalue=False, variable=displaytype, command=lambda : options_command())
+optionsmenu.add_separator()
+
+optionsmenu.add_cascade(label="View by", menu=viewbyMenu)
+viewbyMenu.add_radiobutton(label="Name", variable=view, value="name", command=lambda : options_command())
+viewbyMenu.add_radiobutton(label="Id", variable=view, value="id", command=lambda : options_command())
+optionsmenu.add_separator()
+
+
+optionsmenu.add_cascade(label="Sort by", menu=sortbyMenu)
+sortbyMenu.add_radiobutton(label="Alphabetical ▲", variable=sort, value="alph", command=lambda : options_command())
+sortbyMenu.add_radiobutton(label="Alphabetical ▼", variable=sort, value="alphdesc", command=lambda : options_command())
+sortbyMenu.add_separator()
+sortbyMenu.add_radiobutton(label="Last Modified ▲", variable=sort, value="lm", command=lambda : options_command())
+sortbyMenu.add_radiobutton(label="Last Modified ▼", variable=sort, value="lmdesc", command=lambda : options_command())
+optionsmenu.add_separator()
+
+
 menubar.add_cascade(label="Options", menu=optionsmenu)
+
+
+
+
+
+
 
 helpmenu.grab_release()
 

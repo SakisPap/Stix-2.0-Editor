@@ -36,6 +36,7 @@ import stix2
 import sys
 import time
 from makers import *
+from tools import Multiselect
 
 class Objects(tk.Frame):
     def __init__(self, parent):
@@ -103,10 +104,8 @@ class Objects(tk.Frame):
 
 
         self.display_type=tk.BooleanVar()
-        self.sortby=tk.StringVar()
-        self.viewby=tk.StringVar()
-        self.sortby="lm"
-        self.viewby="name"
+        self.sortby = tk.StringVar()
+        self.viewby = tk.StringVar()
         self.full_list= []
         self.editmode=False
 
@@ -218,6 +217,7 @@ class Objects(tk.Frame):
 
         self.listbox = tk.Listbox(self.listBody, exportselection=0, font=("OpenSans", 12, "bold"), bd=0, width=30, height=16, relief=tk.FLAT, highlightthickness=0, bg="#AED1D6", fg="#314570")
         self.listbox.pack()
+        self.listbox.bind('<Button-1>', lambda _: [self.edit_button.configure(state=tk.NORMAL) if self.object!="relationship" else print(""), self.delete_button.configure(state=tk.NORMAL)])
         #self.scrollbar = tk.Scrollbar(self.listBody, orient="vertical")
         #self.scrollbar.configure(command=self.listbox.yview)
         #self.scrollbar.pack(side=tk.LEFT, fill=tk.Y)
@@ -233,6 +233,7 @@ class Objects(tk.Frame):
         self.edit_button.configure(state=tk.DISABLED)
         self.delete_button = tk.Button(self.listBody, text="Delete", font=("OpenSans", 12, "bold"), fg="white", bg="#FF3B30", relief=tk.FLAT, highlightthickness=0, height=3, command=lambda : [delete(self.object,self.listbox.get(self.listbox.curselection())), self.updatelist(self.object)if self.object != "nothing" else self.enlistall()])
         self.delete_button.pack(side=tk.LEFT, fill=tk.X, expand=True)
+        self.delete_button.configure(state=tk.DISABLED)
 
 
 
@@ -240,38 +241,50 @@ class Objects(tk.Frame):
 #--------------LISTING FOR MAIN PAGE----------------------------------
     #---Enlist all objects in project, exclusively run when project is opened or show all is clicked
     def enlistall(self):
-        sortby = self.sortby
-        viewby = self.viewby
         self.listbox.delete(0, tk.END)
-        for itemname in filestoarr2(sortby):
+        self.full_list =[]
+        for itemname in filestoarr2(self.sortby.get()):
             if itemname.get("type") != "relationship":
-                if(viewby=="name"):
-                    self.listbox.insert(tk.END, itemname.get("type")+": "+itemname.get("name"))
-                else:
-                    self.listbox.insert(tk.END, itemname.get("id"))
+                self.full_list.append(itemname.get("type")+": "+itemname.get("name")+": "+itemname.get("id"))
             else:
-                self.listbox.insert(tk.END, itemname.get("id"))
+                self.full_list.append(itemname.get("type") + ": "+itemname.get("id"))
+        for itemname in self.full_list:
+            itemname=itemname.split(": ")
+            if (itemname[0] != "relationship" and self.viewby.get() == "name"):
+                if self.display_type.get():
+                    self.listbox.insert(tk.END, itemname[0] + ": " + itemname[1])
+                else:
+                    self.listbox.insert(tk.END, itemname[1])
+
+            elif (itemname[0] != "relationship" and self.viewby.get() == "id"):
+                self.listbox.insert(tk.END, itemname[2])
+            else:
+                self.listbox.insert(tk.END, itemname[1])
 
 
-    #---List object specific
+
+
     def updatelist(self, object):
-        sortby=self.sortby
-        viewby=self.viewby
         self.listbox.delete(0, tk.END)
-        if object!="relationship":
-            if(viewby=="name"):
-                if(self.display_type.get()):
-                    for itemname in filestoarr2obj(object,sortby):
-                        self.listbox.insert(tk.END, itemname.get("type")+": "+itemname.get("name"))
-                else:
-                    for itemname in filestoarr2obj(object,sortby):
-                        self.listbox.insert(tk.END, itemname.get("name"))
+        self.full_list =[]
+        for itemname in filestoarr2obj(object, self.sortby.get()):
+            if itemname.get("type") != "relationship":
+                self.full_list.append(itemname.get("type")+": "+itemname.get("name")+": "+itemname.get("id"))
             else:
-                for itemname in filestoarr2obj(object, sortby):
-                    self.listbox.insert(tk.END, itemname.get("id"))
-        else:
-            for itemname in filestoarr2obj(object,sortby):
-                self.listbox.insert(tk.END, itemname.get("id"))
+                self.full_list.append(itemname.get("type") + ": "+itemname.get("id"))
+
+        for itemname in self.full_list:
+            itemname=itemname.split(": ")
+            if (itemname[0] != "relationship" and self.viewby.get() == "name"):
+                if self.display_type.get():
+                    self.listbox.insert(tk.END, itemname[0] + ": " + itemname[1])
+                else:
+                    self.listbox.insert(tk.END, itemname[1])
+
+            elif (itemname[0] != "relationship" and self.viewby.get() == "id"):
+                self.listbox.insert(tk.END, itemname[2])
+            else:
+                self.listbox.insert(tk.END, itemname[1])
 
 #--------------------------------------------------------------------
 
@@ -280,7 +293,8 @@ class Objects(tk.Frame):
         self.add_button.configure(state=tk.NORMAL)
         self.object=object
         self.add_button.configure(command=lambda: self.editor(self.masterBody, self.object, 0))
-        self.edit_button.configure(state=tk.NORMAL)
+        self.edit_button.configure(state=tk.DISABLED)
+        self.delete_button.configure(state=tk.DISABLED)
         if object=="attack-pattern":
             self.infoLabel.configure(text="Attack Pattern: A type of Tactics, Techniques, and Procedures (TTP) that describes ways threat actors attempt to compromise targets.")
             self.topLabel.config(text="Selected Object: Attack Pattern")
@@ -343,6 +357,7 @@ class Objects(tk.Frame):
         try:
             self.updatelist(object)
         except:
+            self.enlistall()
             print("Error in update list: no " + str(self.object) + " folder")
 
 
@@ -364,6 +379,7 @@ class Objects(tk.Frame):
 
 
 #----------THIS IS THE STARTING POINT OF THE EDITOR TAB----------------------------------
+
 
     def editor(self, parent, object, type_of_editor):
         self.editorFrame = tk.Frame(parent, width=800, height=380)
@@ -669,11 +685,6 @@ class Objects(tk.Frame):
 
 
 
-
-
-
-
-
         #-----Frame Buttons----------------------
         self.buttonHolder = tk.Frame(self.editorFrame)
         self.buttonHolder.pack(side=tk.BOTTOM)
@@ -688,18 +699,10 @@ class Objects(tk.Frame):
 
 
     def edit(self):
-        name = self.listbox.get(tk.ACTIVE)
-        if(self.viewby=="name"):
-            if(self.display_type.get()) or (self.object=="nothing"):
-                name = name.split(": ")
-                stix2object = filesto2obj(name[0],name[1])
-            else:
-                name = name
-                stix2object = filesto2obj(self.object,name)
-            keys = getkeys(stix2object)
-        else:
-            stix2object = filesto2objid(name)
-            keys = getkeys(stix2object)
+        name = self.full_list[self.listbox.curselection()[0]]
+        name = name.split(": ")
+        stix2object = filestoarr2obj4edit(name[0], name[1])
+        keys = getkeys(stix2object)
 
         for item in self.widget_list:
             if item[1] in keys: #keys
@@ -812,6 +815,8 @@ class Objects(tk.Frame):
             btn_list = ["targets"]
             semi_list = ["identity", "vulnerability"]
         else:
+            btn_list = []
+            semi_list = []
             print("out of value index")
 
         #---- enbale corresponding radio buttons

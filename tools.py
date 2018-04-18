@@ -94,3 +94,46 @@ def bugreport(parent, msg):
     except:
         tk.messagebox.showerror("Error", "Failed to send bug report.\n Check your internet connection and try again later.", parent=parent)
     parent.destroy()
+
+
+
+
+
+class Multiselect(tk.Frame):
+    def __init__(self, parent):
+        tk.Frame.__init__(self, parent, bg="red")
+        self.parent=parent
+        self.widgets()
+
+    def show_callback(self):
+        self.listframe.pack(side=tk.LEFT)
+        self.listframe.grab_set()
+        try:
+            self.showlabel.pack_forget()
+        except:
+            pass
+
+    def done_callback(self):
+        selected_items = []
+        temp = []
+        for item in self.listview.curselection():
+            selected_items.append(self.listview.get(item))
+            self.listframe.pack_forget()
+            self.showlabel.config(text=str(selected_items).replace("'", ""))
+            self.showlabel.pack(side=tk.LEFT)
+            self.listframe.grab_release()
+
+    def widgets(self):
+        self.listbutton = tk.Button(self.parent, text="Select Multiple Vals", command=lambda: self.show_callback())
+        self.listbutton.pack(side=tk.LEFT, padx=10)
+        self.testbutton.pack(side=tk.RIGHT, padx=10)
+        self.showlabel = tk.Label(self.parent, background="#AED1D6", wraplength=250)
+        self.listframe = tk.Frame(self.parent)
+        self.listview = tk.Listbox(self.listframe, exportselection=0, font=("OpenSans", 10, "bold"), bd=1,
+                              relief=tk.FLAT, highlightthickness=0, fg="#314570", selectmode='multiple')
+        self.listview.pack()
+
+        self.donebutton = tk.Button(self.listframe, text="Done", command=lambda: self.done_callback())
+        self.donebutton.pack(side=tk.LEFT, fill=tk.X, expand=1)
+        self.clearbutton = tk.Button(self.listframe, text="Clear", command=lambda: self.listview.selection_clear(0, tk.END))
+        self.clearbutton.pack(side=tk.RIGHT, fill=tk.X, expand=1)

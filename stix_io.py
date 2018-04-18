@@ -239,11 +239,20 @@ def filestoarr2(sortby):
 
 def filestoarr2obj(object,sort):
     items = []
-    for file in getFilesJsonExt(object,sort):
+    for file in getFilesJsonExt(object, sort):
         stix2obj = stix2.parse(filetoitem(object + "/" + file))
         if stix2obj.get("type") == object:
             items.append(stix2obj)
     return items
+
+
+#--New addition, check that Dre
+def filestoarr2obj4edit(object, name):
+    for file in getFilesJsonExt(object, sortby="alph"):
+        stix2obj = stix2.parse(filetoitem(object + "/" + file))
+        if stix2obj.get("type") == object and stix2obj.get("name")==name:
+            return stix2obj
+
 
 def filestobundle():     #prepei kai logika 8a exoume idi chdir()
     items=[]

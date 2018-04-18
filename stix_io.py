@@ -65,6 +65,9 @@ def checkcfgfolder():
     if not (os.path.exists(cfgfolder)):
         os.makedirs(cfgfolder)
 
+def getcfgfile():
+    return os.path.join(getcfgfolder(), "sav.dat")
+
 def setlastproject(ppath):
     lastfile=os.path.join(getcfgfolder(),"last.cfg")
     file = open(lastfile, "w")

@@ -26,7 +26,7 @@ import tkinter as tk
 from ObjectsPage import Objects
 from PIL import Image, ImageTk
 import os
-from stix_io import OpenProject, LoadEnvironment, readfile, ImportFile, ExportProject, OpenInExplorer, NewProject, checkcfgfolder, LoadPrevious
+from stix_io import OpenProject, LoadEnvironment, readfile, ImportFile, ExportProject, OpenInExplorer, NewProject, checkcfgfolder, LoadPrevious, getcfgfile
 from tkinter import messagebox
 from tools import Elevate, bugreport
 import pickle
@@ -44,7 +44,7 @@ def disableOptions():
     editmenu.entryconfig("Open in Explorer", state=tk.DISABLED)
 
 def picklesave(displaytype, sort, view):
-    sav = open("sav.dat", "wb")
+    sav = open(getcfgfile(), "wb")
     pickle.dump([displaytype, sort, view], sav)
     sav.close()
 
@@ -189,7 +189,7 @@ view = tk.StringVar()
 
 
 try:
-    sav = open("sav.dat","rb")
+    sav = open(getcfgfile(), "rb")
     displaytype1, sort1, view1 = pickle.load(sav)
     displaytype.set(displaytype1)
     sort.set(sort1)

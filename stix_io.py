@@ -77,6 +77,13 @@ def setlastproject(ppath):
 def getFolderArray():
     return ['attack-pattern', 'campaign', 'course-of-action', 'identity', 'indicator', 'intrusion-set', 'malware', 'observed-data', 'report', 'threat-actor', 'tool', 'vulnerability', 'relationship']
 
+def isProjectActive():
+    for folder in getFolderArray():
+        if not (os.path.exists(folder)):
+            return False
+    return True
+
+
 def getFilesJson(path, lm):#Xwris to extension plz   lm=0 -> alplhabetical
     if(lm==0):
         return [pathlib.Path(x).stem for x in os.listdir(path) if x.endswith(".json")] #Den paizoun symbolic links swsta? Alliws vale resolve kai meta stem
@@ -157,7 +164,7 @@ def ImportFile():
                     stix2obj=stix2.parse(filetoitem(file))
                     type=stix2obj.get("type")
                     if not (type=="bundle"):
-                        shutil.copy2(file,type)
+                        shutil.copy2(file,os.path.join(type,stix2obj.get("name")+".json"))
                         imports+=1
                     else:
                         tk.messagebox.showwarning("Error",file + " is a Bundle. Please use Bundle Management from Tools to import it.")
@@ -181,7 +188,7 @@ def ImportFile():
 
 
 def ExportProject():
-    items=filestoarr2()
+    items=filestoarr2("alph")
     if not items:
         tk.messagebox.showwarning("Error", "Current project seems empty. There is nothing to export.")
         return

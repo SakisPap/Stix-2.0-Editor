@@ -32,6 +32,7 @@ import urllib
 from urllib.parse import *
 from urllib.request import *
 from urllib.response import *
+from stix_io import isProjectActive
 
 
 def Elevate():
@@ -56,8 +57,11 @@ def Elevate():
 
 
 def BundleManage(mode):
-    #check if we are into a project
-    bundle=tk.filedialog.askopenfilename(initialdir="/", title="Please select a STIX2 Bundle file to import.",
+    if (mode == "import"):
+        if not (isProjectActive()):
+            tk.messagebox.showwarning("Error", "You are not into a project. Please Load or Create a project in order to import the Bundle Objects into it otherwise you could use the extract function.")
+            return
+    bundle=tk.filedialog.askopenfilename(initialdir="/", title="Please select a STIX2 Bundle file.",
                                           filetypes=[("json files (STIX2)", "*.json")])
     try:
         stix2bundle = stix2.parse(filetoitem(bundle))

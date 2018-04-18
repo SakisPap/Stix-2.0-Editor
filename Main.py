@@ -28,7 +28,7 @@ from PIL import Image, ImageTk
 import os
 from stix_io import OpenProject, LoadEnvironment, readfile, ImportFile, ExportProject, OpenInExplorer, NewProject, checkcfgfolder, LoadPrevious, getcfgfile
 from tkinter import messagebox
-from tools import Elevate, bugreport
+from tools import Elevate, bugreport, BundleManage
 import pickle
 import webbrowser
 
@@ -128,6 +128,21 @@ def bugreport_window():
 
 
 
+def bundle_management_window():
+    window = tk.Toplevel(root, relief=tk.FLAT, highlightthickness=0)
+    window.geometry("285x70")
+    window.resizable(width=False, height=False)
+    window.title("Bundle Management")
+    window.attributes('-topmost', 'true')
+    window.grab_set()
+
+    importButton = tk.Button(window,text="Import Bundle Objects into current Project", command= lambda : [window.destroy(), BundleManage("import")])
+    importButton.pack(padx=1)
+
+    extractButton = tk.Button(window, text="Extract Bundle Objects into a directory", command=lambda: [window.destroy(), BundleManage("extract")])
+    extractButton.pack(padx=1)
+
+
 
 root = tk.Tk()
 root.geometry("800x480")
@@ -172,7 +187,7 @@ menubar.add_cascade(label="Help", menu=helpmenu)
 
 toolsmenu = tk.Menu(menubar, tearoff=0)
 toolsmenu.add_command(label="Convert STIX1 item to STIX2...", command=lambda : [Elevate()])
-toolsmenu.add_command(label="Bundle Management...")
+toolsmenu.add_command(label="Bundle Management...", command=lambda : [bundle_management_window()])
 menubar.add_cascade(label="Tools", menu=toolsmenu)
 
 # display the menu

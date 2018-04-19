@@ -568,7 +568,11 @@ class Objects(tk.Frame):
         if(object=="attack-pattern" or object=="indicator" or object=="malware" or object=="tool"):
             self.kill_chain_phasesLabel = tk.Label(self.mandatoryFrame, text="Kill Chain Phases:", font=("OpenSans", 12)) #Management!!
             self.kill_chain_phasesLabel.grid(row=eRow, column=0, sticky=tk.E, padx=5)
-            self.kill_chain_phasesButton = tk.Button(self.mandatoryFrame, font = ("OpenSans", 12), text="Add...")
+            listitems=getKillChainPhases()
+            self.multiselect_kill_chain_phases= Multiselect(self.mandatoryFrame, listitems, eRow, self.COLOR_1, self.COLOR_2, self.COLOR_3)
+            self.kill_chain_phasesButton = tk.Button(self.mandatoryFrame, font = ("OpenSans", 12), text="Add...", command=lambda: [self.multiselect_kill_chain_phases.place(x=225, y=5),
+                                                            self.mandatoryFrame.lift(), self.multiselect_kill_chain_phases.lift(),
+                                                            self.multiselect_kill_chain_phases.grab_set()])
             self.kill_chain_phasesButton.grid(row=eRow, column=1, sticky=tk.W, pady=5)
             #ADD TOPLEVEL AND KILL CHAIN PHASE MANAGEMENT!!!!!
             eRow+=1

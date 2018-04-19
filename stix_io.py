@@ -58,7 +58,7 @@ def itemtofile(item):
             return "False"
 
 def killchainphasetofile(filename, item):
-    file=os.path.join(getkcpfolder(), filename+".kc")
+    file=os.path.join(getkcpfolder(), filename+".kcp")
     file = open(file, "w")
     file.write(str(item))
     file.close()
@@ -69,6 +69,9 @@ def getcfgfolder():
 
 def getkcpfolder():
     return os.path.join(getcfgfolder(), "kill-chain-phases")
+
+def getKillChainPhases():
+    return [pathlib.Path(x).stem for x in os.listdir(getkcpfolder()) if x.endswith(".kcp")]
 
 def checkcfgfolder():
     cfgfolder=getcfgfolder()

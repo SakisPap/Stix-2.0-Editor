@@ -182,7 +182,7 @@ class KillChainPhaseMaker(tk.Toplevel):
         self.frame.phasetext = tk.Entry()
         self.frame.phaselabel.grid(row=1, column=0)
         self.frame.phasetext.grid(row=1, column=1)
-        self.frame.addbutton = tk.Button(text="Create", command=lambda : [killchainphasetofile(self.frame.killchaintext.get()+"-"+self.frame.phasetext.get(), stix2.KillChainPhase(kill_chain_name=self.frame.killchaintext, phase_name=self.frame.phasetext))])
+        self.frame.addbutton = tk.Button(text="Create", command=lambda : [killchainphasetofile(self.frame.killchaintext.get()+"-"+self.frame.phasetext.get(), stix2.KillChainPhase(kill_chain_name=self.frame.killchaintext.get(), phase_name=self.frame.phasetext.get()))])
         self.frame.addbutton.grid(row=2, column=0, columnspan=2)
         messagebox.showinfo("vale kati...")
 

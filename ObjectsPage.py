@@ -435,10 +435,31 @@ class Objects(tk.Frame):
             self.nameEntry.bind('<KeyPress>', self.keyPress)
             self.nameLabel.bind("<Enter>", lambda _: self.hover("name"))
             self.nameLabel.bind("<Leave>", lambda _: self.selector(self.object))
-
-
             self.widget_list.append([self.nameEntry, "name"])
             eRow+=1
+
+        if object ==  "observed-data":
+            self.first_observedLabel = tk.Label(self.mandatoryFrame, text="*First Observed:", font=("OpenSans", 12))
+            self.first_observedLabel.grid(row=eRow, column=0, sticky=tk.E, padx=5)
+            self.first_observedEntry = tk.Entry(self.mandatoryFrame, font=("OpenSans", 12))
+            self.first_observedEntry.grid(row=eRow, column=1, sticky=tk.W, pady=5)
+            self.widget_list.append([self.first_observedEntry, "first_observed"])
+            eRow += 1
+
+            self.last_observedLabel = tk.Label(self.mandatoryFrame, text="*Last Observed:", font=("OpenSans", 12))
+            self.last_observedLabel.grid(row=eRow, column=0, sticky=tk.E, padx=5)
+            self.last_observedEntry = tk.Entry(self.mandatoryFrame, font=("OpenSans", 12))
+            self.last_observedEntry.grid(row=eRow, column=1, sticky=tk.W, pady=5)
+            self.widget_list.append([self.last_observedEntry, "last_observed"])
+            eRow += 1
+
+            self.number_observedLabel = tk.Label(self.mandatoryFrame, text="*Number Observed:", font=("OpenSans", 12))
+            self.number_observedLabel.grid(row=eRow, column=0, sticky=tk.E, padx=5)
+            self.number_observedEntry = tk.Entry(self.mandatoryFrame, font=("OpenSans", 12))
+            self.number_observedEntry.grid(row=eRow, column=1, sticky=tk.W, pady=5)
+            self.widget_list.append([self.number_observedEntry, "number_observed"])
+            eRow += 1
+
 
 
         if object == "identity":

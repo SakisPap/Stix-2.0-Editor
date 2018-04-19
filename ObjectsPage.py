@@ -78,6 +78,7 @@ class Objects(tk.Frame):
         self.radio_buttons = []
 
 
+
         self.gridHeader = tk.Frame(self, height=35, width=800, bg=self.COLOR_2)
         self.gridHeader.pack(fill=tk.BOTH, side=tk.TOP)
         self.gridHeader.pack_propagate(0)
@@ -611,12 +612,12 @@ class Objects(tk.Frame):
 
         if(object=="identity"):
             listitems = ["agriculture", "aerospace", "automotive", "communications", "construction", "defence", "education", "energy", "entertainment", "financial-services", "government-national", "government-regional", "government-local", "government-public-services", "healthcare", "hospitality-leisure", "infrastructure", "insurance", "manufacturing", "mining", "non-profit", "pharmaceuticals", "retail", "technology", "telecommunications", "transportation", "utilities"]
-            self.multiselect = Multiselect(self.mandatoryFrame, listitems, eRow, self.COLOR_1, self.COLOR_2, self.COLOR_3)
+            self.multiselect_sectors = Multiselect(self.mandatoryFrame, listitems, eRow, self.COLOR_1, self.COLOR_2, self.COLOR_3)
             self.sectorsLabel = tk.Label(self.mandatoryFrame, text="Sectors:", font=("OpenSans", 12))
             self.sectorsLabel.grid(row=eRow, column=0, sticky=tk.E, padx=5)
-            self.sectorsButton = tk.Button(self.mandatoryFrame, font = ("OpenSans", 12), text="...", command=lambda : [self.multiselect.place(x=225, y=5), self.mandatoryFrame.lift(), self.multiselect.lift(), self.multiselect.grab_set()])
+            self.sectorsButton = tk.Button(self.mandatoryFrame, font = ("OpenSans", 12), text="...", command=lambda : [self.multiselect_sectors.place(x=225, y=5), self.mandatoryFrame.lift(), self.multiselect_sectors.lift(), self.multiselect_sectors.grab_set()])
             self.sectorsButton.grid(row=eRow, column=1, sticky=tk.W, pady=5)
-            self.widget_list.append([self.multiselect, "sectors"])
+            self.widget_list.append([self.multiselect_sectors, "sectors"])
             eRow += 1
 
             self.contant_informationLabel = tk.Label(self.mandatoryFrame, text="Contant Information:", font=("OpenSans", 12))
@@ -660,12 +661,70 @@ class Objects(tk.Frame):
 "personal-satisfaction", "revenge", "unpredictable")
             self.primary_motivationOption.grid(row=eRow, column=1, sticky=tk.W, pady=5)
             self.widget_list.append([self.primary_motivationVar, "primary_motivation"])
+            eRow +=1
 
-            #ADD SECONDARY MOTIVATIONS!
+            self.secondary_motivationsLabel = tk.Label(self.mandatoryFrame, text="Secondary Motivations:", font=("OpenSans", 12))
+            self.secondary_motivationsLabel.grid(row=eRow, column=0, sticky=tk.E, padx=5)
+            listitems=["accidental", "coercion", "dominance", "ideology", "notoriety", "organizational-gain", "personal-gain",
+"personal-satisfaction", "revenge", "unpredictable"]
+            self.multiselect_secondary_motivations = Multiselect(self.mandatoryFrame, listitems, eRow, self.COLOR_1, self.COLOR_2, self.COLOR_3)
+            self.secondary_motivationsButton = tk.Button(self.mandatoryFrame, font=("OpenSans", 12), text="...",
+                                           command=lambda: [self.multiselect_secondary_motivations.place(x=225, y=5),
+                                                            self.mandatoryFrame.lift(), self.multiselect_secondary_motivations.lift(),
+                                                            self.multiselect_secondary_motivations.grab_set()])
+            self.secondary_motivationsButton.grid(row=eRow, column=1, sticky=tk.W, pady=5)
+
+            self.widget_list.append([self.multiselect_secondary_motivations, "secondary_motivations"])
+            eRow += 1
+
 
         if(object=="threat-actor"):
-            #... add later
-            print("")
+            self.personal_motivationsLabel = tk.Label(self.mandatoryFrame, text="Personal Motivations:",
+                                                       font=("OpenSans", 12))
+            self.personal_motivationsLabel.grid(row=eRow, column=0, sticky=tk.E, padx=5)
+            listitems = ["accidental", "coercion", "dominance", "ideology", "notoriety", "organizational-gain",
+                         "personal-gain",
+                         "personal-satisfaction", "revenge", "unpredictable"]
+            self.multiselect_personal_motivations = Multiselect(self.mandatoryFrame, listitems, eRow, self.COLOR_1,
+                                                                 self.COLOR_2, self.COLOR_3)
+            self.personal_motivationsButton = tk.Button(self.mandatoryFrame, font=("OpenSans", 12), text="...",
+                                                         command=lambda: [
+                                                             self.multiselect_personal_motivations.place(x=225, y=5),
+                                                             self.mandatoryFrame.lift(),
+                                                             self.multiselect_personal_motivations.lift(),
+                                                             self.multiselect_personal_motivations.grab_set()])
+            self.personal_motivationsButton.grid(row=eRow, column=1, sticky=tk.W, pady=5)
+
+            self.widget_list.append([self.multiselect_personal_motivations, "personal_motivations"])
+            eRow += 1
+
+
+            self.rolesLabel = tk.Label(self.mandatoryFrame, text="Roles:", font=("OpenSans", 12))
+            self.rolesLabel.grid(row=eRow, column=0, sticky=tk.E, padx=5)
+            listitems = ["agent", "director", "independent", "infrastructure-architect", "infrastructure-operator", "malware-author", "sponsor"]
+            self.multiselect_roles = Multiselect(self.mandatoryFrame, listitems, eRow, self.COLOR_1, self.COLOR_2, self.COLOR_3)
+            self.rolesButton = tk.Button(self.mandatoryFrame, font=("OpenSans", 12), text="...",
+                                                         command=lambda: [
+                                                             self.multiselect_roles.place(x=225, y=5),
+                                                             self.mandatoryFrame.lift(),
+                                                             self.multiselect_roles.lift(),
+                                                             self.multiselect_roles.grab_set()])
+            self.rolesButton.grid(row=eRow, column=1, sticky=tk.W, pady=5)
+
+            self.widget_list.append([self.multiselect_roles, "roles"])
+            eRow+=1
+
+            self.sophisticationLabel = tk.Label(self.mandatoryFrame, text="Sophistication:", font=("OpenSans", 12))
+            self.sophisticationLabel.grid(row=eRow, column=0, sticky=tk.E, padx=5)
+            self.sophisticationVar = tk.StringVar()
+            self.sophisticationVar.set("")
+            self.sophisticationOption = tk.OptionMenu(self.mandatoryFrame, self.sophisticationVar, "none", "minimal", "intermediate", "advanced", "expert", "innovator", "strategic")
+            self.sophisticationOption.grid(row=eRow, column=1, sticky=tk.W, pady=5)
+            self.widget_list.append([self.sophisticationVar, "sophistication"])
+            eRow += 1
+
+
+
 
         if(object=="tool"):
             self.tool_versionLabel = tk.Label(self.mandatoryFrame, text="Tool Version:", font=("OpenSans", 12))
@@ -800,7 +859,7 @@ class Objects(tk.Frame):
         dict = {}
         for item in self.widget_list:
             temp = item[0].get()
-            if item[1] == "labels" or item[1] == "kill-chain-phase":
+            if item[1] == "labels" or item[1] == "kill-chain-phase" or item[1] == "aliases" or item[1] == "goals":
                 temp = temp.split(" ")
             if temp != "":
                 dict.update({item[1] : temp})

@@ -180,6 +180,7 @@ try:
     root.iconbitmap(os.path.abspath("logo.ico"))
 except: Exception
 
+
 img = Image.open(os.path.abspath("images/welcome_page.png"))
 welcome_page = ImageTk.PhotoImage(img)
 welcomeLabel = tk.Label(root, image= welcome_page, bg=COLOR_1)
@@ -275,10 +276,17 @@ sortbyMenu.add_radiobutton(label="Last Modified ▲", variable=sort, value="lm",
 sortbyMenu.add_radiobutton(label="Last Modified ▼", variable=sort, value="lmdesc", command=lambda : options_command())
 optionsmenu.add_separator()
 
+def getExecPath():
+    try:
+        sFile = os.path.abspath(sys.modules['__main__'].__file__)
+    except:
+        sFile = sys.executable
+    return os.path.dirname(sFile)
 
 def restart():
+    os.chdir(getExecPath())
     python = sys.executable
-    script = os.path.realpath(__file__)
+    script = os.path.join(getExecPath(), "Main.py")
     subprocess.Popen([python, script])
     sys.exit(0)
 

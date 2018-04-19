@@ -460,6 +460,13 @@ class Objects(tk.Frame):
             self.widget_list.append([self.number_observedEntry, "number_observed"])
             eRow += 1
 
+            self.objectsLabel = tk.Label(self.mandatoryFrame, text="*Objects:", font=("OpenSans", 12))
+            self.objectsLabel.grid(row=eRow, column=0, sticky=tk.E, padx=5)
+            self.objectsButton = tk.Button(self.mandatoryFrame, text="Add...", font=("OpenSans", 12))
+            self.objectsButton.grid(row=eRow, column=1, sticky=tk.W, pady=5)
+            self.widget_list.append([self.number_observedEntry, "number_observed"])
+            eRow += 1
+
 
 
         if object == "identity":
@@ -475,7 +482,7 @@ class Objects(tk.Frame):
             eRow+=1
 
         if object == "indicator" or object == "malware" or object == "report" or object == "threat-actor" or object == "tool":
-            self.labels_reqLabel = tk.Label(self.mandatoryFrame, text="*Label:", font=("OpenSans", 12))
+            self.labels_reqLabel = tk.Label(self.mandatoryFrame, text="*Labels:", font=("OpenSans", 12))
             self.labels_reqLabel.grid(row=eRow, column=0, sticky=tk.E, padx=5)
             self.labels_reqLabel.bind("<Enter>", lambda _: self.hover("labels"))
             self.labels_reqLabel.bind("<Leave>", lambda _: self.selector(self.object))
@@ -523,6 +530,28 @@ class Objects(tk.Frame):
             self.widget_list.append([self.valid_fromVar, "valid_from"])
 
             eRow+=1
+
+        if(object=="report"):
+            self.publishedLabel = tk.Label(self.mandatoryFrame, text="*Published:", font=("OpenSans", 12))
+            self.publishedLabel.grid(row=eRow, column=0, sticky=tk.E, padx=5)
+            self.publishedEntry = tk.Entry(self.mandatoryFrame, font=("OpenSans", 12))
+            self.publishedEntry.grid(row=eRow, column=1, sticky=tk.W, pady=5)
+            self.widget_list.append([self.publishedEntry, "published"])
+            eRow+=1
+
+            self.object_refsLabel = tk.Label(self.mandatoryFrame, text="*Object Referred:", font=("OpenSans", 12))
+            self.object_refsLabel.grid(row=eRow, column=0, sticky=tk.E, padx=5)
+            listitems = getAllIDs()
+            self.multiselect_object_refs = Multiselect(self.mandatoryFrame, listitems, eRow, self.COLOR_1, self.COLOR_2, self.COLOR_3)
+            #WARNING!! FIX MULTISELECT LOCATION
+            self.object_refsButton = tk.Button(self.mandatoryFrame, font=("OpenSans", 12), text="...",
+                                           command=lambda: [self.multiselect_object_refs.place(x=225, y=5),
+                                                            self.mandatoryFrame.lift(), self.multiselect_object_refs.lift(),
+                                                            self.multiselect_object_refs.grab_set()])
+            self.object_refsButton.grid(row=eRow, column=1, sticky=tk.W, pady=5)
+            self.widget_list.append([self.multiselect_object_refs, "object_refs"])
+            eRow += 1
+
 
         ###########OBJECT SPECIFIC OPTIONALS----------#############################################OBJECT SPECIFIC OPTIONALS----------##################################
         #description (featured in all excpt)

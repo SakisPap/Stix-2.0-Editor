@@ -109,6 +109,13 @@ def getFilesJsonExt(path,sortby):#Me to extension
             return temp
 
 
+def getAllIDs():
+    ids=[]
+    for folder in getFolderArray():
+        for file in getFilesJsonExt(folder,"alph"):
+            ids.append(filetoitem(os.path.join(folder,file)).get("id"))
+    return ids
+
 def InitNewEnvironment(projectpath):
     if not (os.path.exists(projectpath)):
         os.makedirs(projectpath) # warning: full path or poitner to wpath -- RECURSIVE!

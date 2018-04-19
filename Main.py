@@ -31,6 +31,7 @@ from tkinter import messagebox
 from tools import Elevate, bugreport, BundleManage
 import pickle
 import webbrowser
+import sys, subprocess
 
 
 def enableOptions():
@@ -275,11 +276,21 @@ sortbyMenu.add_radiobutton(label="Last Modified ▼", variable=sort, value="lmde
 optionsmenu.add_separator()
 
 
+def restart():
+    python = sys.executable
+    script = os.path.realpath(__file__)
+    subprocess.Popen([python, script])
+    sys.exit(0)
+
+
 def change(theme):
     theme_file = open(getcfgfile2(), "wb")
     pickle.dump(theme, theme_file)
     theme_file.close()
-    tk.messagebox.showinfo("Info", "Theme changes will take place after you restart the application!")
+    ans=tk.messagebox.askyesno("Info", "Theme changes will take place after you restart the application!\nWould you like to restart now?")
+    if(ans):
+        restart()
+
 
 placeholder = tk.IntVar()
 placeholder.set(theme)

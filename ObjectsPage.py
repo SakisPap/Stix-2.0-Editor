@@ -860,7 +860,8 @@ class Objects(tk.Frame):
         for item in self.widget_list:
             temp = item[0].get()
             if item[1] == "labels" or item[1] == "kill-chain-phase" or item[1] == "aliases" or item[1] == "goals":
-                temp = temp.split(" ")
+                if temp != "":
+                    temp = temp.split(" ")
             if temp != "":
                 dict.update({item[1] : temp})
 

@@ -38,11 +38,36 @@ import time
 from makers import *
 from tools import Multiselect
 
+
+
 class Objects(tk.Frame):
-    def __init__(self, parent):
+    def __init__(self, parent, theme):
         tk.Frame.__init__(self, parent)
 
-
+        if theme=="sea":
+            self.COLOR_1= "#AED1D6"
+            self.COLOR_2= "#7584AD"
+            self.COLOR_3= "#314570"
+        elif theme=="multi":
+            self.COLOR_1 = "#B4D2BA"
+            self.COLOR_2 = "#D2BF55"
+            self.COLOR_3 = "#2A4747"
+        elif theme=="semidark":
+            self.COLOR_1 = "#F7EBE8"
+            self.COLOR_2 = "#444140"
+            self.COLOR_3 = "#1E1E24"
+        elif theme=="dark":
+            self.COLOR_1 = "#9999A1"
+            self.COLOR_2 = "#66666E"
+            self.COLOR_3 = "#000000"
+        elif theme=="bordeu":
+            self.COLOR_1 = "#A9927D"
+            self.COLOR_2 = "#5E5037"
+            self.COLOR_3 = "#49111C"
+        elif theme=="green":
+            self.COLOR_1 = "#C3D898"
+            self.COLOR_2 = "#7A9B76"
+            self.COLOR_3 = "#011936"
         #self.rowconfigure(1, weight=2)
         #self.rowconfigure(2, weight=2)
         #self.columnconfigure(0, weight=2)
@@ -53,7 +78,7 @@ class Objects(tk.Frame):
         self.radio_buttons = []
 
 
-        self.gridHeader = tk.Frame(self, height=35, width=800, bg="#7584AD")
+        self.gridHeader = tk.Frame(self, height=35, width=800, bg=self.COLOR_2)
         self.gridHeader.pack(fill=tk.BOTH, side=tk.TOP)
         self.gridHeader.pack_propagate(0)
         self.gridHeader.grid_propagate(0)
@@ -61,29 +86,29 @@ class Objects(tk.Frame):
         # Paging header
         self.exit = tk.Button(self.gridHeader, text="⌫", font=("OpenSans", 12, "bold"), fg="white", bg="#FF3B30", highlightthickness=0, relief=tk.FLAT, command = lambda : [self.grab_release(), self.place_forget()])
         self.exit.pack(side=tk.RIGHT, fill=tk.Y)
-        self.topLabel = tk.Label(self.gridHeader, fg="white", bg="#7584AD", text="Please choose an Object to begin interraction", font=("OpenSans", 16, "bold"))
+        self.topLabel = tk.Label(self.gridHeader, fg="white", bg=self.COLOR_2, text="Please choose an Object to begin interraction", font=("OpenSans", 16, "bold"))
         self.topLabel.pack()
 
 #-------------------------------------------------------
         self.masterBody = tk.Frame(self)
         self.masterBody.pack()
-        self.gridBody = tk.Frame(self.masterBody, height=380, width=400, bg="#314570")
+        self.gridBody = tk.Frame(self.masterBody, height=380, width=400, bg=self.COLOR_3)
         self.gridBody.pack(side=tk.LEFT)
         self.gridBody.pack_propagate(0)
         self.gridBody.grid_propagate(0)
 
-        self.listBody = tk.Frame(self.masterBody, height=380,width=400, bg="#AED1D6")
+        self.listBody = tk.Frame(self.masterBody, height=380,width=400, bg=self.COLOR_1)
         self.listBody.pack(side=tk.LEFT)
         self.listBody.pack_propagate(0)
         self.listBody.grid_propagate(0)
 #-------------------------------------------------------
 
-        self.infoBody = tk.Frame(self, height=65, width=800, bg="#7584AD")
+        self.infoBody = tk.Frame(self, height=65, width=800, bg=self.COLOR_2)
         self.infoBody.pack(fill=tk.X, side=tk.BOTTOM)
         self.infoBody.pack_propagate(0)
         self.infoBody.grid_propagate(0)
 
-        self.infoLabel = tk.Label(self.infoBody, fg="white", bg="#7584AD", text="This is the info tab, click on an Object to learn more", font=("OpenSans", 12, "bold"), wraplength=800)
+        self.infoLabel = tk.Label(self.infoBody, fg="white", bg=self.COLOR_2, text="This is the info tab, click on an Object to learn more", font=("OpenSans", 12, "bold"), wraplength=800)
         self.infoLabel.pack()
 
 
@@ -162,60 +187,60 @@ class Objects(tk.Frame):
         PADY = 5
 
         # Row=0
-        self.attack_patternButton = tk.Button(self.gridBody, image=self.attack_pattern_img, bg="#314570", activebackground="#314570", relief=tk.FLAT, height=77, width=77, highlightthickness=0, highlightbackground="#314570", command=lambda: self.selector("attack-pattern"))
+        self.attack_patternButton = tk.Button(self.gridBody, image=self.attack_pattern_img, bg=self.COLOR_3, activebackground=self.COLOR_3, relief=tk.FLAT, height=77, width=77, highlightthickness=0, highlightbackground=self.COLOR_3, command=lambda: self.selector("attack-pattern"))
         self.attack_patternButton.grid(row=0, column=0, padx=PADX, pady=PADY, sticky="nsew")
 
-        self.campaignButton = tk.Button(self.gridBody, image=self.campaign_img, bg="#314570", activebackground="#314570", relief=tk.FLAT, height=77, width=77, highlightthickness=0, highlightbackground="#314570", command=lambda: [self.selector("campaign")])
+        self.campaignButton = tk.Button(self.gridBody, image=self.campaign_img, bg=self.COLOR_3, activebackground=self.COLOR_3, relief=tk.FLAT, height=77, width=77, highlightthickness=0, highlightbackground=self.COLOR_3, command=lambda: [self.selector("campaign")])
         self.campaignButton.grid(row=0, column=1, padx=PADX, pady=PADY, sticky="nsew")
 
-        self.course_of_actionButton = tk.Button(self.gridBody, image=self.course_of_action_img, bg="#314570", activebackground="#314570", relief=tk.FLAT, height=77, width=77, highlightthickness=0, highlightbackground="#314570", command=lambda: self.selector("course-of-action"))
+        self.course_of_actionButton = tk.Button(self.gridBody, image=self.course_of_action_img, bg=self.COLOR_3, activebackground=self.COLOR_3, relief=tk.FLAT, height=77, width=77, highlightthickness=0, highlightbackground=self.COLOR_3, command=lambda: self.selector("course-of-action"))
         self.course_of_actionButton.grid(row=0, column=2, padx=PADX, pady=PADY, sticky="nsew")
 
-        self.identityButton = tk.Button(self.gridBody, image=self.identity_img, bg="#314570", activebackground="#314570", relief=tk.FLAT, height=77, width=77, highlightthickness=0, highlightbackground="#314570", command=lambda: self.selector("identity"))
+        self.identityButton = tk.Button(self.gridBody, image=self.identity_img, bg=self.COLOR_3, activebackground=self.COLOR_3, relief=tk.FLAT, height=77, width=77, highlightthickness=0, highlightbackground=self.COLOR_3, command=lambda: self.selector("identity"))
         self.identityButton.grid(row=0, column=3, padx=PADX, pady=PADY, sticky="nsew")
 
 
         # Row=1
-        self.indicatorButton = tk.Button(self.gridBody, image=self.indicator_img, bg="#314570", activebackground="#314570", relief=tk.FLAT, height=77, width=77, highlightthickness=0, highlightbackground="#314570", command=lambda: self.selector("indicator"))
+        self.indicatorButton = tk.Button(self.gridBody, image=self.indicator_img, bg=self.COLOR_3, activebackground=self.COLOR_3, relief=tk.FLAT, height=77, width=77, highlightthickness=0, highlightbackground=self.COLOR_3, command=lambda: self.selector("indicator"))
         self.indicatorButton.grid(row=1, column=0, padx=PADX, pady=PADY, sticky="nsew")
 
-        self.intrusion_setButton = tk.Button(self.gridBody, image=self.intrusion_set_img, bg="#314570", activebackground="#314570", relief=tk.FLAT, height=77, width=77, highlightthickness=0, highlightbackground="#314570", command=lambda: self.selector("intrusion-set"))
+        self.intrusion_setButton = tk.Button(self.gridBody, image=self.intrusion_set_img, bg=self.COLOR_3, activebackground=self.COLOR_3, relief=tk.FLAT, height=77, width=77, highlightthickness=0, highlightbackground=self.COLOR_3, command=lambda: self.selector("intrusion-set"))
         self.intrusion_setButton.grid(row=1, column=1, padx=PADX, pady=PADY, sticky="nsew")
 
-        self.malwareButton = tk.Button(self.gridBody, image=self.malware_img, bg="#314570", activebackground="#314570", relief=tk.FLAT, height=77, width=77, highlightthickness=0, highlightbackground="#314570", command=lambda: self.selector("malware"))
+        self.malwareButton = tk.Button(self.gridBody, image=self.malware_img, bg=self.COLOR_3, activebackground=self.COLOR_3, relief=tk.FLAT, height=77, width=77, highlightthickness=0, highlightbackground=self.COLOR_3, command=lambda: self.selector("malware"))
         self.malwareButton.grid(row=1, column=2, padx=PADX, pady=PADY, sticky="nsew")
 
-        self.observed_dataButton = tk.Button(self.gridBody, image=self.observed_data_img, bg="#314570", activebackground="#314570", relief=tk.FLAT, height=77, width=77, highlightthickness=0, highlightbackground="#314570", command=lambda: self.selector("observed-data"))
+        self.observed_dataButton = tk.Button(self.gridBody, image=self.observed_data_img, bg=self.COLOR_3, activebackground=self.COLOR_3, relief=tk.FLAT, height=77, width=77, highlightthickness=0, highlightbackground=self.COLOR_3, command=lambda: self.selector("observed-data"))
         self.observed_dataButton.grid(row=1, column=3, padx=PADX, pady=PADY, sticky="nsew")
 
 
         # Row=2
-        self.reportButton = tk.Button(self.gridBody, image=self.report_img, bg="#314570", activebackground="#314570", relief=tk.FLAT, height=77, width=77, highlightthickness=0, highlightbackground="#314570", command=lambda: self.selector("report"))
+        self.reportButton = tk.Button(self.gridBody, image=self.report_img, bg=self.COLOR_3, activebackground=self.COLOR_3, relief=tk.FLAT, height=77, width=77, highlightthickness=0, highlightbackground=self.COLOR_3, command=lambda: self.selector("report"))
         self.reportButton.grid(row=2, column=0, padx=PADX, pady=PADY, sticky="nsew")
 
-        self.threat_actorButton = tk.Button(self.gridBody, image=self.threat_actor_img, bg="#314570", activebackground="#314570", relief=tk.FLAT, height=77, width=77, highlightthickness=0, highlightbackground="#314570", command=lambda: self.selector("threat-actor"))
+        self.threat_actorButton = tk.Button(self.gridBody, image=self.threat_actor_img, bg=self.COLOR_3, activebackground=self.COLOR_3, relief=tk.FLAT, height=77, width=77, highlightthickness=0, highlightbackground=self.COLOR_3, command=lambda: self.selector("threat-actor"))
         self.threat_actorButton.grid(row=2, column=1, padx=PADX, pady=PADY, sticky="nsew")
 
-        self.toolButton = tk.Button(self.gridBody, image=self.tool_img, bg="#314570", activebackground="#314570", relief=tk.FLAT, height=77, width=77, highlightthickness=0, highlightbackground="#314570", command=lambda: self.selector("tool"))
+        self.toolButton = tk.Button(self.gridBody, image=self.tool_img, bg=self.COLOR_3, activebackground=self.COLOR_3, relief=tk.FLAT, height=77, width=77, highlightthickness=0, highlightbackground=self.COLOR_3, command=lambda: self.selector("tool"))
         self.toolButton.grid(row=2, column=2, padx=PADX, pady=PADY, sticky="nsew")
 
-        self.vulnerabilityButton = tk.Button(self.gridBody, image=self.vulnerability_img, bg="#314570", activebackground="#314570", relief=tk.FLAT, height=77, width=77, highlightthickness=0, highlightbackground="#314570", command=lambda: self.selector("vulnerability"))
+        self.vulnerabilityButton = tk.Button(self.gridBody, image=self.vulnerability_img, bg=self.COLOR_3, activebackground=self.COLOR_3, relief=tk.FLAT, height=77, width=77, highlightthickness=0, highlightbackground=self.COLOR_3, command=lambda: self.selector("vulnerability"))
         self.vulnerabilityButton.grid(row=2, column=3, padx=PADX, pady=PADY, sticky="nsew")
 
 
         #Row=3
-        self.displayall_Button = tk.Button(self.gridBody, image=self.displayall_img, bg="#314570", activebackground="#314570", relief=tk.FLAT, height=77, width=77, highlightthickness=0, highlightbackground="#314570", command=lambda: [self.selector("nothing"), self.enlistall(), print(self.object), self.add_button.configure(state=tk.DISABLED), self.edit_button.configure(state=tk.DISABLED)])
+        self.displayall_Button = tk.Button(self.gridBody, image=self.displayall_img, bg=self.COLOR_3, activebackground=self.COLOR_3, relief=tk.FLAT, height=77, width=77, highlightthickness=0, highlightbackground=self.COLOR_3, command=lambda: [self.selector("nothing"), self.enlistall(), print(self.object), self.add_button.configure(state=tk.DISABLED), self.edit_button.configure(state=tk.DISABLED)])
         self.displayall_Button.grid(row=3, column=0, columnspan=2, padx=PADX, pady=PADY, sticky="nsew")
 
-        self.relationship_Button = tk.Button(self.gridBody, image=self.relationship_img, bg="#314570", activebackground="#314570", relief=tk.FLAT, height=77, width=77, highlightthickness=0, highlightbackground="#314570", command=lambda: self.selector("relationship"))
+        self.relationship_Button = tk.Button(self.gridBody, image=self.relationship_img, bg=self.COLOR_3, activebackground=self.COLOR_3, relief=tk.FLAT, height=77, width=77, highlightthickness=0, highlightbackground=self.COLOR_3, command=lambda: self.selector("relationship"))
         self.relationship_Button.grid(row=3, column=2, columnspan=2, padx=PADX, pady=PADY, sticky="nsew")
 
         # --------------------List Body Widgets-----------------------------------------------------
 
-        self.listLabel = tk.Label(self.listBody, text="Existing Objects in project", font=("OpenSans", 12, "bold"), fg="#314570", relief=tk.SOLID, bd=0)
+        self.listLabel = tk.Label(self.listBody, text="Existing Objects in project", font=("OpenSans", 12, "bold"), fg=self.COLOR_3, relief=tk.SOLID, bd=0)
         self.listLabel.pack(fill=tk.X)
 
-        self.listbox = tk.Listbox(self.listBody, exportselection=0, font=("OpenSans", 12, "bold"), bd=0, width=30, height=16, relief=tk.FLAT, highlightthickness=0, bg="#AED1D6", fg="#314570")
+        self.listbox = tk.Listbox(self.listBody, exportselection=0, font=("OpenSans", 12, "bold"), bd=0, width=30, height=16, relief=tk.FLAT, highlightthickness=0, bg=self.COLOR_1, fg=self.COLOR_3)
         self.listbox.pack()
         self.listbox.bind('<Button-1>', lambda _: [self.edit_button.configure(state=tk.NORMAL) if self.object!="relationship" else print(""), self.delete_button.configure(state=tk.NORMAL)])
         #self.scrollbar = tk.Scrollbar(self.listBody, orient="vertical")
@@ -606,12 +631,12 @@ class Objects(tk.Frame):
 
 
         #-----------------Autofill Tab-----------------------------------------------------
-        self.afLabel = tk.Label(self.editorFrame, text="▶ Show Autofill Properties", font=("OpenSans", 10), bg="#AED1D6",
-                              fg="#314570")
+        self.afLabel = tk.Label(self.editorFrame, text="▶ Show Autofill Properties", font=("OpenSans", 10), bg=self.COLOR_1,
+                              fg=self.COLOR_3)
         self.afLabel.pack(side=tk.TOP, anchor=tk.W, padx=3)
         self.afLabel.bind("<Button-1>", lambda _: afClick(self))
 
-        self.afFrame = tk.Frame(self.editorFrame, bg="#AED1D6")
+        self.afFrame = tk.Frame(self.editorFrame, bg=self.COLOR_1)
 
 
         self.afFlag = True
@@ -628,18 +653,18 @@ class Objects(tk.Frame):
 
 
         #------------------AUTOFILL EDITOR FRAME WIDGETS--------------WARNING!!! Add disclaimer! Use at own risk--------------------------------
-        self.idLabel=tk.Label(self.afFrame, text="ID:", font=("OpenSans", 12),bg="#AED1D6")
+        self.idLabel=tk.Label(self.afFrame, text="ID:", font=("OpenSans", 12),bg=self.COLOR_1)
         self.idLabel.grid(row=0, column=0, sticky=tk.E, padx=5)
         self.idEntry = tk.Entry(self.afFrame, font=("OpenSans", 12), width=64)
         self.idEntry.grid(row=0, column=1, sticky=tk.W, pady=5)
         self.widget_list.append([self.idEntry, "id"])
 
-        self.createdLabel = tk.Label(self.afFrame, text="Created:", font=("OpenSans", 12), bg="#AED1D6")
+        self.createdLabel = tk.Label(self.afFrame, text="Created:", font=("OpenSans", 12), bg=self.COLOR_1)
         self.createdLabel.grid(row=1, column=0, sticky=tk.E, padx=5)
         self.createdEntry = tk.Entry(self.afFrame, font=("OpenSans", 12))
         self.createdEntry.grid(row=1, column=1, sticky=tk.W, pady=5)
 
-        self.modifiedLabel = tk.Label(self.afFrame, text="Modified:", font=("OpenSans", 12), bg="#AED1D6")
+        self.modifiedLabel = tk.Label(self.afFrame, text="Modified:", font=("OpenSans", 12), bg=self.COLOR_1)
         self.modifiedLabel.grid(row=2, column=0, sticky=tk.E, padx=5)
         self.modifiedEntry = tk.Entry(self.afFrame, font=("OpenSans", 12))
         self.modifiedEntry.grid(row=2, column=1, sticky=tk.W, pady=5)
@@ -647,12 +672,12 @@ class Objects(tk.Frame):
 
         #--------------------GLOBAL OPTIONALS-------------------------------------------------------------------------------------------------------------
         self.goLabel = tk.Label(self.editorFrame, text="▶ Show Global Optionals", font=("OpenSans", 10),
-                                bg="#AED1D6",
-                                fg="#314570")
+                                bg=self.COLOR_1,
+                                fg=self.COLOR_3)
         self.goLabel.pack(side=tk.TOP, anchor=tk.W, padx=3)
         self.goLabel.bind("<Button-1>", lambda _: goClick(self))
 
-        self.goFrame = tk.Frame(self.editorFrame, bg="#AED1D6")
+        self.goFrame = tk.Frame(self.editorFrame, bg=self.COLOR_1)
 
         self.goFlag = True
 
@@ -667,15 +692,15 @@ class Objects(tk.Frame):
                 self.goFrame.pack_forget()
 
         # ------------------Global optional frame widgets----------------------------------
-        self.created_by_refLabel = tk.Label(self.goFrame, text="Created by Reference:", font=("OpenSans", 12), bg="#AED1D6")
+        self.created_by_refLabel = tk.Label(self.goFrame, text="Created by Reference:", font=("OpenSans", 12), bg=self.COLOR_1)
         self.created_by_refLabel.grid(row=0, column=0, sticky=tk.E, padx=5)
         self.created_by_refButton = tk.Button(self.goFrame, font=("OpenSans", 12), text="Select Identity...")#Add toplevel and function!
         self.created_by_refButton.grid(row=0, column=1, sticky=tk.W, pady=5)
 
-        self.revokedCheckButton=tk.Checkbutton(self.goFrame, text="Revoked?", font=("OpenSans", 12), bg="#AED1D6")#Add revoked management
+        self.revokedCheckButton=tk.Checkbutton(self.goFrame, text="Revoked?", font=("OpenSans", 12), bg=self.COLOR_1)#Add revoked management
         self.revokedCheckButton.grid(row=1,column=0,sticky=tk.E, padx=5)
 
-        self.external_referencesLabel = tk.Label(self.goFrame, text="External References:", font=("OpenSans", 12), bg="#AED1D6")#Add external reference management
+        self.external_referencesLabel = tk.Label(self.goFrame, text="External References:", font=("OpenSans", 12), bg=self.COLOR_1)#Add external reference management
         self.external_referencesLabel.grid(row=2, column=0, sticky=tk.E, padx=5)
         self.external_referencesButton = tk.Button(self.goFrame, font=("OpenSans",12), text="Add...")
         self.external_referencesButton.grid(row=2, column=1, sticky=tk.W, pady=5)
@@ -991,7 +1016,7 @@ class Objects(tk.Frame):
 
         self.radioFrame = tk.Frame(self.relationshipsFrame, bg="#97ADA9")
 
-        self.listboxLeft = tk.Listbox(self.relationshipsFrame, exportselection=0, font=("OpenSans", 10, "bold"), bd=0, width=30, height=23, relief=tk.FLAT, highlightthickness=0, bg="#AED1D6", fg="#314570")
+        self.listboxLeft = tk.Listbox(self.relationshipsFrame, exportselection=0, font=("OpenSans", 10, "bold"), bd=0, width=30, height=23, relief=tk.FLAT, highlightthickness=0, bg=self.COLOR_1, fg=self.COLOR_3)
         self.listboxLeft.pack(side=tk.LEFT, padx=PADX)
         self.listboxLeft.bind('<<ListboxSelect>>', self.constructRelation)
 
@@ -1035,7 +1060,7 @@ class Objects(tk.Frame):
 
         self.radioFrame.pack(side=tk.LEFT)
 
-        self.listboxRight = tk.Listbox(self.relationshipsFrame, exportselection=0, font=("OpenSans", 10, "bold"), bd=0, width=30, height=23, relief=tk.FLAT, highlightthickness=0, bg="#AED1D6", fg="#314570", highlightcolor="red")
+        self.listboxRight = tk.Listbox(self.relationshipsFrame, exportselection=0, font=("OpenSans", 10, "bold"), bd=0, width=30, height=23, relief=tk.FLAT, highlightthickness=0, bg=self.COLOR_1, fg=self.COLOR_3, highlightcolor="red")
         self.listboxRight.pack(side=tk.LEFT, padx=PADX)
         self.listboxRight.bind('<<ListboxSelect>>', lambda _:  self.ok_button.configure(state=tk.NORMAL) if self.rel_type_var.get() != "null" else self.ok_button.configure(state=tk.DISABLED))
 

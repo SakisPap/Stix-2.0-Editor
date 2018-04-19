@@ -26,7 +26,7 @@ import tkinter as tk
 from ObjectsPage import Objects
 from PIL import Image, ImageTk
 import os
-from stix_io import OpenProject, LoadEnvironment, readfile, ImportFile, ExportProject, OpenInExplorer, NewProject, checkcfgfolder, LoadPrevious, getcfgfile
+from stix_io import OpenProject, LoadEnvironment, readfile, ImportFile, ExportProject, OpenInExplorer, NewProject, checkcfgfolder, LoadPrevious, getcfgfile, getcfgfile2
 from tkinter import messagebox
 from tools import Elevate, bugreport, BundleManage
 import pickle
@@ -130,32 +130,58 @@ def bugreport_window():
 
 def bundle_management_window():
     window = tk.Toplevel(root, relief=tk.FLAT, highlightthickness=0)
-    window.geometry("285x70")
+    #window.geometry("285x70")
     window.resizable(width=False, height=False)
     window.title("Bundle Management")
     window.attributes('-topmost', 'true')
     window.grab_set()
 
     importButton = tk.Button(window,text="Import Bundle Objects into current Project", command= lambda : [window.destroy(), BundleManage("import")])
-    importButton.pack(padx=1)
+    importButton.pack(padx=5, pady=5, fill=tk.X)
 
     extractButton = tk.Button(window, text="Extract Bundle Objects into a directory", command=lambda: [window.destroy(), BundleManage("extract")])
-    extractButton.pack(padx=1)
+    extractButton.pack(padx=5, pady=5, fill=tk.X)
 
 
+
+
+try:
+    theme_file = open(getcfgfile2(), "rb")
+    theme = pickle.load(theme_file)
+    theme_file.close()
+except:
+    theme_file = open(getcfgfile2(), "wb")
+    theme = "sea"
+    pickle.dump(theme, theme_file)
+    theme_file.close()
+
+#--color decleration--
+if theme == "sea":
+    COLOR_1 = "#AED1D6"
+elif theme == "multi":
+    COLOR_1 = "#B4D2BA"
+elif theme == "semidark":
+    COLOR_1 = "#F7EBE8"
+elif theme == "dark":
+    COLOR_1 = "#9999A1"
+elif theme == "bordeu":
+    COLOR_1 = "#A9927D"
+elif theme == "green":
+    COLOR_1 = "#C3D898"
 
 root = tk.Tk()
 root.geometry("800x480")
-root.configure(background = "#AED1D6")
+root.configure(background = COLOR_1)
 root.resizable(width=False, height=False)
 root.title("STIX 2.0 Editor")
+
 try:
     root.iconbitmap(os.path.abspath("logo.ico"))
 except: Exception
 
 img = Image.open(os.path.abspath("images/welcome_page.png"))
 welcome_page = ImageTk.PhotoImage(img)
-welcomeLabel = tk.Label(root, image= welcome_page, bg="#AED1D6")
+welcomeLabel = tk.Label(root, image= welcome_page, bg=COLOR_1)
 welcomeLabel.pack()
 
 img = Image.open(os.path.abspath("images/gpl_image.png"))
@@ -163,7 +189,7 @@ gpl_img = ImageTk.PhotoImage(img)
 
 
 # create a toplevel menu
-menubar = tk.Menu(root, foreground="black", background="#AED1D6", activebackground='#004c99', activeforeground='white')
+menubar = tk.Menu(root, foreground="black", background= COLOR_1, activebackground='#004c99', activeforeground='white')
 
 # create more pulldown menus
 editmenu = tk.Menu(menubar, tearoff=0)
@@ -186,14 +212,20 @@ helpmenu.add_command(label="Report Bugs", command=lambda : bugreport_window())
 menubar.add_cascade(label="Help", menu=helpmenu)
 
 toolsmenu = tk.Menu(menubar, tearoff=0)
+mngmntMenu = tk.Menu(menubar)#
 toolsmenu.add_command(label="Convert STIX1 item to STIX2...", command=lambda : [Elevate()])
-toolsmenu.add_command(label="Bundle Management...", command=lambda : [bundle_management_window()])
+#toolsmenu.add_command(label="Bundle Management...", command=lambda : [bundle_management_window()])
+toolsmenu.add_cascade(label="Bundle Management...", menu=mngmntMenu) #
+mngmntMenu.add_command(label="Import Bundle Objects into current Project", command= lambda : [BundleManage("import")])#
+mngmntMenu.add_separator()#
+mngmntMenu.add_command(label="Extract Bundle Objects into a directory", command=lambda: [BundleManage("extract")])#
+mngmntMenu.add_separator()#
 menubar.add_cascade(label="Tools", menu=toolsmenu)
 
 # display the menu
 root.config(menu=menubar)
 
-objects_page = Objects(root)
+objects_page = Objects(root, theme)
 #objects_page.place(x=0,y=0)
 
 
@@ -210,15 +242,11 @@ try:
     sort.set(sort1)
     view.set(view1)
     sav.close()
-    print("open-dis " + str(displaytype.get()))
-    print("open-dis " + str(sort.get()))
-    print("open-dis " + str(view.get()))
 except:
     picklesave(True, "alph", "name")
     displaytype.set(True)
     sort.set("alph")
     view.set("name")
-    print("i am in here")
 
 objects_page.display_type.set(displaytype.get())
 objects_page.viewby.set(view.get())
@@ -226,6 +254,7 @@ objects_page.sortby.set(sort.get())
 optionsmenu = tk.Menu(menubar, tearoff=0)
 viewbyMenu = tk.Menu(menubar)
 sortbyMenu = tk.Menu(menubar)
+themeMenu = tk.Menu(menubar)
 
 optionsmenu.add_separator()
 optionsmenu.add_checkbutton(label="Display objects type", onvalue=True, offvalue=False, variable=displaytype, command=lambda : options_command())
@@ -246,21 +275,29 @@ sortbyMenu.add_radiobutton(label="Last Modified ▼", variable=sort, value="lmde
 optionsmenu.add_separator()
 
 
+def change(theme):
+    theme_file = open(getcfgfile2(), "wb")
+    pickle.dump(theme, theme_file)
+    theme_file.close()
+    tk.messagebox.showinfo("Info", "Theme changes will take place after you restart the application!")
+
+placeholder = tk.IntVar()
+placeholder.set(theme)
+optionsmenu.add_cascade(label="Theme", menu=themeMenu)
+themeMenu.add_radiobutton(label="Sea", variable=placeholder, value="sea", command=lambda : change("sea"))
+themeMenu.add_radiobutton(label="Multi", variable=placeholder, value="multi", command=lambda : change("multi"))
+themeMenu.add_radiobutton(label="Semidark", variable=placeholder, value="semidark", command=lambda : change("semidark"))
+themeMenu.add_radiobutton(label="Dark", variable=placeholder, value="dark", command=lambda : change("dark"))
+themeMenu.add_radiobutton(label="Bordeu", variable=placeholder, value="bordeu", command=lambda : change("bordeu"))
+themeMenu.add_radiobutton(label="Green", variable=placeholder, value="green", command=lambda : change("green"))
+
+
+
+
+
 menubar.add_cascade(label="Options", menu=optionsmenu)
 
-
-
-
-
-
-
 helpmenu.grab_release()
-
-
-
-
-
-
 
 checkcfgfolder()
 root.mainloop()

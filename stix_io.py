@@ -67,6 +67,8 @@ def checkcfgfolder():
 
 def getcfgfile():
     return os.path.join(getcfgfolder(), "sav.dat")
+def getcfgfile2():
+    return os.path.join(getcfgfolder(), "theme.dat")
 
 def setlastproject(ppath):
     lastfile=os.path.join(getcfgfolder(),"last.cfg")

@@ -104,40 +104,62 @@ def bugreport(parent, msg):
 
 
 class Multiselect(tk.Frame):
-    def __init__(self, parent):
-        tk.Frame.__init__(self, parent, bg="red")
+    def __init__(self, parent, list_items, eRow, COLOR_1, COLOR_2, COLOR_3):
+        tk.Frame.__init__(self, parent, bg=COLOR_2, bd=3)
         self.parent=parent
+        self.COLOR_1 = COLOR_1
+        self.COLOR_2 = COLOR_2
+        self.COLOR_3 = COLOR_3
         self.widgets()
+        self.eRow = eRow
+        self.list_items = list_items
+
+        for item in self.list_items:
+            self.listview.insert(tk.END, item)
+
 
     def show_callback(self):
-        self.listframe.pack(side=tk.LEFT)
-        self.listframe.grab_set()
+        self.pack(side=tk.LEFT)
+        self.grab_set()
         try:
             self.showlabel.pack_forget()
         except:
             pass
 
     def done_callback(self):
-        selected_items = []
-        temp = []
+        self.selected_items = []
         for item in self.listview.curselection():
-            selected_items.append(self.listview.get(item))
-            self.listframe.pack_forget()
-            self.showlabel.config(text=str(selected_items).replace("'", ""))
-            self.showlabel.pack(side=tk.LEFT)
-            self.listframe.grab_release()
+            self.selected_items.append(self.listview.get(item))
+        self.place_forget()
+        self.showlabel.config(text=str(self.selected_items).replace("'", "").replace("[", "").replace("]", ""))
+        self.showlabel.grid(row=self.eRow, column=1)
+        self.grab_release()
 
     def widgets(self):
-        self.listbutton = tk.Button(self.parent, text="Select Multiple Vals", command=lambda: self.show_callback())
-        self.listbutton.pack(side=tk.LEFT, padx=10)
-        self.testbutton.pack(side=tk.RIGHT, padx=10)
-        self.showlabel = tk.Label(self.parent, background="#AED1D6", wraplength=250)
-        self.listframe = tk.Frame(self.parent)
-        self.listview = tk.Listbox(self.listframe, exportselection=0, font=("OpenSans", 10, "bold"), bd=1,
-                              relief=tk.FLAT, highlightthickness=0, fg="#314570", selectmode='multiple')
+        self.showlabel = tk.Label(self.parent, font=("OpenSans", 10), bg=self.COLOR_1, wraplength=500)
+        self.listview = tk.Listbox(self, exportselection=0, font=("OpenSans", 10, "bold"), bd=1, height=9,
+                              relief=tk.FLAT, highlightthickness=0, fg=self.COLOR_3, selectmode='multiple')
         self.listview.pack()
 
-        self.donebutton = tk.Button(self.listframe, text="Done", command=lambda: self.done_callback())
+        self.donebutton = tk.Button(self, text="Done", command=lambda: self.done_callback())
         self.donebutton.pack(side=tk.LEFT, fill=tk.X, expand=1)
-        self.clearbutton = tk.Button(self.listframe, text="Clear", command=lambda: self.listview.selection_clear(0, tk.END))
+        self.clearbutton = tk.Button(self, text="Clear", command=lambda: self.listview.selection_clear(0, tk.END))
         self.clearbutton.pack(side=tk.RIGHT, fill=tk.X, expand=1)
+
+    def get(self):
+        return self.selected_items
+
+    def set(self, list):
+        i = 0
+        self.selected_items=list
+        self.showlabel.config(text=str(self.selected_items).replace("'", "").replace("[", "").replace("]", ""))
+        self.showlabel.grid(row=self.eRow, column=1)
+        for item in self.list_items:
+            if item in list:
+                self.listview.select_set(i)
+            i+=1
+
+
+
+
+

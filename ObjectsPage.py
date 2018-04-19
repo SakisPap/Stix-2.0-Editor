@@ -560,9 +560,14 @@ class Objects(tk.Frame):
 
 
         if(object=="identity"):
-            # IDENTITY industry-sector-ov
-            ##ADD LATER
-            #Sectors
+            listitems = ["agriculture", "aerospace", "automotive", "communications", "construction", "defence", "education", "energy", "entertainment", "financial-services", "government-national", "government-regional", "government-local", "government-public-services", "healthcare", "hospitality-leisure", "infrastructure", "insurance", "manufacturing", "mining", "non-profit", "pharmaceuticals", "retail", "technology", "telecommunications", "transportation", "utilities"]
+            self.multiselect = Multiselect(self.mandatoryFrame, listitems, eRow, self.COLOR_1, self.COLOR_2, self.COLOR_3)
+            self.sectorsLabel = tk.Label(self.mandatoryFrame, text="Sectors:", font=("OpenSans", 12))
+            self.sectorsLabel.grid(row=eRow, column=0, sticky=tk.E, padx=5)
+            self.sectorsButton = tk.Button(self.mandatoryFrame, font = ("OpenSans", 12), text="...", command=lambda : [self.multiselect.place(x=225, y=5), self.mandatoryFrame.lift(), self.multiselect.lift(), self.multiselect.grab_set()])
+            self.sectorsButton.grid(row=eRow, column=1, sticky=tk.W, pady=5)
+            self.widget_list.append([self.multiselect, "sectors"])
+            eRow += 1
 
             self.contant_informationLabel = tk.Label(self.mandatoryFrame, text="Contant Information:", font=("OpenSans", 12))
             self.contant_informationLabel.grid(row=eRow, column=0, sticky=tk.E, padx=5)
@@ -637,7 +642,6 @@ class Objects(tk.Frame):
         self.afLabel.bind("<Button-1>", lambda _: afClick(self))
 
         self.afFrame = tk.Frame(self.editorFrame, bg=self.COLOR_1)
-
 
         self.afFlag = True
 
@@ -719,7 +723,6 @@ class Objects(tk.Frame):
         self.cancelButton.pack(side=tk.LEFT)
 
 
-
 #-----------------------------------------------------EDIT---------------------------------------------------------------------
 
 
@@ -750,7 +753,7 @@ class Objects(tk.Frame):
         dict = {}
         for item in self.widget_list:
             temp = item[0].get()
-            if item[1] == "labels":
+            if item[1] == "labels" or item[1] == "kill-chain-phase":
                 temp = temp.split(" ")
             if temp != "":
                 dict.update({item[1] : temp})

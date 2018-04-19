@@ -113,6 +113,7 @@ class Multiselect(tk.Frame):
         self.widgets()
         self.eRow = eRow
         self.list_items = list_items
+        self.selected_items=[]
 
         for item in self.list_items:
             self.listview.insert(tk.END, item)
@@ -147,7 +148,10 @@ class Multiselect(tk.Frame):
         self.clearbutton.pack(side=tk.RIGHT, fill=tk.X, expand=1)
 
     def get(self):
-        return self.selected_items
+        if self.selected_items:
+            return self.selected_items
+        else:
+            return ""
 
     def set(self, list):
         i = 0

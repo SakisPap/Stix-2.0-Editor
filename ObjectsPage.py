@@ -626,12 +626,9 @@ class Objects(tk.Frame):
             eRow += 1
 
 
-
-
         #OPEN EDITOR IN EDIT MODE
         if self.type_of_editor == 1:
             self.edit()
-
 
 
 

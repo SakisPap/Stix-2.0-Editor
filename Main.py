@@ -28,7 +28,7 @@ from PIL import Image, ImageTk
 import os
 from stix_io import OpenProject, LoadEnvironment, readfile, ImportFile, ExportProject, OpenInExplorer, NewProject, checkcfgfolder, LoadPrevious, getcfgfile, getcfgfile2
 from tkinter import messagebox
-from tools import Elevate, bugreport, BundleManage
+from tools import Elevate, bugreport, BundleManage, KillChainPhaseMaker
 import pickle
 import webbrowser
 import sys, subprocess
@@ -222,6 +222,7 @@ mngmntMenu.add_command(label="Import Bundle Objects into current Project", comma
 mngmntMenu.add_separator()#
 mngmntMenu.add_command(label="Extract Bundle Objects into a directory", command=lambda: [BundleManage("extract")])#
 mngmntMenu.add_separator()#
+toolsmenu.add_command(label="Create a Kill Chain Phase...", command=lambda : [KillChainPhaseMaker()])
 menubar.add_cascade(label="Tools", menu=toolsmenu)
 
 # display the menu

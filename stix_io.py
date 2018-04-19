@@ -57,13 +57,26 @@ def itemtofile(item):
         else:
             return "False"
 
+def killchainphasetofile(filename, item):
+    file=os.path.join(getkcpfolder(), filename+".kc")
+    file = open(file, "w")
+    file.write(str(item))
+    file.close()
+
+
 def getcfgfolder():
     return os.path.join(os.path.expanduser("~"), "STIX2Editor")
+
+def getkcpfolder():
+    return os.path.join(getcfgfolder(), "kill-chain-phases")
 
 def checkcfgfolder():
     cfgfolder=getcfgfolder()
     if not (os.path.exists(cfgfolder)):
         os.makedirs(cfgfolder)
+    kcpfolder=getkcpfolder()
+    if not (os.path.exists(kcpfolder)):
+        os.makedirs(kcpfolder)
 
 def getcfgfile():
     return os.path.join(getcfgfolder(), "sav.dat")

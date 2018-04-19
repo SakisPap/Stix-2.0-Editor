@@ -32,7 +32,7 @@ import urllib
 from urllib.parse import *
 from urllib.request import *
 from urllib.response import *
-from stix_io import isProjectActive
+from stix_io import isProjectActive,killchainphasetofile
 
 
 def Elevate():
@@ -164,6 +164,29 @@ class Multiselect(tk.Frame):
             i+=1
 
 
+class KillChainPhaseMaker(tk.Toplevel):
+    def __init__(self):
+        tk.Toplevel.__init__(self)
+        self.title("Add a Kill Chain Phase...")
+        self.frame = tk.Frame(self)
+        self.frame.pack()
+        self.__make_layout()
+        self.mainloop()
 
+    def __make_layout(self):
+        self.frame.killchainlabel = tk.Label(text="Kill Chain Name:")
+        self.frame.killchaintext = tk.Entry()
+        self.frame.killchainlabel.grid(row=0, column=0)
+        self.frame.killchaintext.grid(row=0, column=1)
+        self.frame.phaselabel = tk.Label(text="Phase Name:")
+        self.frame.phasetext = tk.Entry()
+        self.frame.phaselabel.grid(row=1, column=0)
+        self.frame.phasetext.grid(row=1, column=1)
+        self.frame.addbutton = tk.Button(text="Create", command=lambda : [killchainphasetofile(self.frame.killchaintext.get()+"-"+self.frame.phasetext.get(), stix2.KillChainPhase(kill_chain_name=self.frame.killchaintext, phase_name=self.frame.phasetext))])
+        self.frame.addbutton.grid(row=2, column=0, columnspan=2)
+        messagebox.showinfo("vale kati...")
+
+
+KillChainPhaseMaker()
 
 

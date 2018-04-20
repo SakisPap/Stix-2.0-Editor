@@ -569,9 +569,9 @@ class Objects(tk.Frame):
             self.kill_chain_phasesLabel = tk.Label(self.mandatoryFrame, text="Kill Chain Phases:", font=("OpenSans", 12)) #Management!!
             self.kill_chain_phasesLabel.grid(row=eRow, column=0, sticky=tk.E, padx=5)
             listitems=getKillChainPhases()
-            self.multiselect_kill_chain_phases= Multiselect(self.mandatoryFrame, listitems, eRow, self.COLOR_1, self.COLOR_2, self.COLOR_3)
-            self.kill_chain_phasesButton = tk.Button(self.mandatoryFrame, font = ("OpenSans", 12), text="Add...", command=lambda: [self.multiselect_kill_chain_phases.place(x=225, y=5),
-                                                            self.mandatoryFrame.lift(), self.multiselect_kill_chain_phases.lift(),
+            self.multiselect_kill_chain_phases= Multiselect(self.editorFrame, self.mandatoryFrame, listitems, eRow, self.COLOR_1, self.COLOR_2, self.COLOR_3)
+            self.kill_chain_phasesButton = tk.Button(self.mandatoryFrame, font = ("OpenSans", 12), text="Add...", command=lambda: [self.multiselect_kill_chain_phases.place(x=230, y=50),
+                                                            self.multiselect_kill_chain_phases.lift(),
                                                             self.multiselect_kill_chain_phases.grab_set()])
             self.kill_chain_phasesButton.grid(row=eRow, column=1, sticky=tk.W, pady=5)
             #ADD TOPLEVEL AND KILL CHAIN PHASE MANAGEMENT!!!!!
@@ -616,10 +616,10 @@ class Objects(tk.Frame):
 
         if(object=="identity"):
             listitems = ["agriculture", "aerospace", "automotive", "communications", "construction", "defence", "education", "energy", "entertainment", "financial-services", "government-national", "government-regional", "government-local", "government-public-services", "healthcare", "hospitality-leisure", "infrastructure", "insurance", "manufacturing", "mining", "non-profit", "pharmaceuticals", "retail", "technology", "telecommunications", "transportation", "utilities"]
-            self.multiselect_sectors = Multiselect(self.mandatoryFrame, listitems, eRow, self.COLOR_1, self.COLOR_2, self.COLOR_3)
+            self.multiselect_sectors = Multiselect(self.editorFrame, self.mandatoryFrame, listitems, eRow, self.COLOR_1, self.COLOR_2, self.COLOR_3)
             self.sectorsLabel = tk.Label(self.mandatoryFrame, text="Sectors:", font=("OpenSans", 12))
             self.sectorsLabel.grid(row=eRow, column=0, sticky=tk.E, padx=5)
-            self.sectorsButton = tk.Button(self.mandatoryFrame, font = ("OpenSans", 12), text="...", command=lambda : [self.multiselect_sectors.place(x=225, y=5), self.mandatoryFrame.lift(), self.multiselect_sectors.lift(), self.multiselect_sectors.grab_set()])
+            self.sectorsButton = tk.Button(self.mandatoryFrame, font = ("OpenSans", 12), text="...", command=lambda : [self.multiselect_sectors.place(x=230, y=50), self.multiselect_sectors.grab_set(), self.multiselect_sectors.lift()])
             self.sectorsButton.grid(row=eRow, column=1, sticky=tk.W, pady=5)
             self.widget_list.append([self.multiselect_sectors, "sectors"])
             eRow += 1

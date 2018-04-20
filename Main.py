@@ -222,7 +222,14 @@ mngmntMenu.add_command(label="Import Bundle Objects into current Project", comma
 mngmntMenu.add_separator()#
 mngmntMenu.add_command(label="Extract Bundle Objects into a directory", command=lambda: [BundleManage("extract")])#
 mngmntMenu.add_separator()#
-toolsmenu.add_command(label="Create a Kill Chain Phase...", command=lambda : [KillChainPhaseMaker()])
+
+def killchainStart():
+    killchainphasemaker = KillChainPhaseMaker(root)
+    killchainphasemaker.grab_set()
+    killchainphasemaker.lift()
+    killchainphasemaker.attributes('-topmost', 'true')
+
+toolsmenu.add_command(label="Create a Kill Chain Phase...", command=lambda : [killchainStart()])
 menubar.add_cascade(label="Tools", menu=toolsmenu)
 
 # display the menu
@@ -318,6 +325,6 @@ themeMenu.add_radiobutton(label="Green", variable=placeholder, value="green", co
 menubar.add_cascade(label="Options", menu=optionsmenu)
 
 helpmenu.grab_release()
-
 checkcfgfolder()
 root.mainloop()
+

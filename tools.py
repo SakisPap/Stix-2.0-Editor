@@ -104,9 +104,10 @@ def bugreport(parent, msg):
 
 
 class Multiselect(tk.Frame):
-    def __init__(self, parent, list_items, eRow, COLOR_1, COLOR_2, COLOR_3):
+    def __init__(self, parent, labelparent, list_items, eRow, COLOR_1, COLOR_2, COLOR_3):
         tk.Frame.__init__(self, parent, bg=COLOR_2, bd=3)
         self.parent=parent
+        self.labelparent = labelparent
         self.COLOR_1 = COLOR_1
         self.COLOR_2 = COLOR_2
         self.COLOR_3 = COLOR_3
@@ -137,14 +138,14 @@ class Multiselect(tk.Frame):
         self.grab_release()
 
     def widgets(self):
-        self.showlabel = tk.Label(self.parent, font=("OpenSans", 10), bg=self.COLOR_1, wraplength=500)
-        self.listview = tk.Listbox(self, exportselection=0, font=("OpenSans", 10, "bold"), bd=1, height=9,
+        self.showlabel = tk.Label(self.labelparent, font=("OpenSans", 10), bg=self.COLOR_1, wraplength=500)
+        self.listview = tk.Listbox(self, exportselection=0, font=("OpenSans", 10, "bold"), bd=1, height=15,
                               relief=tk.FLAT, highlightthickness=0, fg=self.COLOR_3, selectmode='multiple')
         self.listview.pack()
 
-        self.donebutton = tk.Button(self, text="Done", command=lambda: self.done_callback())
+        self.donebutton = tk.Button(self, text="Done", fg="white", bg="#03AC13", command=lambda: self.done_callback())
         self.donebutton.pack(side=tk.LEFT, fill=tk.X, expand=1)
-        self.clearbutton = tk.Button(self, text="Clear", command=lambda: self.listview.selection_clear(0, tk.END))
+        self.clearbutton = tk.Button(self, text="Clear", fg="white", bg="#FF9500", command=lambda: self.listview.selection_clear(0, tk.END))
         self.clearbutton.pack(side=tk.RIGHT, fill=tk.X, expand=1)
 
     def get(self):
@@ -165,28 +166,38 @@ class Multiselect(tk.Frame):
 
 
 class KillChainPhaseMaker(tk.Toplevel):
-    def __init__(self):
-        tk.Toplevel.__init__(self)
+    def __init__(self, root):
+        tk.Toplevel.__init__(self, root)
         self.title("Add a Kill Chain Phase...")
+        self.geometry("400x110")
+        self.resizable(width=False, height=False)
         self.frame = tk.Frame(self)
         self.frame.pack()
-        self.__make_layout()
-        self.mainloop()
-
-    def __make_layout(self):
-        self.frame.killchainlabel = tk.Label(text="Kill Chain Name:")
-        self.frame.killchaintext = tk.Entry()
-        self.frame.killchainlabel.grid(row=0, column=0)
-        self.frame.killchaintext.grid(row=0, column=1)
-        self.frame.phaselabel = tk.Label(text="Phase Name:")
-        self.frame.phasetext = tk.Entry()
-        self.frame.phaselabel.grid(row=1, column=0)
-        self.frame.phasetext.grid(row=1, column=1)
-        self.frame.addbutton = tk.Button(text="Create", command=lambda : [killchainphasetofile(self.frame.killchaintext.get()+"-"+self.frame.phasetext.get(), stix2.KillChainPhase(kill_chain_name=self.frame.killchaintext.get(), phase_name=self.frame.phasetext.get()))])
-        self.frame.addbutton.grid(row=2, column=0, columnspan=2)
-        messagebox.showinfo("vale kati...")
+        self.frame.columnconfigure(1, weight=3)
 
 
-KillChainPhaseMaker()
+        self.btframe = tk.Frame(self)
+        self.btframe.pack(side=tk.BOTTOM, fill=tk.X, pady=5)
+        self.widgets()
+
+    def widgets(self):
+        self.killchainlabel = tk.Label(self.frame, text="Kill Chain Name:", font=("OpenSans", 12))
+        self.killchainlabel.grid(row=0, column=0, padx=5, pady=5, sticky=tk.E)
+
+        self.killchaintext = tk.Entry(self.frame, font=("OpenSans", 12))
+        self.killchaintext.grid(row=0, column=1, padx=5, pady=5)
+
+        self.phaselabel = tk.Label(self.frame, text="Phase Name:", font=("OpenSans", 12))
+        self.phaselabel.grid(row=1, column=0, padx=5, pady=5, sticky=tk.E)
+
+        self.phasetext = tk.Entry(self.frame, font=("OpenSans", 12))
+        self.phasetext.grid(row=1, column=1, padx=5, pady=5)
+
+        self.addbutton = tk.Button(self.btframe, text="Create", font=("OpenSans", 12), fg="white", bg="#03AC13", command=lambda : [(killchainphasetofile(self.killchaintext.get()+"-"+self.phasetext.get(), stix2.KillChainPhase(kill_chain_name=self.killchaintext.get(), phase_name=self.phasetext.get()))) if self.killchaintext.get()!="" and self.phasetext.get()!="" else tk.messagebox.showerror("Error", "Input fields cannot be empty!")])
+        self.addbutton.pack(side=tk.LEFT, fill=tk.X, expand=True, padx=5)
+
+        self.cancelbutton = tk.Button(self.btframe, text="Cancel", font=("OpenSans", 12), fg="white", bg="#FF3B30", command=lambda : self.destroy())
+        self.cancelbutton.pack(side=tk.LEFT, fill=tk.X, expand=True, padx=5)
+
 
 

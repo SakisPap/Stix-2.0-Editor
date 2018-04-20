@@ -569,12 +569,12 @@ class Objects(tk.Frame):
             self.kill_chain_phasesLabel = tk.Label(self.mandatoryFrame, text="Kill Chain Phases:", font=("OpenSans", 12)) #Management!!
             self.kill_chain_phasesLabel.grid(row=eRow, column=0, sticky=tk.E, padx=5)
             listitems=getKillChainPhases()
-            self.multiselect_kill_chain_phases= Multiselect(self.editorFrame, self.mandatoryFrame, listitems, eRow, self.COLOR_1, self.COLOR_2, self.COLOR_3)
+            self.multiselect_kill_chain_phases= Multiselect(self.editorFrame, self.mandatoryFrame, listitems, eRow, self.COLOR_1, self.COLOR_2, self.COLOR_3, flag=True)
             self.kill_chain_phasesButton = tk.Button(self.mandatoryFrame, font = ("OpenSans", 12), text="Add...", command=lambda: [self.multiselect_kill_chain_phases.place(x=230, y=50),
                                                             self.multiselect_kill_chain_phases.lift(),
                                                             self.multiselect_kill_chain_phases.grab_set()])
             self.kill_chain_phasesButton.grid(row=eRow, column=1, sticky=tk.W, pady=5)
-            #ADD TOPLEVEL AND KILL CHAIN PHASE MANAGEMENT!!!!!
+            self.widget_list.append([self.multiselect_kill_chain_phases, "kill_chain_phases"])
             eRow+=1
 
         #aliases - arr string
@@ -863,7 +863,9 @@ class Objects(tk.Frame):
         dict = {}
         for item in self.widget_list:
             temp = item[0].get()
-            if item[1] == "labels" or item[1] == "kill-chain-phase" or item[1] == "aliases" or item[1] == "goals":
+
+
+            if item[1] == "labels" or item[1] == "aliases" or item[1] == "goals":
                 if temp != "":
                     temp = temp.split(" ")
             if temp != "":

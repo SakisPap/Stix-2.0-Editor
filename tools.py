@@ -104,9 +104,10 @@ def bugreport(parent, msg):
 
 
 class Multiselect(tk.Frame):
-    def __init__(self, parent, labelparent, list_items, eRow, COLOR_1, COLOR_2, COLOR_3):
+    def __init__(self, parent, labelparent, list_items, eRow, COLOR_1, COLOR_2, COLOR_3, flag=None):
         tk.Frame.__init__(self, parent, bg=COLOR_2, bd=3)
         self.parent=parent
+        self.flag=flag
         self.labelparent = labelparent
         self.COLOR_1 = COLOR_1
         self.COLOR_2 = COLOR_2
@@ -149,10 +150,16 @@ class Multiselect(tk.Frame):
         self.clearbutton.pack(side=tk.RIGHT, fill=tk.X, expand=1)
 
     def get(self):
-        if self.selected_items:
-            return self.selected_items
+        if not self.flag:
+            if self.selected_items:
+                return self.selected_items
+            else:
+                return ""
         else:
-            return ""
+            killchains=[]
+            for item in self.selected_items:
+                killchains.append(stix2.KillChainPhase(kill_chain_name=item.split("_")[0], phase_name=item.split("_")[1]))
+            return killchains
 
     def set(self, list):
         i = 0
@@ -180,12 +187,24 @@ class KillChainPhaseMaker(tk.Toplevel):
         self.btframe.pack(side=tk.BOTTOM, fill=tk.X, pady=5)
         self.widgets()
 
+    def keyPress(self, event):
+        if event.char in ("-",
+                          "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z",
+                         " "):
+            print
+            event.char
+        elif event.keysym not in ('BackSpace', 'Delete', 'Tab', 'Left', 'Right'):
+            print
+            event.keysym
+            return 'break'
+
     def widgets(self):
         self.killchainlabel = tk.Label(self.frame, text="Kill Chain Name:", font=("OpenSans", 12))
         self.killchainlabel.grid(row=0, column=0, padx=5, pady=5, sticky=tk.E)
 
         self.killchaintext = tk.Entry(self.frame, font=("OpenSans", 12))
         self.killchaintext.grid(row=0, column=1, padx=5, pady=5)
+        self.killchaintext.bind('<KeyPress>', lambda event : self.keyPress(event))
 
         self.phaselabel = tk.Label(self.frame, text="Phase Name:", font=("OpenSans", 12))
         self.phaselabel.grid(row=1, column=0, padx=5, pady=5, sticky=tk.E)
@@ -193,7 +212,7 @@ class KillChainPhaseMaker(tk.Toplevel):
         self.phasetext = tk.Entry(self.frame, font=("OpenSans", 12))
         self.phasetext.grid(row=1, column=1, padx=5, pady=5)
 
-        self.addbutton = tk.Button(self.btframe, text="Create", font=("OpenSans", 12), fg="white", bg="#03AC13", command=lambda : [(killchainphasetofile(self.killchaintext.get()+"-"+self.phasetext.get(), stix2.KillChainPhase(kill_chain_name=self.killchaintext.get(), phase_name=self.phasetext.get()))) if self.killchaintext.get()!="" and self.phasetext.get()!="" else tk.messagebox.showerror("Error", "Input fields cannot be empty!")])
+        self.addbutton = tk.Button(self.btframe, text="Create", font=("OpenSans", 12), fg="white", bg="#03AC13", command=lambda : [(killchainphasetofile(self.killchaintext.get()+"_"+self.phasetext.get(), stix2.KillChainPhase(kill_chain_name=self.killchaintext.get(), phase_name=self.phasetext.get())), self.destroy(), tk.messagebox.showinfo("Success", "Kill Chain Phase created successfully!")) if self.killchaintext.get()!="" and self.phasetext.get()!="" else tk.messagebox.showerror("Error", "Input fields cannot be empty!")])
         self.addbutton.pack(side=tk.LEFT, fill=tk.X, expand=True, padx=5)
 
         self.cancelbutton = tk.Button(self.btframe, text="Cancel", font=("OpenSans", 12), fg="white", bg="#FF3B30", command=lambda : self.destroy())

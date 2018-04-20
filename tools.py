@@ -32,7 +32,7 @@ import urllib
 from urllib.parse import *
 from urllib.request import *
 from urllib.response import *
-from stix_io import isProjectActive,killchainphasetofile
+from stix_io import isProjectActive,killchainphasetofile, getKillChainPhases, killchainphasedelete
 
 
 def Elevate():
@@ -176,7 +176,7 @@ class KillChainPhaseMaker(tk.Toplevel):
     def __init__(self, root):
         tk.Toplevel.__init__(self, root)
         self.title("Add a Kill Chain Phase...")
-        self.geometry("400x110")
+        #self.geometry("400x110")
         self.resizable(width=False, height=False)
         self.frame = tk.Frame(self)
         self.frame.pack()
@@ -198,6 +198,11 @@ class KillChainPhaseMaker(tk.Toplevel):
             event.keysym
             return 'break'
 
+    def getlist(self):
+        self.listview.delete(0, tk.END)
+        for item in getKillChainPhases():
+            self.listview.insert(tk.END, item)
+
     def widgets(self):
         self.killchainlabel = tk.Label(self.frame, text="Kill Chain Name:", font=("OpenSans", 12))
         self.killchainlabel.grid(row=0, column=0, padx=5, pady=5, sticky=tk.E)
@@ -212,11 +217,19 @@ class KillChainPhaseMaker(tk.Toplevel):
         self.phasetext = tk.Entry(self.frame, font=("OpenSans", 12))
         self.phasetext.grid(row=1, column=1, padx=5, pady=5)
 
-        self.addbutton = tk.Button(self.btframe, text="Create", font=("OpenSans", 12), fg="white", bg="#03AC13", command=lambda : [(killchainphasetofile(self.killchaintext.get()+"_"+self.phasetext.get(), stix2.KillChainPhase(kill_chain_name=self.killchaintext.get(), phase_name=self.phasetext.get())), self.destroy(), tk.messagebox.showinfo("Success", "Kill Chain Phase created successfully!")) if self.killchaintext.get()!="" and self.phasetext.get()!="" else tk.messagebox.showerror("Error", "Input fields cannot be empty!")])
-        self.addbutton.pack(side=tk.LEFT, fill=tk.X, expand=True, padx=5)
+        self.label = tk.Label(self.btframe, font=("OpenSans", 8, "bold"), text="Existing Kill Chain Phase objects into workspace:", bg="black", fg="white")
+        self.label.pack(fill=tk.X, padx=10)
 
-        self.cancelbutton = tk.Button(self.btframe, text="Cancel", font=("OpenSans", 12), fg="white", bg="#FF3B30", command=lambda : self.destroy())
-        self.cancelbutton.pack(side=tk.LEFT, fill=tk.X, expand=True, padx=5)
+        self.listview = tk.Listbox(self.btframe, font=("OpenSans", 10, "bold"), height=5)
+        self.listview.pack(fill=tk.X, expand=True, padx=10)
+
+        self.getlist()
+
+        self.addbutton = tk.Button(self.btframe, text="Create", font=("OpenSans", 12), fg="white", bg="#03AC13", command=lambda : [(killchainphasetofile(self.killchaintext.get()+"_"+self.phasetext.get(), stix2.KillChainPhase(kill_chain_name=self.killchaintext.get(), phase_name=self.phasetext.get())), self.getlist(), tk.messagebox.showinfo("Success", "Kill Chain Phase created successfully!", parent=self)) if self.killchaintext.get()!="" and self.phasetext.get()!="" else tk.messagebox.showerror("Error", "Input fields cannot be empty!", parent=self)])
+        self.addbutton.pack(side=tk.LEFT, fill=tk.X, expand=True, padx=5, pady=5)
+
+        self.cancelbutton = tk.Button(self.btframe, text="Delete", font=("OpenSans", 12), fg="white", bg="#FF3B30", command=lambda : [(killchainphasedelete(self.listview.get(tk.ACTIVE)), self.getlist()) if self.listview.get(tk.ACTIVE)!="" else print("")])
+        self.cancelbutton.pack(side=tk.LEFT, fill=tk.X, expand=True, padx=5, pady=5)
 
 
 

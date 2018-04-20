@@ -226,7 +226,7 @@ mngmntMenu.add_separator()#
 def killchainStart():
     killchainphasemaker = KillChainPhaseMaker(root)
     killchainphasemaker.grab_set()
-    killchainphasemaker.lift()
+    #killchainphasemaker.lift()
     killchainphasemaker.attributes('-topmost', 'true')
 
 toolsmenu.add_command(label="Create a Kill Chain Phase...", command=lambda : [killchainStart()])

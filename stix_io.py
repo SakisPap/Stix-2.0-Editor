@@ -63,6 +63,8 @@ def killchainphasetofile(filename, item):
     file.write(str(item))
     file.close()
 
+def killchainphasedelete(filename):
+    os.remove(os.path.join(getkcpfolder(), filename+".kcp"))
 
 def getcfgfolder():
     return os.path.join(os.path.expanduser("~"), "STIX2Editor")

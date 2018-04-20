@@ -543,7 +543,7 @@ class Objects(tk.Frame):
             self.object_refsLabel = tk.Label(self.mandatoryFrame, text="*Object Referred:", font=("OpenSans", 12))
             self.object_refsLabel.grid(row=eRow, column=0, sticky=tk.E, padx=5)
             listitems = getAllIDs()
-            self.multiselect_object_refs = Multiselect(self.mandatoryFrame, listitems, eRow, self.COLOR_1, self.COLOR_2, self.COLOR_3)
+            self.multiselect_object_refs = Multiselect(self.editorFrame, self.mandatoryFrame, listitems, eRow, self.COLOR_1, self.COLOR_2, self.COLOR_3)
             #WARNING!! FIX MULTISELECT LOCATION
             self.object_refsButton = tk.Button(self.mandatoryFrame, font=("OpenSans", 12), text="...",
                                            command=lambda: [self.multiselect_object_refs.place(x=225, y=5),
@@ -671,7 +671,7 @@ class Objects(tk.Frame):
             self.secondary_motivationsLabel.grid(row=eRow, column=0, sticky=tk.E, padx=5)
             listitems=["accidental", "coercion", "dominance", "ideology", "notoriety", "organizational-gain", "personal-gain",
 "personal-satisfaction", "revenge", "unpredictable"]
-            self.multiselect_secondary_motivations = Multiselect(self.mandatoryFrame, listitems, eRow, self.COLOR_1, self.COLOR_2, self.COLOR_3)
+            self.multiselect_secondary_motivations = Multiselect(self.editorFrame, self.mandatoryFrame, listitems, eRow, self.COLOR_1, self.COLOR_2, self.COLOR_3)
             self.secondary_motivationsButton = tk.Button(self.mandatoryFrame, font=("OpenSans", 12), text="...",
                                            command=lambda: [self.multiselect_secondary_motivations.place(x=225, y=5),
                                                             self.mandatoryFrame.lift(), self.multiselect_secondary_motivations.lift(),
@@ -689,7 +689,7 @@ class Objects(tk.Frame):
             listitems = ["accidental", "coercion", "dominance", "ideology", "notoriety", "organizational-gain",
                          "personal-gain",
                          "personal-satisfaction", "revenge", "unpredictable"]
-            self.multiselect_personal_motivations = Multiselect(self.mandatoryFrame, listitems, eRow, self.COLOR_1,
+            self.multiselect_personal_motivations = Multiselect(self.editorFrame, self.mandatoryFrame, listitems, eRow, self.COLOR_1,
                                                                  self.COLOR_2, self.COLOR_3)
             self.personal_motivationsButton = tk.Button(self.mandatoryFrame, font=("OpenSans", 12), text="...",
                                                          command=lambda: [
@@ -706,7 +706,7 @@ class Objects(tk.Frame):
             self.rolesLabel = tk.Label(self.mandatoryFrame, text="Roles:", font=("OpenSans", 12))
             self.rolesLabel.grid(row=eRow, column=0, sticky=tk.E, padx=5)
             listitems = ["agent", "director", "independent", "infrastructure-architect", "infrastructure-operator", "malware-author", "sponsor"]
-            self.multiselect_roles = Multiselect(self.mandatoryFrame, listitems, eRow, self.COLOR_1, self.COLOR_2, self.COLOR_3)
+            self.multiselect_roles = Multiselect(self.editorFrame, self.mandatoryFrame, listitems, eRow, self.COLOR_1, self.COLOR_2, self.COLOR_3)
             self.rolesButton = tk.Button(self.mandatoryFrame, font=("OpenSans", 12), text="...",
                                                          command=lambda: [
                                                              self.multiselect_roles.place(x=225, y=5),

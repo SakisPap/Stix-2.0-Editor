@@ -64,7 +64,9 @@ def killchainphasetofile(filename, item):
     file.close()
 
 def killchainphasedelete(filename):
-    os.remove(os.path.join(getkcpfolder(), filename+".kcp"))
+    ans = tk.messagebox.askyesno("Confirm Delete?", "Are you sure that you want to delete the selected Kill Chain Phase?")
+    if ans:
+        os.remove(os.path.join(getkcpfolder(), filename+".kcp"))
 
 def getcfgfolder():
     return os.path.join(os.path.expanduser("~"), "STIX2Editor")

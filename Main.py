@@ -229,7 +229,7 @@ def killchainStart():
     #killchainphasemaker.lift()
     killchainphasemaker.attributes('-topmost', 'true')
 
-toolsmenu.add_command(label="Create a Kill Chain Phase...", command=lambda : [killchainStart()])
+toolsmenu.add_command(label="Manage Kill Chain Phases...", command=lambda : [killchainStart()])
 menubar.add_cascade(label="Tools", menu=toolsmenu)
 
 # display the menu

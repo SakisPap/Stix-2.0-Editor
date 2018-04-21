@@ -175,7 +175,7 @@ class Multiselect(tk.Frame):
 class KillChainPhaseMaker(tk.Toplevel):
     def __init__(self, root):
         tk.Toplevel.__init__(self, root)
-        self.title("Add a Kill Chain Phase...")
+        self.title("Manage Kill Chain Phases...")
         #self.geometry("400x110")
         self.resizable(width=False, height=False)
         self.frame = tk.Frame(self)

@@ -1,18 +1,16 @@
 High Priority:
 
-1) Finish impl. required (and optional) object properies and add them to GUI
-1b) Implement list handling on object creation (e.g. kill-chain-phases, external-references)
-2) Fix broken edit (Partially DONE)
-3) Lock relationship editing... (DONE)
-4) Fully implement or purge sortby (DONE)
-5) Show more object info other than name ; eg show id and/or date on hover or on info section
+1) Implement external references
+2) Fix major GUI bugs such as threat actor making frame not scaling, folding sections, etc
+3) Show more object info other than name ; eg show id and/or date on hover or on info section
+3b) Add tooltips for property info (e.g. published is a timestamp, labels is an array split with whitespace, etc)
 
 
 Medium Priority:
 
-1) Impl. kill-chain-phase and external-reference making and ultilize them to GUI
-2) Impl. sightings/markings/observables
-3) Add Bundle Management GUI (DONE)
+1) Implement observables
+2) Implement sightings/markings
+
 
 
 Low Priortiy:

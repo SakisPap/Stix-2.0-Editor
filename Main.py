@@ -173,7 +173,8 @@ elif theme == "green":
 root = tk.Tk()
 root.geometry("800x480")
 root.configure(background = COLOR_1)
-root.resizable(width=False, height=False)
+#root.resizable(width=False, height=False)
+root.minsize(800, 480)
 root.title("STIX 2.0 Editor")
 
 try:
@@ -184,7 +185,7 @@ except: Exception
 img = Image.open(os.path.abspath("images/welcome_page.png"))
 welcome_page = ImageTk.PhotoImage(img)
 welcomeLabel = tk.Label(root, image= welcome_page, bg=COLOR_1)
-welcomeLabel.pack()
+welcomeLabel.pack(fill=tk.BOTH, expand=True)
 
 img = Image.open(os.path.abspath("images/gpl_image.png"))
 gpl_img = ImageTk.PhotoImage(img)
@@ -197,7 +198,7 @@ menubar = tk.Menu(root, foreground="black", background= COLOR_1, activebackgroun
 editmenu = tk.Menu(menubar, tearoff=0)
 editmenu.add_command(label="New Project...", command= lambda : [(objects_page.place(x=0,y=0), enableOptions()) if NewProject() else print("")])
 editmenu.add_command(label="Open Existing Project", command= lambda: [(objects_page.place(x=0,y=0), objects_page.enlistall(), enableOptions()) if OpenProject() else print("")])
-editmenu.add_command(label="Load Previously Opened Project", command= lambda: [(objects_page.place(x=0,y=0) , objects_page.enlistall(), enableOptions()) if LoadPrevious() else print("")])
+editmenu.add_command(label="Load Previously Opened Project", command= lambda: [(welcomeLabel.pack_forget(), objects_page.pack(fill=tk.BOTH, expand=True) , objects_page.enlistall(), enableOptions()) if LoadPrevious() else print("")])
 editmenu.add_separator()
 editmenu.add_command(label="Import", command=lambda: [ImportFile()])
 editmenu.add_command(label="Export Project", command=lambda: [ExportProject()])

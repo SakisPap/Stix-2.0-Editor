@@ -79,38 +79,38 @@ class Objects(tk.Frame):
 
 
 
-        self.gridHeader = tk.Frame(self, height=35, width=800, bg=self.COLOR_2)
-        self.gridHeader.pack(fill=tk.BOTH, side=tk.TOP)
+        self.gridHeader = tk.Frame(self, bg=self.COLOR_2, height=35)
+        self.gridHeader.pack(fill=tk.X, side=tk.TOP)
         self.gridHeader.pack_propagate(0)
         self.gridHeader.grid_propagate(0)
 
         # Paging header
         self.exit = tk.Button(self.gridHeader, text="⌫", font=("OpenSans", 12, "bold"), fg="white", bg="#FF3B30", highlightthickness=0, relief=tk.FLAT, command = lambda : [self.grab_release(), self.place_forget()])
         self.exit.pack(side=tk.RIGHT, fill=tk.Y)
-        self.topLabel = tk.Label(self.gridHeader, fg="white", bg=self.COLOR_2, text="Please choose an Object to begin interraction", font=("OpenSans", 16, "bold"))
-        self.topLabel.pack()
+        self.topLabel = tk.Label(self.gridHeader, fg="white", bg=self.COLOR_2, text="Please choose an Object to begin interraction", font=("OpenSans", 17, "bold"))
+        self.topLabel.pack(fill=tk.BOTH, expand=True)
 
 #-------------------------------------------------------
         self.masterBody = tk.Frame(self)
-        self.masterBody.pack()
-        self.gridBody = tk.Frame(self.masterBody, height=380, width=400, bg=self.COLOR_3)
-        self.gridBody.pack(side=tk.LEFT)
+        self.masterBody.pack(fill=tk.BOTH, expand=True)
+        self.gridBody = tk.Frame(self.masterBody, bg=self.COLOR_3)
+        self.gridBody.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
         self.gridBody.pack_propagate(0)
         self.gridBody.grid_propagate(0)
 
-        self.listBody = tk.Frame(self.masterBody, height=380,width=400, bg=self.COLOR_1)
-        self.listBody.pack(side=tk.LEFT)
+        self.listBody = tk.Frame(self.masterBody, bg=self.COLOR_1)
+        self.listBody.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
         self.listBody.pack_propagate(0)
         self.listBody.grid_propagate(0)
 #-------------------------------------------------------
 
-        self.infoBody = tk.Frame(self, height=65, width=800, bg=self.COLOR_2)
+        self.infoBody = tk.Frame(self, bg=self.COLOR_2, height=60)
         self.infoBody.pack(fill=tk.X, side=tk.BOTTOM)
         self.infoBody.pack_propagate(0)
         self.infoBody.grid_propagate(0)
 
         self.infoLabel = tk.Label(self.infoBody, fg="white", bg=self.COLOR_2, text="This is the info tab, click on an Object to learn more", font=("OpenSans", 12, "bold"), wraplength=800)
-        self.infoLabel.pack()
+        self.infoLabel.pack(fill=tk.BOTH, expand=True)
 
 
         """
@@ -236,13 +236,19 @@ class Objects(tk.Frame):
         self.relationship_Button = tk.Button(self.gridBody, image=self.relationship_img, bg=self.COLOR_3, activebackground=self.COLOR_3, relief=tk.FLAT, height=77, width=77, highlightthickness=0, highlightbackground=self.COLOR_3, command=lambda: self.selector("relationship"))
         self.relationship_Button.grid(row=3, column=2, columnspan=2, padx=PADX, pady=PADY, sticky="nsew")
 
+
+        for i in range(4):
+            self.gridBody.columnconfigure(i, weight=1)
+            self.gridBody.rowconfigure(i, weight=1)
+
+
         # --------------------List Body Widgets-----------------------------------------------------
 
         self.listLabel = tk.Label(self.listBody, text="Existing Objects in project", font=("OpenSans", 12, "bold"), fg=self.COLOR_3, relief=tk.SOLID, bd=0)
         self.listLabel.pack(fill=tk.X)
 
-        self.listbox = tk.Listbox(self.listBody, exportselection=0, font=("OpenSans", 12, "bold"), bd=0, width=30, height=16, relief=tk.FLAT, highlightthickness=0, bg=self.COLOR_1, fg=self.COLOR_3)
-        self.listbox.pack()
+        self.listbox = tk.Listbox(self.listBody, exportselection=0, font=("OpenSans", 12, "bold"), bd=0, width=35, relief=tk.FLAT, highlightthickness=0, bg=self.COLOR_1, fg=self.COLOR_3)
+        self.listbox.pack(fill=tk.Y, expand=True, padx=10, pady=5)
         self.listbox.bind('<Button-1>', lambda _: [self.edit_button.configure(state=tk.NORMAL) if self.object!="relationship" else print(""), self.delete_button.configure(state=tk.NORMAL)])
         #self.scrollbar = tk.Scrollbar(self.listBody, orient="vertical")
         #self.scrollbar.configure(command=self.listbox.yview)
@@ -250,14 +256,15 @@ class Objects(tk.Frame):
         #self.listbox.configure(yscrollcommand=self.scrollbar.set)
         #self.scrollbar.lift()
 
-
-        self.add_button = tk.Button(self.listBody, text="+Add New",font=("OpenSans", 12, "bold"), fg="white", bg="#03AC13", relief=tk.FLAT, highlightthickness=0, height=3, command=lambda : self.editor(self.masterBody, self.object, 0))
+        self.listbody_bottomFrame = tk.Frame(self.listBody)
+        self.listbody_bottomFrame.pack(side=tk.BOTTOM, fill=tk.X)
+        self.add_button = tk.Button(self.listbody_bottomFrame, text="+Add New",font=("OpenSans", 12, "bold"), fg="white", bg="#03AC13", relief=tk.FLAT, highlightthickness=0, command=lambda : self.editor(self.masterBody, self.object, 0))
         self.add_button.pack(side=tk.LEFT, fill=tk.X, expand=True)
         self.add_button.configure(state=tk.DISABLED)
-        self.edit_button = tk.Button(self.listBody, text="Edit",font=("OpenSans", 12, "bold"), fg="white", bg="#FF9500", relief=tk.FLAT, highlightthickness=0, height=3, command=lambda : self.editor(self.masterBody, self.object, 1))
+        self.edit_button = tk.Button(self.listbody_bottomFrame, text="Edit",font=("OpenSans", 12, "bold"), fg="white", bg="#FF9500", relief=tk.FLAT, highlightthickness=0, command=lambda : self.editor(self.masterBody, self.object, 1))
         self.edit_button.pack(side=tk.LEFT, fill=tk.X, expand=True)
         self.edit_button.configure(state=tk.DISABLED)
-        self.delete_button = tk.Button(self.listBody, text="Delete", font=("OpenSans", 12, "bold"), fg="white", bg="#FF3B30", relief=tk.FLAT, highlightthickness=0, height=3, command=lambda : [delete(self.object,self.listbox.get(self.listbox.curselection())), self.updatelist(self.object)if self.object != "nothing" else self.enlistall()])
+        self.delete_button = tk.Button(self.listbody_bottomFrame, text="Delete", font=("OpenSans", 12, "bold"), fg="white", bg="#FF3B30", relief=tk.FLAT, highlightthickness=0, command=lambda : [delete(self.object,self.listbox.get(self.listbox.curselection())), self.updatelist(self.object)if self.object != "nothing" else self.enlistall()])
         self.delete_button.pack(side=tk.LEFT, fill=tk.X, expand=True)
         self.delete_button.configure(state=tk.DISABLED)
 
@@ -405,13 +412,23 @@ class Objects(tk.Frame):
 
 
 #----------THIS IS THE STARTING POINT OF THE EDITOR TAB----------------------------------
+    def packer(self, flag):
+        if flag:
+            self.listBody.pack_forget()
+            self.gridBody.pack_forget()
+        else:
+            self.gridBody.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+            self.listBody.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+
+
 
 
     def editor(self, parent, object, type_of_editor):
-        self.editorFrame = tk.Frame(parent, width=800, height=380)
-        self.editorFrame.place(x=0, y=0)
-        self.editorFrame.grid_propagate(0)
-        self.editorFrame.pack_propagate(0)
+        self.editorFrame = tk.Frame(parent)
+        self.editorFrame.pack(fill=tk.BOTH, expand=True)
+        self.packer(1)
+        #self.editorFrame.grid_propagate(0)
+        #self.editorFrame.pack_propagate(0)
         self.editorFrame.grab_set()
 
         self.editorFrame.columnconfigure(0, weight=1)
@@ -827,9 +844,9 @@ class Objects(tk.Frame):
         #-----Frame Buttons----------------------
         self.buttonHolder = tk.Frame(self.editorFrame)
         self.buttonHolder.pack(side=tk.BOTTOM)
-        self.submitButton = tk.Button(self.buttonHolder, text="Submit", font=("OpenSans", 12, "bold"), fg="white", bg="#03AC13", relief=tk.FLAT, highlightthickness=0, command = lambda : [self.callback(), self.updatelist(self.object)])
+        self.submitButton = tk.Button(self.buttonHolder, text="Submit", font=("OpenSans", 12, "bold"), fg="white", bg="#03AC13", relief=tk.FLAT, highlightthickness=0, command = lambda : [self.callback(), self.packer(0), self.updatelist(self.object)])
         self.submitButton.pack(side=tk.LEFT)
-        self.cancelButton = tk.Button(self.buttonHolder, text="Cancel", font=("OpenSans", 12, "bold"), fg="white", bg="#FF3B30", relief=tk.FLAT, highlightthickness=0, command=lambda: [self.editorFrame.destroy()])
+        self.cancelButton = tk.Button(self.buttonHolder, text="Cancel", font=("OpenSans", 12, "bold"), fg="white", bg="#FF3B30", relief=tk.FLAT, highlightthickness=0, command=lambda: [self.editorFrame.destroy(), self.packer(0)])
         self.cancelButton.pack(side=tk.LEFT)
 
 
@@ -1124,8 +1141,9 @@ class Objects(tk.Frame):
             text="Relationship: Used to link two SDOs and to describe how they are related to each other.")
         self.topLabel.config(text="Select an Object from the left list to relate it")
 
-        self.relationshipsFrame = tk.Frame(parent, width=800, height=380, bg="#97ADA9")
-        self.relationshipsFrame.place(x=0, y=0)
+        self.relationshipsFrame = tk.Frame(parent, bg="#97ADA9")
+        self.packer(1)
+        self.relationshipsFrame.pack(fill=tk.BOTH, expand=True)
         self.relationshipsFrame.grid_propagate(0)
         self.relationshipsFrame.pack_propagate(0)
         self.relationshipsFrame.grab_set()
@@ -1133,7 +1151,7 @@ class Objects(tk.Frame):
         self.radioFrame = tk.Frame(self.relationshipsFrame, bg="#97ADA9")
 
         self.listboxLeft = tk.Listbox(self.relationshipsFrame, exportselection=0, font=("OpenSans", 10, "bold"), bd=0, width=30, height=23, relief=tk.FLAT, highlightthickness=0, bg=self.COLOR_1, fg=self.COLOR_3)
-        self.listboxLeft.pack(side=tk.LEFT, padx=PADX)
+        self.listboxLeft.pack(side=tk.LEFT, padx=PADX, fill=tk.BOTH, expand=True)
         self.listboxLeft.bind('<<ListboxSelect>>', self.constructRelation)
 
         # ----List All in Left List-------
@@ -1177,19 +1195,19 @@ class Objects(tk.Frame):
         self.radioFrame.pack(side=tk.LEFT)
 
         self.listboxRight = tk.Listbox(self.relationshipsFrame, exportselection=0, font=("OpenSans", 10, "bold"), bd=0, width=30, height=23, relief=tk.FLAT, highlightthickness=0, bg=self.COLOR_1, fg=self.COLOR_3, highlightcolor="red")
-        self.listboxRight.pack(side=tk.LEFT, padx=PADX)
+        self.listboxRight.pack(side=tk.LEFT, padx=PADX, fill=tk.BOTH, expand=True)
         self.listboxRight.bind('<<ListboxSelect>>', lambda _:  self.ok_button.configure(state=tk.NORMAL) if self.rel_type_var.get() != "null" else self.ok_button.configure(state=tk.DISABLED))
 
 
 
         self.ok_button = tk.Button(self.radioFrame, text="Relate", font=("OpenSans", 12, "bold"), fg="white", width=5,
                                     bg="#03AC13", relief=tk.FLAT, highlightthickness=0, height=1,
-                                    command=lambda: [self.relationshipsFrame.place_forget(), self.relationshipsFrame.grab_release(), self.selector(self.object), self.createRelationship()])
+                                    command=lambda: [self.relationshipsFrame.destroy(), self.relationshipsFrame.grab_release(), self.selector(self.object), self.createRelationship(), self.packer(0)])
         self.ok_button.pack(side=tk.LEFT, pady=20, padx=5)
 
         self.cancel_button = tk.Button(self.radioFrame, text="Abort", font=("OpenSans", 12, "bold"), fg="white",
                                        width=5, bg="#FF3B30", relief=tk.FLAT, highlightthickness=0, height=1,
-                                       command=lambda: [self.relationshipsFrame.place_forget(), self.relationshipsFrame.grab_release(), self.selector(self.object)])
+                                       command=lambda: [self.relationshipsFrame.destroy(), self.relationshipsFrame.grab_release(), self.selector(self.object), self.packer(0)])
         self.cancel_button.pack(side=tk.LEFT, pady=20, padx=5)
 
         self.ok_button.configure(state=tk.DISABLED)

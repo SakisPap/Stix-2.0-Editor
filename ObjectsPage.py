@@ -261,7 +261,7 @@ class Objects(tk.Frame):
         self.add_button = tk.Button(self.listbody_bottomFrame, text="+Add New",font=("OpenSans", 12, "bold"), fg="white", bg="#03AC13", relief=tk.FLAT, highlightthickness=0, command=lambda : self.editor(self.masterBody, self.object, 0))
         self.add_button.pack(side=tk.LEFT, fill=tk.X, expand=True)
         self.add_button.configure(state=tk.DISABLED)
-        self.edit_button = tk.Button(self.listbody_bottomFrame, text="Edit",font=("OpenSans", 12, "bold"), fg="white", bg="#FF9500", relief=tk.FLAT, highlightthickness=0, command=lambda : self.editor(self.masterBody, self.object, 1))
+        self.edit_button = tk.Button(self.listbody_bottomFrame, text="Edit",font=("OpenSans", 12, "bold"), fg="white", bg="#FF9500", relief=tk.FLAT, highlightthickness=0, command=lambda : [self.editor(self.masterBody, self.object, 1) if self.object!="nothing" else self.editor(self.masterBody, self.full_list[self.listbox.curselection()[0]].split(": ")[0], 1)])
         self.edit_button.pack(side=tk.LEFT, fill=tk.X, expand=True)
         self.edit_button.configure(state=tk.DISABLED)
         self.delete_button = tk.Button(self.listbody_bottomFrame, text="Delete", font=("OpenSans", 12, "bold"), fg="white", bg="#FF3B30", relief=tk.FLAT, highlightthickness=0, command=lambda : [delete(self.object,self.listbox.get(self.listbox.curselection())), self.updatelist(self.object)if self.object != "nothing" else self.enlistall()])
@@ -424,6 +424,7 @@ class Objects(tk.Frame):
 
 
     def editor(self, parent, object, type_of_editor):
+        self.object=object
         self.editorFrame = tk.Frame(parent)
         self.editorFrame.pack(fill=tk.BOTH, expand=True)
         self.packer(1)
@@ -875,6 +876,7 @@ class Objects(tk.Frame):
     #This gets called upon frame submit---
     def callback(self):
         object = self.object
+        self.selector(object)
 
 
         dict = {}
@@ -885,7 +887,12 @@ class Objects(tk.Frame):
             if item[1] == "labels" or item[1] == "aliases" or item[1] == "goals":
                 if temp != "":
                     temp = temp.split(" ")
-            if temp != "":
+
+
+            if isinstance(temp, list):
+                if temp:
+                    dict.update({item[1]: temp})
+            elif temp != "":
                 dict.update({item[1] : temp})
 
             elif (item[1] in ["name"]):

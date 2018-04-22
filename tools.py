@@ -134,8 +134,11 @@ class Multiselect(tk.Frame):
         for item in self.listview.curselection():
             self.selected_items.append(self.listview.get(item))
         self.place_forget()
-        self.showlabel.config(text=str(self.selected_items).replace("'", "").replace("[", "").replace("]", ""))
+        tex = str(self.selected_items).replace("'", "").replace("[", "").replace("]", "")
+        self.showlabel.config(text=tex)
         self.showlabel.grid(row=self.eRow, column=1)
+        if tex == "":
+            self.showlabel.grid_forget()
         self.grab_release()
 
     def widgets(self):
@@ -163,9 +166,18 @@ class Multiselect(tk.Frame):
 
     def set(self, list):
         i = 0
+        chain_text=[]
+        #try:
+        if self.flag:
+            for item in list:
+                entity = item.get("kill_chain_name")+"_"+item.get("phase_name")
+                chain_text.append(entity)
+            list = chain_text
+
         self.selected_items=list
         self.showlabel.config(text=str(self.selected_items).replace("'", "").replace("[", "").replace("]", ""))
         self.showlabel.grid(row=self.eRow, column=1)
+
         for item in self.list_items:
             if item in list:
                 self.listview.select_set(i)

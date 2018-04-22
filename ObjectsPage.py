@@ -385,6 +385,7 @@ class Objects(tk.Frame):
             self.infoLabel.configure(text="This is the info tab, click on an Object to learn more")
             self.listLabel.config(text="Existing Objects in project")
             self.topLabel.configure(text="Please choose an Object to begin interraction")
+            self.object="nothing"
 
         #---Show in Main-list specific objects
         try:

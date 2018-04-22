@@ -181,7 +181,6 @@ try:
     root.iconbitmap(os.path.abspath("logo.ico"))
 except: Exception
 
-
 img = Image.open(os.path.abspath("images/welcome_page.png"))
 welcome_page = ImageTk.PhotoImage(img)
 welcomeLabel = tk.Label(root, image= welcome_page, bg=COLOR_1)
@@ -196,8 +195,8 @@ menubar = tk.Menu(root, foreground="black", background= COLOR_1, activebackgroun
 
 # create more pulldown menus
 editmenu = tk.Menu(menubar, tearoff=0)
-editmenu.add_command(label="New Project...", command= lambda : [(objects_page.place(x=0,y=0), enableOptions()) if NewProject() else print("")])
-editmenu.add_command(label="Open Existing Project", command= lambda: [(objects_page.place(x=0,y=0), objects_page.enlistall(), enableOptions()) if OpenProject() else print("")])
+editmenu.add_command(label="New Project...", command= lambda : [(welcomeLabel.pack_forget(), objects_page.pack(fill=tk.BOTH, expand=True), enableOptions()) if NewProject() else print("")])
+editmenu.add_command(label="Open Existing Project", command= lambda: [(welcomeLabel.pack_forget(), objects_page.pack(fill=tk.BOTH, expand=True), objects_page.enlistall(), enableOptions()) if OpenProject() else print("")])
 editmenu.add_command(label="Load Previously Opened Project", command= lambda: [(welcomeLabel.pack_forget(), objects_page.pack(fill=tk.BOTH, expand=True) , objects_page.enlistall(), enableOptions()) if LoadPrevious() else print("")])
 editmenu.add_separator()
 editmenu.add_command(label="Import", command=lambda: [ImportFile()])

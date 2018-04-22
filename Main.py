@@ -181,6 +181,7 @@ try:
     root.iconbitmap(os.path.abspath("logo.ico"))
 except: Exception
 
+
 img = Image.open(os.path.abspath("images/welcome_page.png"))
 welcome_page = ImageTk.PhotoImage(img)
 welcomeLabel = tk.Label(root, image= welcome_page, bg=COLOR_1)

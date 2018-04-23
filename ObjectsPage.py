@@ -777,8 +777,11 @@ class Objects(tk.Frame):
         def afClick(self):
             if self.afFlag == True:
                 self.afLabel.configure(text="▼ Hide Autofill Properties")
+                self.goLabel.pack_forget()
                 self.afFlag = not self.afFlag
                 self.afFrame.pack(fill=tk.BOTH)
+                self.goLabel.pack(side=tk.TOP, anchor=tk.W, padx=3)
+
             else:
                 self.afLabel.configure(text="▶ Show Autofill Properties")
                 self.afFlag = not self.afFlag

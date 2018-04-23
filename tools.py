@@ -151,6 +151,8 @@ class Multiselect(tk.Frame):
         self.donebutton.pack(side=tk.LEFT, fill=tk.X, expand=1)
         self.clearbutton = tk.Button(self, text="Clear", fg="white", bg="#FF9500", command=lambda: self.listview.selection_clear(0, tk.END))
         self.clearbutton.pack(side=tk.RIGHT, fill=tk.X, expand=1)
+        self.xbutton = tk.Button(self, text="X", fg="white", bg="#FF3B30", command=lambda: [self.grab_release(), self.place_forget()])
+        self.xbutton.pack(side=tk.RIGHT, fill=tk.X, expand=1)
 
     def get(self):
         if not self.flag:
@@ -182,6 +184,9 @@ class Multiselect(tk.Frame):
             if item in list:
                 self.listview.select_set(i)
             i+=1
+
+
+
 
 
 class KillChainPhaseMaker(tk.Toplevel):

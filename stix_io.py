@@ -63,8 +63,8 @@ def killchainphasetofile(filename, item):
     file.write(str(item))
     file.close()
 
-def killchainphasedelete(filename):
-    ans = tk.messagebox.askyesno("Confirm Delete?", "Are you sure that you want to delete the selected Kill Chain Phase?")
+def killchainphasedelete(filename, parent):
+    ans = tk.messagebox.askyesno("Confirm Delete?", "Are you sure that you want to delete the selected Kill Chain Phase?", parent=parent)
     if ans:
         os.remove(os.path.join(getkcpfolder(), filename+".kcp"))
 

@@ -240,7 +240,7 @@ class KillChainPhaseMaker(tk.Toplevel):
         self.addbutton = tk.Button(self.btframe, text="Create", font=("OpenSans", 12), fg="white", bg="#03AC13", command=lambda : [(killchainphasetofile(self.killchaintext.get()+"_"+self.phasetext.get(), stix2.KillChainPhase(kill_chain_name=self.killchaintext.get(), phase_name=self.phasetext.get())), self.getlist(), tk.messagebox.showinfo("Success", "Kill Chain Phase created successfully!", parent=self)) if self.killchaintext.get()!="" and self.phasetext.get()!="" else tk.messagebox.showerror("Error", "Input fields cannot be empty!", parent=self)])
         self.addbutton.pack(side=tk.LEFT, fill=tk.X, expand=True, padx=5, pady=5)
 
-        self.cancelbutton = tk.Button(self.btframe, text="Delete", font=("OpenSans", 12), fg="white", bg="#FF3B30", command=lambda : [(killchainphasedelete(self.listview.get(tk.ACTIVE)), self.getlist()) if self.listview.get(tk.ACTIVE)!="" else print("")])
+        self.cancelbutton = tk.Button(self.btframe, text="Delete", font=("OpenSans", 12), fg="white", bg="#FF3B30", command=lambda : [(killchainphasedelete(self.listview.get(tk.ACTIVE), self), self.getlist()) if self.listview.get(tk.ACTIVE)!="" else print("")])
         self.cancelbutton.pack(side=tk.LEFT, fill=tk.X, expand=True, padx=5, pady=5)
 
 

@@ -1,19 +1,17 @@
 High Priority:
 
-1) Implement external references
-2) Fix major GUI bugs such as threat actor making frame not scaling, folding sections, etc
-3) Show more object info other than name ; eg show id and/or date on hover or on info section
-3b) Add tooltips for property info (e.g. published is a timestamp, labels is an array split with whitespace, etc)
+
+1) Show more object info other than name ; eg show id and/or date on hover or on info section
+1b) Add tooltips for property info (e.g. published is a timestamp, labels is an array split with whitespace, etc)
 
 
 Medium Priority:
 
 1) Implement observables
-2) Implement sightings/markings
+2) Implement markings
 
 
 
 Low Priortiy:
-1) Add more tooltips, hovertips on editor etc, handle errors on object creation, imporve patterning
-2) Implement single (non-project) file editing
-3) Fix minor GUI bugs/glitches (e.g. grab)
+1) Add more tooltips, hovertips on editor etc, handle errors on object creation, improve patterning
+

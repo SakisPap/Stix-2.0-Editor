@@ -32,7 +32,7 @@ import urllib
 from urllib.parse import *
 from urllib.request import *
 from urllib.response import *
-from stix_io import isProjectActive,killchainphasetofile, getKillChainPhases, killchainphasedelete
+from stix_io import isProjectActive,killchainphasetofile, getKillChainPhases, killchainphasedelete, exreftofile, getExternalRefs, externalrefdelete
 
 
 def Elevate():
@@ -284,8 +284,43 @@ class ExternalReferenceMaker(tk.Toplevel):
 
     def getlist(self):
         self.listview.delete(0, tk.END)
-        for item in getKillChainPhases():
+        for item in getExternalRefs():
             self.listview.insert(tk.END, item)
+
+    def Maker(self):
+        flag=False
+        if self.sourcetext.get() == "":
+            tk.messagebox.showerror("Error", "Source name cannot be empty!", parent=self)
+            return
+
+        dict = {}
+        dict.update({"source_name" : self.sourcetext.get()})
+        if not (len(self.desctext.get())==0):
+            dict.update({"description": self.desctext.get()})
+            flag=True
+        if not (len(self.urltext.get())==0):
+            dict.update({"url": self.urltext.get()})
+            flag=True
+            if not (len(self.hashestext.get())==0):
+                dict2 = {}
+                dict2.update({self.hash_var.get() : self.hashestext.get()})
+                dict.update({"hashes" : dict2})
+        if not (len(self.ext_idtext.get())==0):
+            dict.update({"external_id": self.ext_idtext.get()})
+            flag=True
+
+        if not (flag):
+            tk.messagebox.showerror("Error", "At least one of the Description, URL, or External ID properties must be present.")
+            return
+        try:
+            exreftofile(self.sourcetext.get(), stix2.ExternalReference(**dict))
+        except Exception as e:
+            tk.messagebox.showerror("Error", str(e), parent=self)
+            return
+        self.getlist()
+        tk.messagebox.showinfo("Success", "External Reference created successfully!", parent=self)
+
+
 
     def widgets(self):
         self.sourcelabel = tk.Label(self.frame, text="*Source Name:", font=("OpenSans", 12))
@@ -296,7 +331,7 @@ class ExternalReferenceMaker(tk.Toplevel):
 
         self.desclabel = tk.Label(self.frame, text="Description:", font=("OpenSans", 12))
         self.desclabel.grid(row=1, column=0, padx=5, pady=5, sticky=tk.E)
-        self.desctext = tk.Text(self.frame, font=("OpenSans", 12), height=3, width=60)
+        self.desctext = tk.Entry(self.frame, font=("OpenSans", 12),  width=60)
         self.desctext.grid(row=1, column=1, padx=5, pady=5, sticky=tk.W)
 
 
@@ -320,6 +355,9 @@ class ExternalReferenceMaker(tk.Toplevel):
         self.ext_idtext = tk.Entry(self.frame, font=("OpenSans", 12), width=35)
         self.ext_idtext.grid(row=4, column=1, padx=5, pady=5, sticky=tk.W)
 
+        self.hashesdesclaimer = tk.Label(self.frame, text="**Hashes will be omitted if URL is not present.", font=("OpenSans", 8))
+        self.hashesdesclaimer.grid(row=5, column=0, padx=5, pady=5, sticky=tk.E)
+
 
 
 
@@ -334,18 +372,12 @@ class ExternalReferenceMaker(tk.Toplevel):
         self.getlist()
 
         self.addbutton = tk.Button(self.btframe, text="Create", font=("OpenSans", 12), fg="white", bg="#03AC13",
-                                   command=lambda: [(killchainphasetofile(
-                                       self.killchaintext.get() + "_" + self.phasetext.get(),
-                                       stix2.KillChainPhase(kill_chain_name=self.killchaintext.get(),
-                                                            phase_name=self.phasetext.get())), self.getlist(),
-                                                     tk.messagebox.showinfo("Success",
-                                                                            "Kill Chain Phase created successfully!",
-                                                                            parent=self)) if self.killchaintext.get() != "" and self.phasetext.get() != "" else tk.messagebox.showerror(
-                                       "Error", "Input fields cannot be empty!", parent=self)])
+                                   command=lambda: [self.Maker()])
+
         self.addbutton.pack(side=tk.LEFT, fill=tk.X, expand=True, padx=5, pady=5)
 
         self.cancelbutton = tk.Button(self.btframe, text="Delete", font=("OpenSans", 12), fg="white", bg="#FF3B30",
-                                      command=lambda: [(killchainphasedelete(self.listview.get(tk.ACTIVE), self),
+                                      command=lambda: [(externalrefdelete(self.listview.get(tk.ACTIVE), self),
                                                         self.getlist()) if self.listview.get(
                                           tk.ACTIVE) != "" else print("")])
         self.cancelbutton.pack(side=tk.LEFT, fill=tk.X, expand=True, padx=5, pady=5)

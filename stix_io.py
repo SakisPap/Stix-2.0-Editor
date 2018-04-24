@@ -63,10 +63,21 @@ def killchainphasetofile(filename, item):
     file.write(str(item))
     file.close()
 
+def exreftofile(filename, item):
+    file=os.path.join(getexreffolder(), filename+".ext")
+    file = open(file, "w")
+    file.write(str(item))
+    file.close()
+
 def killchainphasedelete(filename, parent):
     ans = tk.messagebox.askyesno("Confirm Delete?", "Are you sure that you want to delete the selected Kill Chain Phase?", parent=parent)
     if ans:
         os.remove(os.path.join(getkcpfolder(), filename+".kcp"))
+
+def externalrefdelete(filename, parent):
+    ans = tk.messagebox.askyesno("Confirm Delete?", "Are you sure that you want to delete the selected External Reference?", parent=parent)
+    if ans:
+        os.remove(os.path.join(getexreffolder(), filename+".ext"))
 
 def getcfgfolder():
     return os.path.join(os.path.expanduser("~"), "STIX2Editor")
@@ -74,16 +85,25 @@ def getcfgfolder():
 def getkcpfolder():
     return os.path.join(getcfgfolder(), "kill-chain-phases")
 
+def getexreffolder():
+    return os.path.join(getcfgfolder(), "external-references")
+
 def getKillChainPhases():
     return [pathlib.Path(x).stem for x in os.listdir(getkcpfolder()) if x.endswith(".kcp")]
+
+def getExternalRefs():
+    return [pathlib.Path(x).stem for x in os.listdir(getexreffolder()) if x.endswith(".ext")]
 
 def checkcfgfolder():
     cfgfolder=getcfgfolder()
     if not (os.path.exists(cfgfolder)):
         os.makedirs(cfgfolder)
     kcpfolder=getkcpfolder()
+    exreffolder=getexreffolder()
     if not (os.path.exists(kcpfolder)):
         os.makedirs(kcpfolder)
+    if not (os.path.exists(exreffolder)):
+        os.makedirs(exreffolder)
 
 def getcfgfile():
     return os.path.join(getcfgfolder(), "sav.dat")

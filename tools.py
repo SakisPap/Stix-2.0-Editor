@@ -164,7 +164,7 @@ class Multiselect(tk.Frame):
         elif self.flag=="killchain":
             killchains=[]
             for item in self.selected_items:
-                killchains.append(stix2.KillChainPhase(kill_chain_name=item.split("_")[0], phase_name=item.split("_")[1]))
+                killchains.append(json.load(open(os.path.join(getkcpfolder(), item+".kcp"))))
             return killchains
         else:
             exrefs=[]
@@ -175,11 +175,17 @@ class Multiselect(tk.Frame):
     def set(self, list):
         i = 0
         chain_text=[]
+        ext_text=[]
         if self.flag=="killchain":
             for item in list:
                 entity = item.get("kill_chain_name")+"_"+item.get("phase_name")
                 chain_text.append(entity)
             list = chain_text
+        elif self.flag=="exref":
+            for item in list:
+                entity = item.get("source_name")
+                ext_text.append(entity)
+            list = ext_text
 
 
         self.selected_items=list

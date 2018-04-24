@@ -386,10 +386,6 @@ class Editor(tk.Frame):
             eRow += 1
 
 
-        #OPEN EDITOR IN EDIT MODE
-        if self.type_of_editor == 1:
-            self.edit()
-
 
 
         #-----------------Autofill Tab-----------------------------------------------------
@@ -442,6 +438,7 @@ class Editor(tk.Frame):
         self.goLabel.bind("<Button-1>", lambda _: goClick(self))
 
         self.goFrame = tk.Frame(self, bg=self.COLOR_1)
+        self.goFrame.columnconfigure(1, weight=3)
 
         self.goFlag = True
 
@@ -477,6 +474,10 @@ class Editor(tk.Frame):
 
 
         #add markings, object_marking_refs and granualr markings
+
+        # OPEN EDITOR IN EDIT MODE
+        if self.type_of_editor == 1:
+            self.edit()
 
 
 

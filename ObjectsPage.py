@@ -265,7 +265,7 @@ class Objects(tk.Frame):
         self.edit_button = tk.Button(self.listbody_bottomFrame, text="Edit",font=("OpenSans", 12, "bold"), fg="white", bg="#FF9500", relief=tk.FLAT, highlightthickness=0, command=lambda : [self.start_Editor(1)])
         self.edit_button.pack(side=tk.LEFT, fill=tk.X, expand=True)
         self.edit_button.configure(state=tk.DISABLED)
-        self.delete_button = tk.Button(self.listbody_bottomFrame, text="Delete", font=("OpenSans", 12, "bold"), fg="white", bg="#FF3B30", relief=tk.FLAT, highlightthickness=0, command=lambda : [delete(self.object,self.listbox.get(self.listbox.curselection())), self.updatelist(self.object)if self.object != "nothing" else self.enlistall()])
+        self.delete_button = tk.Button(self.listbody_bottomFrame, text="Delete", font=("OpenSans", 12, "bold"), fg="white", bg="#FF3B30", relief=tk.FLAT, highlightthickness=0, command=lambda : [delete(self.full_list[self.listbox.curselection()[0]].split(": ")[0], self.full_list[self.listbox.curselection()[0]].split(": ")[1]), self.updatelist(self.object)if self.object != "nothing" else self.enlistall()])
         self.delete_button.pack(side=tk.LEFT, fill=tk.X, expand=True)
         self.delete_button.configure(state=tk.DISABLED)
 

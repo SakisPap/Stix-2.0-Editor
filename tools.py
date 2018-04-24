@@ -310,7 +310,7 @@ class ExternalReferenceMaker(tk.Toplevel):
             flag=True
 
         if not (flag):
-            tk.messagebox.showerror("Error", "At least one of the Description, URL, or External ID properties must be present.")
+            tk.messagebox.showerror("Error", "At least one of the Description, URL, or External ID properties must be present.", parent=self)
             return
         try:
             exreftofile(self.sourcetext.get(), stix2.ExternalReference(**dict))

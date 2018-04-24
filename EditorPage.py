@@ -37,7 +37,7 @@ import stix2
 import sys
 import time
 from makers import *
-from tools import Multiselect
+from tools import Multiselect, CreatedByRef
 
 
 
@@ -73,6 +73,11 @@ class Editor(tk.Frame):
 
         self.mandatoryFrame = tk.Frame(self)
         self.mandatoryFrame.pack(fill=tk.X)
+
+        def CreatedByRefStart():
+            createdbyref = CreatedByRef(self.mandatoryFrame)
+            createdbyref.grab_set()
+            createdbyref.attributes('-topmost', 'true')
 
         #---Name---
         if object != "observed-data":                                                   #Indicator's name can be optional according to docs but messes with the GUI understanding
@@ -423,11 +428,13 @@ class Editor(tk.Frame):
         self.createdLabel.grid(row=1, column=0, sticky=tk.E, padx=5)
         self.createdEntry = tk.Entry(self.afFrame, font=("OpenSans", 12))
         self.createdEntry.grid(row=1, column=1, sticky=tk.W, pady=5)
+        self.widget_list.append([self.createdEntry, "created"])
 
         self.modifiedLabel = tk.Label(self.afFrame, text="Modified:", font=("OpenSans", 12), bg=self.COLOR_1)
         self.modifiedLabel.grid(row=2, column=0, sticky=tk.E, padx=5)
         self.modifiedEntry = tk.Entry(self.afFrame, font=("OpenSans", 12))
         self.modifiedEntry.grid(row=2, column=1, sticky=tk.W, pady=5)
+        self.widget_list.append([self.modifiedEntry, "modified"])
 
 
         #--------------------GLOBAL OPTIONALS-------------------------------------------------------------------------------------------------------------
@@ -455,13 +462,17 @@ class Editor(tk.Frame):
         # ------------------Global optional frame widgets----------------------------------
         self.created_by_refLabel = tk.Label(self.goFrame, text="Created by Reference:", font=("OpenSans", 12), bg=self.COLOR_1)
         self.created_by_refLabel.grid(row=0, column=0, sticky=tk.E, padx=5)
-        self.created_by_refButton = tk.Button(self.goFrame, font=("OpenSans", 12), text="Select Identity...")#Add toplevel and function!
+        self.created_by_refButton = tk.Button(self.goFrame, font=("OpenSans", 12), text="Select Identity...", command= lambda : [CreatedByRefStart()])
         self.created_by_refButton.grid(row=0, column=1, sticky=tk.W, pady=5)
+        self.created_by_refLabel2 = tk.Label(self.goFrame, font=("OpenSans", 12), bg=self.COLOR_1)
+        self.created_by_refLabel2.grid(row=0, column=2, sticky=tk.W ,pady=5)
+        self.widget_list.append([self.created_by_refLabel2, "created_by_ref"])
+
 
         self.revokedCheckButton=tk.Checkbutton(self.goFrame, text="Revoked?", font=("OpenSans", 12), bg=self.COLOR_1)#Add revoked management
         self.revokedCheckButton.grid(row=1,column=0,sticky=tk.E, padx=5)
 
-        self.external_referencesLabel = tk.Label(self.goFrame, text="External References:", font=("OpenSans", 12), bg=self.COLOR_1)#Add external reference management
+        self.external_referencesLabel = tk.Label(self.goFrame, text="External References:", font=("OpenSans", 12), bg=self.COLOR_1)
         self.external_referencesLabel.grid(row=2, column=0, sticky=tk.E, padx=5)
         listitems=getExternalRefs()
         self.multiselect_external_references= Multiselect(self, self.goFrame, listitems, 2, self.COLOR_1, self.COLOR_2, self.COLOR_3, flag="exref")

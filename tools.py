@@ -397,3 +397,54 @@ class ExternalReferenceMaker(tk.Toplevel):
 
 
 
+
+
+class CreatedByRef(tk.Toplevel):
+    def __init__(self, root):
+        tk.Toplevel.__init__(self, root)
+        self.title("Identity Selection")
+        self.geometry("1900x950")
+        self.resizable(width=False, height=False)
+        self.frame = tk.Frame(self)
+        self.frame.pack(fill=tk.X,pady=5)
+
+
+        self.widgets()
+
+    def getlist(self):
+        self.listview.delete(0, tk.END)
+        for item in getIdentityRef():
+            self.listview.insert(tk.END, item)
+
+    def get(self):
+        return self.listview.get(self.listview.curselection()).split(": ")[1]
+        self.destroy()
+
+
+
+    def widgets(self):
+
+        self.createdbyrefdesclaimer = tk.Label(self.frame, text="Please select the Identity that describes the entity that created the current object you are constructing.", font=("OpenSans", 10))
+        self.createdbyrefdesclaimer.pack()
+
+
+
+
+
+        self.label = tk.Label(self.frame, font=("OpenSans", 8, "bold"),
+                              text="Existing Identities into workspace: (Format <name> : <id>", bg="black", fg="white")
+        self.label.pack(fill=tk.X, padx=10)
+
+        self.listview = tk.Listbox(self.frame, font=("OpenSans", 10, "bold"), height=45)
+        self.listview.pack(fill=tk.X, expand=True, padx=10)
+
+        self.getlist()
+
+        self.addbutton = tk.Button(self.frame, text="Select", font=("OpenSans", 12), fg="white", bg="#03AC13",
+                                   command=lambda: [self.get()])
+
+        self.addbutton.pack(side=tk.LEFT, fill=tk.X, expand=True, padx=5, pady=5)
+
+        self.cancelbutton = tk.Button(self.frame, text="Cancel", font=("OpenSans", 12), fg="white", bg="#FF3B30",
+                                      command=lambda: [self.destroy()])
+        self.cancelbutton.pack(side=tk.LEFT, fill=tk.X, expand=True, padx=5, pady=5)

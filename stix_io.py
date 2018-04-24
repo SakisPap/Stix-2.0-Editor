@@ -156,6 +156,14 @@ def getAllIDs():
             ids.append(filetoitem(os.path.join(folder,file)).get("id"))
     return ids
 
+def getIdentityRef():
+    identitylist=[]
+    folder="identity"
+    for file in getFilesJsonExt(folder, "alph"):
+        identity=filetoitem(os.path.join(folder, file))
+        identitylist.append(identity.get("name")+" : "+identity.get("id"))
+    return identitylist
+
 def InitNewEnvironment(projectpath):
     if not (os.path.exists(projectpath)):
         os.makedirs(projectpath) # warning: full path or poitner to wpath -- RECURSIVE!

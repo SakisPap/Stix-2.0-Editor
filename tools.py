@@ -169,7 +169,6 @@ class Multiselect(tk.Frame):
     def set(self, list):
         i = 0
         chain_text=[]
-        #try:
         if self.flag:
             for item in list:
                 entity = item.get("kill_chain_name")+"_"+item.get("phase_name")
@@ -184,6 +183,8 @@ class Multiselect(tk.Frame):
             if item in list:
                 self.listview.select_set(i)
             i+=1
+
+
 
 
 
@@ -234,7 +235,7 @@ class KillChainPhaseMaker(tk.Toplevel):
         self.phasetext = tk.Entry(self.frame, font=("OpenSans", 12))
         self.phasetext.grid(row=1, column=1, padx=5, pady=5)
 
-        self.label = tk.Label(self.btframe, font=("OpenSans", 8, "bold"), text="Existing Kill Chain Phase objects into workspace:", bg="black", fg="white")
+        self.label = tk.Label(self.btframe, font=("OpenSans", 8, "bold"), text="Existing Kill Chain Phase into workspace:", bg="black", fg="white")
         self.label.pack(fill=tk.X, padx=10)
 
         self.listview = tk.Listbox(self.btframe, font=("OpenSans", 10, "bold"), height=5)
@@ -246,6 +247,107 @@ class KillChainPhaseMaker(tk.Toplevel):
         self.addbutton.pack(side=tk.LEFT, fill=tk.X, expand=True, padx=5, pady=5)
 
         self.cancelbutton = tk.Button(self.btframe, text="Delete", font=("OpenSans", 12), fg="white", bg="#FF3B30", command=lambda : [(killchainphasedelete(self.listview.get(tk.ACTIVE), self), self.getlist()) if self.listview.get(tk.ACTIVE)!="" else print("")])
+        self.cancelbutton.pack(side=tk.LEFT, fill=tk.X, expand=True, padx=5, pady=5)
+
+
+
+
+
+
+class ExternalReferenceMaker(tk.Toplevel):
+    def __init__(self, root):
+        tk.Toplevel.__init__(self, root)
+        self.title("Manage External References...")
+        # self.geometry("400x110")
+        self.resizable(width=False, height=False)
+        self.frame = tk.Frame(self)
+        self.frame.pack()
+        self.frame.columnconfigure(1, weight=3)
+
+        self.btframe = tk.Frame(self)
+        self.btframe.pack(side=tk.BOTTOM, fill=tk.X, pady=5)
+        self.widgets()
+
+    """
+    def keyPress(self, event):
+        if event.char in ("-",
+                          "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r",
+                          "s", "t", "u", "v", "w", "x", "y", "z",
+                          " "):
+            print
+            event.char
+        elif event.keysym not in ('BackSpace', 'Delete', 'Tab', 'Left', 'Right'):
+            print
+            event.keysym
+            return 'break'
+    """
+
+    def getlist(self):
+        self.listview.delete(0, tk.END)
+        for item in getKillChainPhases():
+            self.listview.insert(tk.END, item)
+
+    def widgets(self):
+        self.sourcelabel = tk.Label(self.frame, text="*Source Name:", font=("OpenSans", 12))
+        self.sourcelabel.grid(row=0, column=0, padx=5, pady=5, sticky=tk.E)
+        self.sourcetext = tk.Entry(self.frame, font=("OpenSans", 12))
+        self.sourcetext.grid(row=0, column=1, padx=5, pady=5, sticky=tk.W)
+        #self.killchaintext.bind('<KeyPress>', lambda event: self.keyPress(event))
+
+        self.desclabel = tk.Label(self.frame, text="Description:", font=("OpenSans", 12))
+        self.desclabel.grid(row=1, column=0, padx=5, pady=5, sticky=tk.E)
+        self.desctext = tk.Text(self.frame, font=("OpenSans", 12), height=3, width=60)
+        self.desctext.grid(row=1, column=1, padx=5, pady=5, sticky=tk.W)
+
+
+        self.urllabel = tk.Label(self.frame, text="URL:", font=("OpenSans", 12))
+        self.urllabel.grid(row=2, column=0, padx=5, pady=5, sticky=tk.E)
+        self.urltext = tk.Entry(self.frame, font=("OpenSans", 12), width=30)
+        self.urltext.grid(row=2, column=1, padx=5, pady=5, sticky=tk.W)
+
+
+        self.hasheslabel = tk.Label(self.frame, text="**Hashes:", font=("OpenSans", 12))
+        self.hasheslabel.grid(row=3, column=0, padx=5, pady=5, sticky=tk.E)
+        self.hash_var = tk.StringVar()
+        self.hash_var.set("          ")
+        self.hashesoption = tk.OptionMenu(self.frame, self.hash_var, "MD5", "MD6", "RIPEMD-160", "SHA-1", "SHA-224", "SHA-256", "SHA-384", "SHA-512", "SHA3-224", "SHA3-256", "SHA3-384", "SHA3-512", "ssdeep", "WHIRLPOOL")
+        self.hashesoption.grid(row=3, column=1, padx=5, pady=5, sticky=tk.W)
+        self.hashestext = tk.Entry(self.frame, font=("OpenSans", 12), width=48)
+        self.hashestext.grid(row=3, column=1, padx=5, pady=5, sticky=tk.E)
+
+        self.ext_idlabel = tk.Label(self.frame, text="External ID:", font=("OpenSans", 12))
+        self.ext_idlabel.grid(row=4, column=0, padx=5, pady=5, sticky=tk.E)
+        self.ext_idtext = tk.Entry(self.frame, font=("OpenSans", 12), width=35)
+        self.ext_idtext.grid(row=4, column=1, padx=5, pady=5, sticky=tk.W)
+
+
+
+
+
+        self.label = tk.Label(self.btframe, font=("OpenSans", 8, "bold"),
+                              text="Existing External References into workspace:", bg="black", fg="white")
+        self.label.pack(fill=tk.X, padx=10)
+
+        self.listview = tk.Listbox(self.btframe, font=("OpenSans", 10, "bold"), height=5)
+        self.listview.pack(fill=tk.X, expand=True, padx=10)
+
+        self.getlist()
+
+        self.addbutton = tk.Button(self.btframe, text="Create", font=("OpenSans", 12), fg="white", bg="#03AC13",
+                                   command=lambda: [(killchainphasetofile(
+                                       self.killchaintext.get() + "_" + self.phasetext.get(),
+                                       stix2.KillChainPhase(kill_chain_name=self.killchaintext.get(),
+                                                            phase_name=self.phasetext.get())), self.getlist(),
+                                                     tk.messagebox.showinfo("Success",
+                                                                            "Kill Chain Phase created successfully!",
+                                                                            parent=self)) if self.killchaintext.get() != "" and self.phasetext.get() != "" else tk.messagebox.showerror(
+                                       "Error", "Input fields cannot be empty!", parent=self)])
+        self.addbutton.pack(side=tk.LEFT, fill=tk.X, expand=True, padx=5, pady=5)
+
+        self.cancelbutton = tk.Button(self.btframe, text="Delete", font=("OpenSans", 12), fg="white", bg="#FF3B30",
+                                      command=lambda: [(killchainphasedelete(self.listview.get(tk.ACTIVE), self),
+                                                        self.getlist()) if self.listview.get(
+                                          tk.ACTIVE) != "" else print("")])
         self.cancelbutton.pack(side=tk.LEFT, fill=tk.X, expand=True, padx=5, pady=5)
 
 

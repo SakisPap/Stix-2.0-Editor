@@ -1213,12 +1213,12 @@ class Objects(tk.Frame):
 
         self.ok_button = tk.Button(self.radioFrame, text="Relate", font=("OpenSans", 12, "bold"), fg="white", width=5,
                                     bg="#03AC13", relief=tk.FLAT, highlightthickness=0, height=1,
-                                    command=lambda: [self.relationshipsFrame.destroy(), self.relationshipsFrame.grab_release(), self.selector(self.object), self.createRelationship(), self.packer(0)])
+                                    command=lambda: [ self.createRelationship(), self.relationshipsFrame.grab_release(), self.relationshipsFrame.destroy(), self.packer(0), self.selector(self.object)])
         self.ok_button.pack(side=tk.LEFT, pady=20, padx=5)
 
         self.cancel_button = tk.Button(self.radioFrame, text="Abort", font=("OpenSans", 12, "bold"), fg="white",
                                        width=5, bg="#FF3B30", relief=tk.FLAT, highlightthickness=0, height=1,
-                                       command=lambda: [self.relationshipsFrame.destroy(), self.relationshipsFrame.grab_release(), self.selector(self.object), self.packer(0)])
+                                       command=lambda: [self.relationshipsFrame.grab_release(), self.relationshipsFrame.destroy(), self.packer(0), self.selector()])
         self.cancel_button.pack(side=tk.LEFT, pady=20, padx=5)
 
         self.ok_button.configure(state=tk.DISABLED)

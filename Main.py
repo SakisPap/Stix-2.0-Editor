@@ -28,7 +28,7 @@ from PIL import Image, ImageTk
 import os
 from stix_io import OpenProject, LoadEnvironment, readfile, ImportFile, ExportProject, OpenInExplorer, NewProject, checkcfgfolder, LoadPrevious, getcfgfile, getcfgfile2
 from tkinter import messagebox
-from tools import Elevate, bugreport, BundleManage, KillChainPhaseMaker
+from tools import Elevate, bugreport, BundleManage, KillChainPhaseMaker, ExternalReferenceMaker
 import pickle
 import webbrowser
 import sys, subprocess
@@ -230,7 +230,15 @@ def killchainStart():
     #killchainphasemaker.lift()
     killchainphasemaker.attributes('-topmost', 'true')
 
+def externalStart():
+    externalreferencesmaker = ExternalReferenceMaker(root)
+    externalreferencesmaker.grab_set()
+    #killchainphasemaker.lift()
+    externalreferencesmaker.attributes('-topmost', 'true')
+
 toolsmenu.add_command(label="Manage Kill Chain Phases...", command=lambda : [killchainStart()])
+toolsmenu.add_command(label="Manage External References...", command=lambda : [externalStart()])
+
 menubar.add_cascade(label="Tools", menu=toolsmenu)
 
 # display the menu

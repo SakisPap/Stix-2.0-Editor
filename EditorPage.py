@@ -216,7 +216,7 @@ class Editor(tk.Frame):
             self.kill_chain_phasesLabel = tk.Label(self.mandatoryFrame, text="Kill Chain Phases:", font=("OpenSans", 12)) #Management!!
             self.kill_chain_phasesLabel.grid(row=eRow, column=0, sticky=tk.E, padx=5)
             listitems=getKillChainPhases()
-            self.multiselect_kill_chain_phases= Multiselect(self, self.mandatoryFrame, listitems, eRow, self.COLOR_1, self.COLOR_2, self.COLOR_3, flag=True)
+            self.multiselect_kill_chain_phases= Multiselect(self, self.mandatoryFrame, listitems, eRow, self.COLOR_1, self.COLOR_2, self.COLOR_3, flag="killchain")
             self.kill_chain_phasesButton = tk.Button(self.mandatoryFrame, font = ("OpenSans", 12), text="Add...", command=lambda: [self.multiselect_kill_chain_phases.place(x=230, y=50),
                                                             self.multiselect_kill_chain_phases.lift(),
                                                             self.multiselect_kill_chain_phases.grab_set()])
@@ -467,7 +467,7 @@ class Editor(tk.Frame):
         self.external_referencesLabel = tk.Label(self.goFrame, text="External References:", font=("OpenSans", 12), bg=self.COLOR_1)#Add external reference management
         self.external_referencesLabel.grid(row=2, column=0, sticky=tk.E, padx=5)
         listitems=getExternalRefs()
-        self.multiselect_external_references= Multiselect(self, self.goFrame, listitems, 2, self.COLOR_1, self.COLOR_2, self.COLOR_3, flag=True)
+        self.multiselect_external_references= Multiselect(self, self.goFrame, listitems, 2, self.COLOR_1, self.COLOR_2, self.COLOR_3, flag="exref")
         self.external_referencesButton = tk.Button(self.goFrame, font = ("OpenSans", 12), text="Add...", command=lambda: [self.multiselect_external_references.place(x=230, y=50),
                                                         self.multiselect_external_references.lift(),
                                                         self.multiselect_external_references.grab_set()])

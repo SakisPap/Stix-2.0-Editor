@@ -32,7 +32,8 @@ import urllib
 from urllib.parse import *
 from urllib.request import *
 from urllib.response import *
-from stix_io import isProjectActive,killchainphasetofile, getKillChainPhases, killchainphasedelete, exreftofile, getExternalRefs, externalrefdelete
+from stix_io import *
+import json
 
 
 def Elevate():
@@ -160,20 +161,26 @@ class Multiselect(tk.Frame):
                 return self.selected_items
             else:
                 return ""
-        else:
+        elif self.flag=="killchain":
             killchains=[]
             for item in self.selected_items:
                 killchains.append(stix2.KillChainPhase(kill_chain_name=item.split("_")[0], phase_name=item.split("_")[1]))
             return killchains
+        else:
+            exrefs=[]
+            for item in self.selected_items:
+                exrefs.append(json.load(open(os.path.join(getexreffolder(),item+".ext"))))
+            return exrefs
 
     def set(self, list):
         i = 0
         chain_text=[]
-        if self.flag:
+        if self.flag=="killchain":
             for item in list:
                 entity = item.get("kill_chain_name")+"_"+item.get("phase_name")
                 chain_text.append(entity)
             list = chain_text
+
 
         self.selected_items=list
         self.showlabel.config(text=str(self.selected_items).replace("'", "").replace("[", "").replace("]", ""))

@@ -466,8 +466,14 @@ class Editor(tk.Frame):
 
         self.external_referencesLabel = tk.Label(self.goFrame, text="External References:", font=("OpenSans", 12), bg=self.COLOR_1)#Add external reference management
         self.external_referencesLabel.grid(row=2, column=0, sticky=tk.E, padx=5)
-        self.external_referencesButton = tk.Button(self.goFrame, font=("OpenSans",12), text="Add...")
+        listitems=getExternalRefs()
+        self.multiselect_external_references= Multiselect(self, self.goFrame, listitems, 2, self.COLOR_1, self.COLOR_2, self.COLOR_3, flag=True)
+        self.external_referencesButton = tk.Button(self.goFrame, font = ("OpenSans", 12), text="Add...", command=lambda: [self.multiselect_external_references.place(x=230, y=50),
+                                                        self.multiselect_external_references.lift(),
+                                                        self.multiselect_external_references.grab_set()])
         self.external_referencesButton.grid(row=2, column=1, sticky=tk.W, pady=5)
+        self.widget_list.append([self.multiselect_external_references, "external_references"])
+
 
 
         #add markings, object_marking_refs and granualr markings

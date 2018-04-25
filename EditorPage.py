@@ -75,6 +75,7 @@ class Editor(tk.Frame):
     def widgets(self, object_class):
         eRow=0
 
+        object=object_class.object
         self.mandatoryFrame = tk.Frame(self)
         self.mandatoryFrame.pack(fill=tk.X)
 

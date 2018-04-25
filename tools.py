@@ -428,7 +428,10 @@ class CreatedByRef():
         self.created_by_refLabel2.configure(text=self.selected_value)
 
     def get(self):
-        return self.selected_value
+        try:
+            return self.selected_value
+        except:
+            return ""
 
     def set(self, item):
         self.created_by_refLabel2 = tk.Label(self.goFrame, font=("OpenSans", 12))

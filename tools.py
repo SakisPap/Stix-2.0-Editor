@@ -399,14 +399,19 @@ class ExternalReferenceMaker(tk.Toplevel):
 
 
 
-class CreatedByRef(tk.Toplevel):
-    def __init__(self, root):
-        tk.Toplevel.__init__(self, root)
-        self.title("Identity Selection")
-        self.geometry("1900x950")
-        self.resizable(width=False, height=False)
-        self.frame = tk.Frame(self)
+class CreatedByRef():
+    def __init__(self, goFrame):
+        self.goFrame=goFrame
+
+    def pop(self, root, goFrame):
+        self.top = tk.Toplevel(root)
+        self.top.title("Identity Selection")
+        #self.geometry("1900x950")
+        self.top.resizable(width=False, height=False)
+        self.frame = tk.Frame(self.top)
         self.frame.pack(fill=tk.X,pady=5)
+
+        self.selected_value = ""
 
 
         self.widgets()
@@ -416,10 +421,19 @@ class CreatedByRef(tk.Toplevel):
         for item in getIdentityRef():
             self.listview.insert(tk.END, item)
 
-    def get(self):
-        return self.listview.get(self.listview.curselection()).split(": ")[1]
-        self.destroy()
+    def callback(self):
+        self.selected_value=self.listview.get(self.listview.curselection()).split(": ")[1]
+        self.created_by_refLabel2 = tk.Label(self.goFrame, font=("OpenSans", 12))
+        self.created_by_refLabel2.grid(row=0, column=2, sticky=tk.W, pady=5)
+        self.created_by_refLabel2.configure(text=self.selected_value)
 
+    def get(self):
+        return self.selected_value
+
+    def set(self, item):
+        self.created_by_refLabel2 = tk.Label(self.goFrame, font=("OpenSans", 12))
+        self.created_by_refLabel2.grid(row=0, column=2, sticky=tk.W, pady=5)
+        self.created_by_refLabel2.configure(text=item)
 
 
     def widgets(self):
@@ -429,22 +443,20 @@ class CreatedByRef(tk.Toplevel):
 
 
 
-
-
         self.label = tk.Label(self.frame, font=("OpenSans", 8, "bold"),
                               text="Existing Identities into workspace: (Format <name> : <id>", bg="black", fg="white")
         self.label.pack(fill=tk.X, padx=10)
 
-        self.listview = tk.Listbox(self.frame, font=("OpenSans", 10, "bold"), height=45)
+        self.listview = tk.Listbox(self.frame, font=("OpenSans", 10, "bold"))
         self.listview.pack(fill=tk.X, expand=True, padx=10)
 
         self.getlist()
 
         self.addbutton = tk.Button(self.frame, text="Select", font=("OpenSans", 12), fg="white", bg="#03AC13",
-                                   command=lambda: [self.get()])
+                                   command=lambda: [self.callback(), self.top.destroy()])
 
         self.addbutton.pack(side=tk.LEFT, fill=tk.X, expand=True, padx=5, pady=5)
 
         self.cancelbutton = tk.Button(self.frame, text="Cancel", font=("OpenSans", 12), fg="white", bg="#FF3B30",
-                                      command=lambda: [self.destroy()])
+                                      command=lambda: [self.top.destroy()])
         self.cancelbutton.pack(side=tk.LEFT, fill=tk.X, expand=True, padx=5, pady=5)

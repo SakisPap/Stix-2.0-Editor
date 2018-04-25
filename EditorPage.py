@@ -66,18 +66,19 @@ class Editor(tk.Frame):
         self.widget_list = []
         self.type_of_editor = type_of_editor
 
+        self.widgets(object_class)
+
+
 
 
         #------------------MANDATORY EDITOR FRAME WIDGETS------------------------------
+    def widgets(self, object_class):
         eRow=0
 
         self.mandatoryFrame = tk.Frame(self)
         self.mandatoryFrame.pack(fill=tk.X)
 
-        def CreatedByRefStart():
-            createdbyref = CreatedByRef(self.mandatoryFrame)
-            createdbyref.grab_set()
-            createdbyref.attributes('-topmost', 'true')
+
 
         #---Name---
         if object != "observed-data":                                                   #Indicator's name can be optional according to docs but messes with the GUI understanding
@@ -462,11 +463,11 @@ class Editor(tk.Frame):
         # ------------------Global optional frame widgets----------------------------------
         self.created_by_refLabel = tk.Label(self.goFrame, text="Created by Reference:", font=("OpenSans", 12), bg=self.COLOR_1)
         self.created_by_refLabel.grid(row=0, column=0, sticky=tk.E, padx=5)
-        self.created_by_refButton = tk.Button(self.goFrame, font=("OpenSans", 12), text="Select Identity...", command= lambda : [CreatedByRefStart()])
+
+        self.createdbyref = CreatedByRef(self.goFrame)
+        self.created_by_refButton = tk.Button(self.goFrame, font=("OpenSans", 12), text="Select Identity...", command= lambda : [self.createdbyref.pop(self.mandatoryFrame, self.goFrame)])
         self.created_by_refButton.grid(row=0, column=1, sticky=tk.W, pady=5)
-        self.created_by_refLabel2 = tk.Label(self.goFrame, font=("OpenSans", 12), bg=self.COLOR_1)
-        self.created_by_refLabel2.grid(row=0, column=2, sticky=tk.W ,pady=5)
-        self.widget_list.append([self.created_by_refLabel2, "created_by_ref"])
+        self.widget_list.append([self.createdbyref, "created_by_ref"])
 
 
         self.revokedCheckButton=tk.Checkbutton(self.goFrame, text="Revoked?", font=("OpenSans", 12), bg=self.COLOR_1)#Add revoked management

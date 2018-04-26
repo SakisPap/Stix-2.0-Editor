@@ -182,6 +182,9 @@ class Objects(tk.Frame):
         self.img = Image.open(os.path.abspath("images/marking_def.png"))
         self.marking_def_img = ImageTk.PhotoImage(self.img)
 
+        self.img = Image.open(os.path.abspath("images/sighting.png"))
+        self.sighting_img = ImageTk.PhotoImage(self.img)
+
         self.img = Image.open(os.path.abspath("images/displayall.png"))
         self.displayall_img = ImageTk.PhotoImage(self.img)
 
@@ -242,6 +245,10 @@ class Objects(tk.Frame):
 
         self.relationship_Button = tk.Button(self.gridBody, image=self.relationship_img, bg=self.COLOR_3, activebackground=self.COLOR_3, relief=tk.FLAT, height=77, width=77, highlightthickness=0, highlightbackground=self.COLOR_3, command=lambda: self.selector("relationship"))
         self.relationship_Button.grid(row=3, column=2, padx=PADX, pady=PADY, sticky="nsew")
+
+        self.sightingButton = tk.Button(self.gridBody, image=self.sighting_img, bg=self.COLOR_3, activebackground=self.COLOR_3, relief=tk.FLAT, height=77, width=77, highlightthickness=0, highlightbackground=self.COLOR_3, command=lambda: self.selector("sighting"))
+        self.sightingButton.grid(row=3, column=3, padx=PADX, pady=PADY, sticky="nsew")
+        self.sightingButton.configure(state=tk.DISABLED)
 
 
         for i in range(4):
@@ -406,6 +413,10 @@ class Objects(tk.Frame):
             self.infoLabel.configure(text="Marking Definition: The marking-definition object represents a specific marking. Data markings typically represent handling or sharing requirements for data.")
             self.topLabel.config(text="Selected Object: Marking Definition")
             self.listLabel.config(text="Existing Marking Definitions in project")
+        elif object == "sighting":
+            self.infoLabel.configure(text="Sighting: Denotes the belief that an element of CTI was seen (e.g., indicator, malware).")
+            self.topLabel.config(text="Selected Object: Sighting")
+            self.listLabel.config(text="Existing Sightings in project")
         elif object == "relationship":
             self.infoLabel.configure(text="Relationship: Used to link two SDOs and to describe how they are related to each other.")
             self.topLabel.config(text="Selected Object: Relationship")

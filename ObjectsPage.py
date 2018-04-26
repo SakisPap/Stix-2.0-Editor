@@ -179,6 +179,9 @@ class Objects(tk.Frame):
         self.img = Image.open(os.path.abspath("images/relationship.png"))
         self.relationship_img = ImageTk.PhotoImage(self.img)
 
+        self.img = Image.open(os.path.abspath("images/marking_def.png"))
+        self.marking_def_img = ImageTk.PhotoImage(self.img)
+
         self.img = Image.open(os.path.abspath("images/displayall.png"))
         self.displayall_img = ImageTk.PhotoImage(self.img)
 
@@ -234,7 +237,7 @@ class Objects(tk.Frame):
         self.displayall_Button = tk.Button(self.gridBody, image=self.displayall_img, bg=self.COLOR_3, activebackground=self.COLOR_3, relief=tk.FLAT, height=77, width=77, highlightthickness=0, highlightbackground=self.COLOR_3, command=lambda: [self.selector("nothing"), self.enlistall(), print(self.object), self.add_button.configure(state=tk.DISABLED), self.edit_button.configure(state=tk.DISABLED)])
         self.displayall_Button.grid(row=3, column=0, padx=PADX, pady=PADY, sticky="nsew")
 
-        self.marking_defsButton = tk.Button(self.gridBody, image=self.relationship_img, bg=self.COLOR_3, activebackground=self.COLOR_3, relief=tk.FLAT, height=77, width=77, highlightthickness=0, highlightbackground=self.COLOR_3, command=lambda: self.selector("marking-definition"))
+        self.marking_defsButton = tk.Button(self.gridBody, image=self.marking_def_img, bg=self.COLOR_3, activebackground=self.COLOR_3, relief=tk.FLAT, height=77, width=77, highlightthickness=0, highlightbackground=self.COLOR_3, command=lambda: self.selector("marking-definition"))
         self.marking_defsButton.grid(row=3, column=1, padx=PADX, pady=PADY, sticky="nsew")
 
         self.relationship_Button = tk.Button(self.gridBody, image=self.relationship_img, bg=self.COLOR_3, activebackground=self.COLOR_3, relief=tk.FLAT, height=77, width=77, highlightthickness=0, highlightbackground=self.COLOR_3, command=lambda: self.selector("relationship"))

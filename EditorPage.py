@@ -499,7 +499,7 @@ class Editor(tk.Frame):
         self.backButton = tk.Button(self.buttonHolder, text="Previous Page", highlightthickness=0, font=("OpenSans", 12, "bold"), fg="white", bg=self.COLOR_3, command=lambda : self.switch_page("left"), relief=tk.FLAT)
         self.backButton.pack(side=tk.LEFT, fill=tk.X, expand=True)
         self.backButton.configure(state=tk.DISABLED)
-        self.submitButton = tk.Button(self.buttonHolder, text="Submit", font=("OpenSans", 12, "bold"), fg="white", bg="#03AC13", relief=tk.FLAT, highlightthickness=0, command = lambda : [self.callback(object_class), object_class.packer(0), object_class.updatelist(self.object)])
+        self.submitButton = tk.Button(self.buttonHolder, text="Submit", font=("OpenSans", 12, "bold"), fg="white", bg="#03AC13", relief=tk.FLAT, highlightthickness=0, command = lambda : [self.callback(object_class)])
         self.submitButton.pack(side=tk.LEFT)
         self.cancelButton = tk.Button(self.buttonHolder, text="Cancel", font=("OpenSans", 12, "bold"), fg="white", bg="#FF3B30", relief=tk.FLAT, highlightthickness=0, command=lambda: [self.destroy(), object_class.packer(0)])
         self.cancelButton.pack(side=tk.LEFT)
@@ -599,6 +599,8 @@ class Editor(tk.Frame):
                 tk.messagebox.showwarning("Error", "Entries marked with '*' cannot be left blank!", parent = self)
                 return
 
+
+
         if not self.editmode:
             try:
                 flag, debug = getattr(sys.modules[__name__], "%s_maker" % object.replace("-", "_"))(**dict)
@@ -641,6 +643,9 @@ class Editor(tk.Frame):
                     self.editmode=False
                     pass
                 self.destroy()
+
+        object_class.packer(0)
+        object_class.updatelist(self.object)
 
 
 

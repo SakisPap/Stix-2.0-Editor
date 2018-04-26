@@ -690,12 +690,12 @@ class Editor(tk.Frame):
 
 
         if not self.editmode:
-            try:
-                flag, debug = getattr(sys.modules[__name__], "%s_maker" % object.replace("-", "_"))(**dict)
-                print(debug)
-            except Exception as e:
-                tk.messagebox.showerror("Error", str(e), parent = self)
-                return
+            #try:
+            flag, debug = getattr(sys.modules[__name__], "%s_maker" % object.replace("-", "_"))(**dict)
+            print(debug)
+            #except Exception as e:
+                #tk.messagebox.showerror("Error", str(e), parent = self)
+                #return
             if flag=="True":
                 tk.messagebox.showinfo("Object Creation Successfull!", object + " " + self.nameEntry.get() + " created seccessfully!", parent = self)
                 pass

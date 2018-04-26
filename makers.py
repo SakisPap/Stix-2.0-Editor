@@ -98,3 +98,8 @@ def relationship_maker(source,type,target):
     relationship=stix2.Relationship(source,type,target)
     itemtofile(relationship)
     return relationship
+
+def marking_definition_maker(**kwargs):
+    marking_definition=stix2.MarkingDefinition(**kwargs)
+    itemtofile(marking_definition)
+    return marking_definition

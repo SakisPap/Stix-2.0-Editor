@@ -236,7 +236,6 @@ class Objects(tk.Frame):
 
         self.marking_defsButton = tk.Button(self.gridBody, image=self.relationship_img, bg=self.COLOR_3, activebackground=self.COLOR_3, relief=tk.FLAT, height=77, width=77, highlightthickness=0, highlightbackground=self.COLOR_3, command=lambda: self.selector("marking-definition"))
         self.marking_defsButton.grid(row=3, column=1, padx=PADX, pady=PADY, sticky="nsew")
-        self.marking_defsButton.configure(state=tk.DISABLED) #Dreeeeeeee i disabled it here
 
         self.relationship_Button = tk.Button(self.gridBody, image=self.relationship_img, bg=self.COLOR_3, activebackground=self.COLOR_3, relief=tk.FLAT, height=77, width=77, highlightthickness=0, highlightbackground=self.COLOR_3, command=lambda: self.selector("relationship"))
         self.relationship_Button.grid(row=3, column=2, padx=PADX, pady=PADY, sticky="nsew")

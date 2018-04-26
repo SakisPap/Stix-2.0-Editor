@@ -83,7 +83,7 @@ class Editor(tk.Frame):
 
 
         #---Name---
-        if object != "observed-data" or object!= "marking-definition":                                                   #Indicator's name can be optional according to docs but messes with the GUI understanding
+        if (object != "observed-data" or object != "marking-definition"):                                                   #Indicator's name can be optional according to docs but messes with the GUI understanding
             self.nameLabel = tk.Label(self.mandatoryFrame, text="*Name:", font=("OpenSans", 12))
             self.nameLabel.grid(row=eRow, column=0, sticky=tk.E, padx=5)
             self.nameEntry = tk.Entry(self.mandatoryFrame, font=("OpenSans", 12))
@@ -211,7 +211,7 @@ class Editor(tk.Frame):
 
         ###########OBJECT SPECIFIC OPTIONALS----------#############################################OBJECT SPECIFIC OPTIONALS----------##################################
         #description (featured in all excpt)
-        if(object!="observed-data"):
+        if(object!="observed-data" or object!="marking-definition"):
             self.descriptionLabel = tk.Label(self.mandatoryFrame, text="Description:", font=("OpenSans", 12))
             self.descriptionLabel.grid(row=eRow, column=0, sticky=tk.E, padx=5)
             self.descriptionEntry = tk.Entry(self.mandatoryFrame, font=("OpenSans", 12), width=60)
@@ -396,8 +396,18 @@ class Editor(tk.Frame):
 
 
         if(object=="marking-definition"):
-            def markdef():
-                print("")
+            def markdef(event):
+                if(self.definition_typeVar.get()=="statement"):
+                    self.tlpLabel.config(state=tk.DISABLED)
+                    self.tlpOption.config(state=tk.DISABLED)
+                    self.statementLabel.config(state=tk.NORMAL)
+                    self.statementEntry.config(state=tk.NORMAL)
+                else:
+                    self.statementLabel.config(state=tk.DISABLED)
+                    self.statementEntry.config(state=tk.DISABLED)
+                    self.tlpLabel.config(state=tk.NORMAL)
+                    self.tlpOption.config(state=tk.NORMAL)
+
 
             self.definition_typeLabel = tk.Label(self.mandatoryFrame, text="*Definition Type:", font=("OpenSans", 12))
             self.definition_typeLabel.grid(row=eRow, column=0, sticky=tk.E, padx=5)
@@ -407,20 +417,21 @@ class Editor(tk.Frame):
             self.definition_typeOption.grid(row=eRow, column=1, sticky=tk.W, pady=5)
             eRow += 1
 
-            self.statementLabel = tk.Label(self.mandatoryFrame, text="*Statement:", font=("OpenSans", 12))
+            self.statementLabel = tk.Label(self.mandatoryFrame, text="*Statement:", font=("OpenSans", 12), state=tk.DISABLED)
             self.statementLabel.grid(row=eRow, column=0, sticky=tk.E, padx=5)
 
-            self.statementEntry = tk.Entry(self.mandatoryFrame, font=("OpenSans", 12))
+            self.statementEntry = tk.Entry(self.mandatoryFrame, font=("OpenSans", 12), state=tk.DISABLED)
             self.statementEntry.grid(row=eRow, column=1, sticky=tk.W, padx=5)
 
             eRow += 1
 
-            self.tlpLabel = tk.Label(self.mandatoryFrame, text="*TLP:", font=("OpenSans", 12))
+            self.tlpLabel = tk.Label(self.mandatoryFrame, text="*TLP:", font=("OpenSans", 12), state=tk.DISABLED)
             self.tlpLabel.grid(row=eRow, column=0, sticky=tk.E, padx=5)
             self.tlpVar = tk.StringVar()
             self.tlpVar.set("")
-            self.tlpOption = tk.OptionMenu(self.mandatoryFrame, self.tlpVar, "statement", "tlp")
+            self.tlpOption = tk.OptionMenu(self.mandatoryFrame, self.tlpVar, "white", "green", "amber", "red")
             self.tlpOption.grid(row=eRow, column=1, sticky=tk.W, pady=5)
+            self.tlpOption.config(state=tk.DISABLED)
             eRow += 1
 
 

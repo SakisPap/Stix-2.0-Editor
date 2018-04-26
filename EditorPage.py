@@ -415,6 +415,7 @@ class Editor(tk.Frame):
             self.definition_typeVar.set("")
             self.definition_typeOption = tk.OptionMenu(self.mandatoryFrame, self.definition_typeVar, "statement", "tlp", command=markdef)
             self.definition_typeOption.grid(row=eRow, column=1, sticky=tk.W, pady=5)
+            self.widget_list.append([self.definition_typeVar, "definition_type"])
             eRow += 1
 
             self.statementLabel = tk.Label(self.mandatoryFrame, text="*Statement:", font=("OpenSans", 12), state=tk.DISABLED)
@@ -422,6 +423,7 @@ class Editor(tk.Frame):
 
             self.statementEntry = tk.Entry(self.mandatoryFrame, font=("OpenSans", 12), state=tk.DISABLED)
             self.statementEntry.grid(row=eRow, column=1, sticky=tk.W, padx=5)
+
 
             eRow += 1
 
@@ -658,6 +660,14 @@ class Editor(tk.Frame):
 
 
         dict = {}
+        if object=="marking-definition":
+            dict2 = {}
+            if (self.definition_typeVar.get()=="statement"):
+                dict2.update({self.definition_typeVar.get() : self.statementEntry.get()})
+                dict.update({"definition" : dict2})
+            else:
+                dict2.update({self.definition_typeVar.get() : self.tlpVar.get()})
+                dict.update({"definition": dict2})
         for item in self.widget_list:
             temp = item[0].get()
 

@@ -162,7 +162,7 @@ try:
     theme_file.close()
 except:
     rez_file = open(getcfgfile3(), "wb")
-    resolution = "800x480"
+    resolution = "1050x600"
     pickle.dump(resolution, rez_file)
     theme_file.close()
 
@@ -184,7 +184,7 @@ root = tk.Tk()
 root.geometry(resolution)
 root.configure(background = COLOR_1)
 #root.resizable(width=False, height=False)
-root.minsize(800, 480)
+root.minsize(1050, 600)
 root.title("STIX 2.0 Editor")
 def save_rez(event):
     rez_file = open(getcfgfile3(), "wb")

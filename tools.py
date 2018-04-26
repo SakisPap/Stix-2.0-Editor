@@ -400,8 +400,9 @@ class ExternalReferenceMaker(tk.Toplevel):
 
 
 class CreatedByRef():
-    def __init__(self, goFrame):
+    def __init__(self, goFrame, goRow):
         self.goFrame=goFrame
+        self.goRow=goRow
 
     def pop(self, root, goFrame):
         self.top = tk.Toplevel(root)
@@ -410,6 +411,7 @@ class CreatedByRef():
         self.top.resizable(width=False, height=False)
         self.frame = tk.Frame(self.top)
         self.frame.pack(fill=tk.X,pady=5)
+        self.goFrame=goFrame
 
         self.selected_value = ""
 
@@ -422,9 +424,12 @@ class CreatedByRef():
             self.listview.insert(tk.END, item)
 
     def callback(self):
+        try:
+            self.created_by_refLabel2.destroy()
+        except: pass
         self.selected_value=self.listview.get(self.listview.curselection()).split(": ")[1]
-        self.created_by_refLabel2 = tk.Label(self.goFrame, font=("OpenSans", 12))
-        self.created_by_refLabel2.grid(row=0, column=2, sticky="w", pady=5)
+        self.created_by_refLabel2 = tk.Label(self.goFrame, font=("OpenSans", 10))
+        self.created_by_refLabel2.grid(row=self.goRow, column=1, pady=5)
         self.created_by_refLabel2.configure(text=self.selected_value)
 
     def get(self):
@@ -434,8 +439,8 @@ class CreatedByRef():
             return ""
 
     def set(self, item):
-        self.created_by_refLabel2 = tk.Label(self.goFrame, font=("OpenSans", 12))
-        self.created_by_refLabel2.grid(row=0, column=2, sticky="w", pady=5)
+        self.created_by_refLabel2 = tk.Label(self.goFrame, font=("OpenSans", 10))
+        self.created_by_refLabel2.grid(row=self.goRow, column=1, pady=5)
         self.created_by_refLabel2.configure(text=item)
 
 
@@ -463,3 +468,21 @@ class CreatedByRef():
         self.cancelbutton = tk.Button(self.frame, text="Cancel", font=("OpenSans", 12), fg="white", bg="#FF3B30",
                                       command=lambda: [self.top.destroy()])
         self.cancelbutton.pack(side=tk.LEFT, fill=tk.X, expand=True, padx=5, pady=5)
+
+
+class HoverManager():
+    def __init__(self, object_class):
+        self.object_class=object_class
+
+    def show(self, widget):
+        if widget == "name":
+            text="Name: A name used to identify the "+self.object_class.object
+        elif widget == "labels":
+            text="Labels: This property is an Open Vocabulary that specifies the type of "+self.object_class.object
+        elif widget == "pattern":
+            text="Pattern: The detection pattern for this Indicator is a STIX Pattern as specified in STIX Patterning Docs.\n Format Example: [ipv4:value='192.168.1.1'] "
+        elif widget == "valid_from":
+            text = "Valid From: The time from which this Indicator should be considered valuable intelligence."
+
+        self.object_class.infoLabel.configure(text=text)
+

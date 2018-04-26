@@ -100,6 +100,6 @@ def relationship_maker(source,type,target):
     return relationship
 
 def marking_definition_maker(**kwargs):
-    marking_definition=stix2.MarkingDefinition(**kwargs)
-    itemtofile(marking_definition)
-    return marking_definition
+    marking_definition = stix2.MarkingDefinition(**kwargs)
+    flag = itemtofile(marking_definition)
+    return flag, marking_definition

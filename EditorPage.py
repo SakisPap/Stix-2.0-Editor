@@ -628,8 +628,12 @@ class Editor(tk.Frame):
                         pass
                         self.destroy()
             else:
-                flag, debug = getattr(sys.modules[__name__], "%s_maker" % object.replace("-", "_"))(**dict)
-                print(debug)
+                try:
+                    flag, debug = getattr(sys.modules[__name__], "%s_maker" % object.replace("-", "_"))(**dict)
+                    print(debug)
+                except Exception as e:
+                    tk.messagebox.showerror("Error", str(e), parent=self)
+                    return
                 if flag == "True":
                     tk.messagebox.showinfo("Object Edit Successfull!",
                                            object + " " + self.nameEntry.get() + " was edited seccessfully!",

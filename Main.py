@@ -306,8 +306,8 @@ optionsmenu.add_cascade(label="Sort by", menu=sortbyMenu)
 sortbyMenu.add_radiobutton(label="Alphabetical ▲", variable=sort, value="alph", command=lambda : options_command())
 sortbyMenu.add_radiobutton(label="Alphabetical ▼", variable=sort, value="alphdesc", command=lambda : options_command())
 sortbyMenu.add_separator()
-sortbyMenu.add_radiobutton(label="Last Modified ▲", variable=sort, value="lm", command=lambda : options_command())
-sortbyMenu.add_radiobutton(label="Last Modified ▼", variable=sort, value="lmdesc", command=lambda : options_command())
+sortbyMenu.add_radiobutton(label="Date Modified ▲", variable=sort, value="lm", command=lambda : options_command())
+sortbyMenu.add_radiobutton(label="Date Modified ▼", variable=sort, value="lmdesc", command=lambda : options_command())
 optionsmenu.add_separator()
 
 def getExecPath():

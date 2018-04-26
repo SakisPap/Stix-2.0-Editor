@@ -38,7 +38,7 @@ from stix2elevator.options import *
 
 
 def itemtofile(item):
-    if item.get("type") == "relationship" or item.get("type") == "observed-data" or item.get("type") == "marking-definition":
+    if item.get("type") == "relationship" or item.get("type") == "observed-data" or item.get("type") == "marking-definition" or item.get("type")=="sighting":
         filename=item.get("type")+"/"+item.get("id")+".json"
     else:
         filename=item.get("type")+"/"+item.get("name")+".json"
@@ -120,7 +120,7 @@ def setlastproject(ppath):
     file.close()
 
 def getFolderArray():
-    return ['attack-pattern', 'campaign', 'course-of-action', 'identity', 'indicator', 'intrusion-set', 'malware', 'observed-data', 'report', 'threat-actor', 'tool', 'vulnerability', 'relationship', 'marking-definition']
+    return ['attack-pattern', 'campaign', 'course-of-action', 'identity', 'indicator', 'intrusion-set', 'malware', 'observed-data', 'report', 'threat-actor', 'tool', 'vulnerability', 'relationship', 'marking-definition', 'sighting']
 
 def isProjectActive():
     for folder in getFolderArray():

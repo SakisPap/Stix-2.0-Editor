@@ -103,3 +103,8 @@ def marking_definition_maker(**kwargs):
     marking_definition = stix2.MarkingDefinition(**kwargs)
     flag = itemtofile(marking_definition)
     return flag, marking_definition
+
+def sighting_maker(**kwargs):
+    sighting = stix2.Sighting(**kwargs)
+    flag = itemtofile(sighting)
+    return flag, sighting

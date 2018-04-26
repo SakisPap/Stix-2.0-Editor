@@ -94,6 +94,69 @@ class Editor(tk.Frame):
             self.widget_list.append([self.nameEntry, "name"])
             eRow+=1
 
+        if (object == "sighting"):
+            # WARNING: Implement id selection toplevel OF ALL OBJECTS
+            self.sighting_of_refLabel = tk.Label(self.mandatoryFrame, text="*Sighting of Reference:",
+                                                 font=("OpenSans", 12))
+            self.sighting_of_refLabel.grid(row=eRow, column=0, sticky=tk.E, padx=5)
+            self.sighting_of_refButton = tk.Button(self.mandatoryFrame, font=("OpenSans", 12), text="Select...",
+                                                   command="Implement ID selection")
+            self.sighting_of_refButton.grid(row=eRow, column=1, sticky=tk.W, pady=5)
+            self.sighting_of_refLabel2 = tk.Entry(self.mandatoryFrame, text="All object ids",
+                                                 font=("OpenSans", 12))
+            self.sighting_of_refLabel2.grid(row=eRow, column=2, sticky=tk.E, padx=5)
+            self.widget_list.append([self.sighting_of_refLabel2, "sighting_of_ref"])
+            eRow += 1
+
+            self.countLabel = tk.Label(self.mandatoryFrame, text="Count:", font=("OpenSans", 12))  # integer
+            self.countLabel.grid(row=eRow, column=0, sticky=tk.E, padx=5)
+            self.countEntry = tk.Entry(self.mandatoryFrame, font=("OpenSans", 12))
+            self.countEntry.grid(row=eRow, column=1, sticky=tk.W, padx=5)
+            self.widget_list.append([self.countEntry, "count"])
+            eRow += 1
+
+
+            self.observed_data_refsLabel = tk.Label(self.mandatoryFrame, text="Observed Data References:",
+                                                    font=("OpenSans", 12))
+            self.observed_data_refsLabel.grid(row=eRow, column=0, sticky=tk.E, padx=5)
+            listitems = getObjectIDs("observed-data")
+            self.multiselect_observed_data_refs = Multiselect(self, self.mandatoryFrame, listitems, eRow, self.COLOR_1,
+                                                              self.COLOR_2,
+                                                              self.COLOR_3)
+            self.observed_data_refsButton = tk.Button(self.mandatoryFrame, font=("OpenSans", 12), text="...",
+                                                      command=lambda: [
+                                                          self.multiselect_observed_data_refs.place(x=225, y=5),
+                                                          self.mandatoryFrame.lift(),
+                                                          self.multiselect_observed_data_refs.lift(),
+                                                          self.multiselect_observed_data_refs.grab_set()])
+            self.observed_data_refsButton.grid(row=eRow, column=1, sticky=tk.W, pady=5)
+
+            self.widget_list.append([self.multiselect_observed_data_refs, "observed_data_refs"])
+            eRow += 1
+
+            self.where_sighted_refsLabel = tk.Label(self.mandatoryFrame, text="Where Sighted References:",
+                                                    font=("OpenSans", 12))
+            self.where_sighted_refsLabel.grid(row=eRow, column=0, sticky=tk.E, padx=5)
+            listitems = getObjectIDs("identity")
+            self.multiselect_where_sighted_refs = Multiselect(self, self.mandatoryFrame, listitems, eRow, self.COLOR_1,
+                                                              self.COLOR_2,
+                                                              self.COLOR_3)
+            self.where_sighted_refsButton = tk.Button(self.mandatoryFrame, font=("OpenSans", 12),
+                                                      text="Select Identity IDs",
+                                                      command=lambda: [
+                                                          self.multiselect_where_sighted_refs.place(x=225, y=5),
+                                                          self.mandatoryFrame.lift(),
+                                                          self.multiselect_where_sighted_refs.lift(),
+                                                          self.multiselect_where_sighted_refs.grab_set()])
+            self.where_sighted_refsButton.grid(row=eRow, column=1, sticky=tk.W, pady=5)
+            self.widget_list.append([self.multiselect_where_sighted_refs, "where_sighted_refs"])
+            eRow += 1
+
+            self.summaryCheckButton = tk.Checkbutton(self.mandatoryFrame, text="Summary", font=("OpenSans", 12),
+                                                     bg=self.COLOR_1)
+            self.summaryCheckButton.grid(row=eRow, column=0, sticky=tk.E, padx=5)
+            eRow += 1
+
         if object ==  "observed-data":
             self.first_observedLabel = tk.Label(self.mandatoryFrame, text="*First Observed:", font=("OpenSans", 12))
             self.first_observedLabel.grid(row=eRow, column=0, sticky=tk.E, padx=5)
@@ -440,61 +503,7 @@ class Editor(tk.Frame):
             self.markdefdesclaimerLabel.grid(row=eRow,column=0, sticky=tk.E,padx=5)
             eRow += 1
 
-        if(object=="sighting"):
-            self.countLabel = tk.Label(self.mandatoryFrame, text="Count:", font=("OpenSans", 12))#integer
-            self.countLabel.grid(row=eRow, column=0, sticky=tk.E, padx=5)
-            self.countEntry = tk.Entry(self.mandatoryFrame, font=("OpenSans", 12))
-            self.countEntry.grid(row=eRow, column=1, sticky=tk.W, padx=5)
-            self.widget_list.append([self.countEntry, "count"])
-            eRow+=1
 
-            #WARNING: Implement id selection topelvel
-            self.sighting_of_refLabel = tk.Label(self.mandatoryFrame, text="Sighting of Reference:",
-                                                    font=("OpenSans", 12))
-            self.sighting_of_refLabel.grid(row=eRow, column=0, sticky=tk.E, padx=5)
-            self.sighting_of_refButton = tk.Button(self.mandatoryFrame, font=("OpenSans", 12), text="Select...", command="Implement ID selection")
-            self.sighting_of_refButton.grid(row=eRow, column=1, sticky=tk.W, pady=5)
-            self.widget_list.append([self.sighting_of_refLabel2, "sighting_of_ref"])
-
-
-
-            self.observed_data_refsLabel = tk.Label(self.mandatoryFrame, text="Observed Data References:", font=("OpenSans", 12))
-            self.observed_data_refsLabel.grid(row=eRow, column=0, sticky=tk.E, padx=5)
-            listitems=getObjectIDs("observed-data")
-            self.multiselect_observed_data_refs = Multiselect(self, self.mandatoryFrame, listitems, eRow, self.COLOR_1, self.COLOR_2,
-                                                 self.COLOR_3)
-            self.observed_data_refsButton = tk.Button(self.mandatoryFrame, font=("OpenSans", 12), text="...",
-                                         command=lambda: [
-                                             self.multiselect_observed_data_refs.place(x=225, y=5),
-                                             self.mandatoryFrame.lift(),
-                                             self.multiselect_observed_data_refs.lift(),
-                                             self.multiselect_observed_data_refs.grab_set()])
-            self.observed_data_refsButton.grid(row=eRow, column=1, sticky=tk.W, pady=5)
-
-            self.widget_list.append([self.multiselect_observed_data_refs, "observed_data_refs"])
-            eRow += 1
-
-
-            self.where_sighted_refsLabel = tk.Label(self.mandatoryFrame, text="Where Sighted References:", font=("OpenSans", 12))
-            self.where_sighted_refsLabel.grid(row=eRow, column=0, sticky=tk.E, padx=5)
-            listitems=getObjectIDs("identity")
-            self.multiselect_where_sighted_refs = Multiselect(self, self.mandatoryFrame, listitems, eRow, self.COLOR_1,
-                                                              self.COLOR_2,
-                                                              self.COLOR_3)
-            self.where_sighted_refsButton = tk.Button(self.mandatoryFrame, font=("OpenSans", 12), text="...",
-                                                      command=lambda: [
-                                                          self.multiselect_where_sighted_refs.place(x=225, y=5),
-                                                          self.mandatoryFrame.lift(),
-                                                          self.multiselect_where_sighted_refs.lift(),
-                                                          self.multiselect_where_sighted_refs.grab_set()])
-            self.where_sighted_refsButton = tk.Button(self.mandatoryFrame, font=("OpenSans", 12), text="Select Identity...", command="modify createdbyref")
-            self.where_sighted_refsButton.grid(row=eRow, column=1, sticky=tk.W, pady=5)
-            self.widget_list.append([self.multiselect_where_sighted_refs, "where_sighted_refs"])
-            eRow += 1
-
-            self.summaryCheckButton = tk.Checkbutton(self.goFrame, text="Summary", font=("OpenSans", 12), bg=self.COLOR_1)
-            self.summaryCheckButton.grid(row=eRow, column=0, sticky=tk.E, padx=5)
-            eRow += 1
 
 
 

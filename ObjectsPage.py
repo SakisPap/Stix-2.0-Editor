@@ -310,19 +310,19 @@ class Objects(tk.Frame):
         self.listbox.delete(0, tk.END)
         self.full_list =[]
         for itemname in filestoarr2(self.sortby.get()):
-            if itemname.get("type") != "relationship" and itemname.get("type") != "marking-definition":
+            if itemname.get("type") != "relationship" and itemname.get("type") != "marking-definition" and itemname.get("type")!="sighting":
                 self.full_list.append(itemname.get("type")+": "+itemname.get("name")+": "+itemname.get("id"))
             else:
                 self.full_list.append(itemname.get("type") + ": "+itemname.get("id"))
         for itemname in self.full_list:
             itemname=itemname.split(": ")
-            if (itemname[0] != "relationship" and itemname[0] != "marking-definition" and self.viewby.get() == "name"):
+            if (itemname[0] != "relationship" and itemname[0] != "marking-definition" and itemname[0]!="sighting" and self.viewby.get() == "name"):
                 if self.display_type.get():
                     self.listbox.insert(tk.END, itemname[0] + ": " + itemname[1])
                 else:
                     self.listbox.insert(tk.END, itemname[1])
 
-            elif (itemname[0] != "relationship" and itemname[0] !="marking-definition" and self.viewby.get() == "id"):
+            elif (itemname[0] != "relationship" and itemname[0] !="marking-definition" and itemname[0]!="sighting" and self.viewby.get() == "id"):
                 self.listbox.insert(tk.END, itemname[2])
             else:
                 self.listbox.insert(tk.END, itemname[1])
@@ -334,20 +334,20 @@ class Objects(tk.Frame):
         self.listbox.delete(0, tk.END)
         self.full_list =[]
         for itemname in filestoarr2obj(object, self.sortby.get()):
-            if itemname.get("type") != "relationship" and itemname.get("type") != "marking-definition":
+            if itemname.get("type") != "relationship" and itemname.get("type") != "marking-definition" and itemname.get("type")!="sighting":
                 self.full_list.append(itemname.get("type")+": "+itemname.get("name")+": "+itemname.get("id"))
             else:
                 self.full_list.append(itemname.get("type") + ": "+itemname.get("id"))
 
         for itemname in self.full_list:
             itemname=itemname.split(": ")
-            if (itemname[0] != "relationship" and itemname[0] != "marking-definition" and self.viewby.get() == "name"):
+            if (itemname[0] != "relationship" and itemname[0] != "marking-definition" and itemname[0] !="sighting" and self.viewby.get() == "name"):
                 if self.display_type.get():
                     self.listbox.insert(tk.END, itemname[0] + ": " + itemname[1])
                 else:
                     self.listbox.insert(tk.END, itemname[1])
 
-            elif (itemname[0] != "relationship" and itemname[0] !="marking-definition" and self.viewby.get() == "id"):
+            elif (itemname[0] != "relationship" and itemname[0] !="marking-definition" and itemname[0] !="sighting" and self.viewby.get() == "id"):
                 self.listbox.insert(tk.END, itemname[2])
             else:
                 self.listbox.insert(tk.END, itemname[1])

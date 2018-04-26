@@ -536,16 +536,16 @@ class Editor(tk.Frame):
         self.object_marking_refsLabel = tk.Label(self.goFrame, text="Object Marking References:", font=("OpenSans", 12),
                                                  bg=self.COLOR_1)
         self.object_marking_refsLabel.grid(row=goRow, column=0, sticky=tk.E, padx=5)
-        #listitems = getMarkingDefs()
+        listitems = getFilesJson("marking-definition", 0)
         self.multiselect_object_marking_refs = Multiselect(self, self.goFrame, listitems, goRow, self.COLOR_1,
-                                                           self.COLOR_2, self.COLOR_3, flag="exref")
+                                                           self.COLOR_2, self.COLOR_3)
         self.object_marking_refsButton = tk.Button(self.goFrame, font=("OpenSans", 12), text="Add...", command=lambda: [
             self.multiselect_object_marking_refs.place(x=230, y=50),
             self.multiselect_object_marking_refs.lift(),
             self.multiselect_object_marking_refs.grab_set()])
         self.object_marking_refsButton.grid(row=goRow, column=1, sticky=tk.W, pady=5)
         self.widget_list.append([self.multiselect_object_marking_refs, "object_marking_refs"])
-        self.object_marking_refsButton.config(state=tk.DISABLED)
+
 
         goRow+=1
 

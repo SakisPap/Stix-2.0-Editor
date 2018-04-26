@@ -418,7 +418,7 @@ class Editor(tk.Frame):
             self.widget_list.append([self.definition_typeVar, "definition_type"])
             eRow += 1
 
-            self.statementLabel = tk.Label(self.mandatoryFrame, text="*Statement:", font=("OpenSans", 12), state=tk.DISABLED)
+            self.statementLabel = tk.Label(self.mandatoryFrame, text="**Statement:", font=("OpenSans", 12), state=tk.DISABLED)
             self.statementLabel.grid(row=eRow, column=0, sticky=tk.E, padx=5)
 
             self.statementEntry = tk.Entry(self.mandatoryFrame, font=("OpenSans", 12), state=tk.DISABLED)
@@ -427,13 +427,17 @@ class Editor(tk.Frame):
 
             eRow += 1
 
-            self.tlpLabel = tk.Label(self.mandatoryFrame, text="*TLP:", font=("OpenSans", 12), state=tk.DISABLED)
+            self.tlpLabel = tk.Label(self.mandatoryFrame, text="**TLP:", font=("OpenSans", 12), state=tk.DISABLED)
             self.tlpLabel.grid(row=eRow, column=0, sticky=tk.E, padx=5)
             self.tlpVar = tk.StringVar()
             self.tlpVar.set("")
             self.tlpOption = tk.OptionMenu(self.mandatoryFrame, self.tlpVar, "white", "green", "amber", "red")
             self.tlpOption.grid(row=eRow, column=1, sticky=tk.W, pady=5)
             self.tlpOption.config(state=tk.DISABLED)
+            eRow += 1
+
+            self.markdefdesclaimerLabel=tk.Label(self.mandatoryFrame, text="**You can only choose one\n based on Definition Type", font=("OpenSans", 8))
+            self.markdefdesclaimerLabel.grid(row=eRow,column=0, sticky=tk.E,padx=5)
             eRow += 1
 
 

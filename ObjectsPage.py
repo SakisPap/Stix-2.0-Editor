@@ -276,6 +276,7 @@ class Objects(tk.Frame):
 
     def start_Editor(self, type_of_editor):
         if self.object=="nothing" and type_of_editor==1:
+            #set object for when in display all
             self.object=self.full_list[self.listbox.curselection()[0]].split(": ")[0]
             editor = Editor(self, self.masterBody, self.full_list[self.listbox.curselection()[0]].split(": ")[0], type_of_editor)
         else:

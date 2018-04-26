@@ -38,7 +38,7 @@ from stix2elevator.options import *
 
 
 def itemtofile(item):
-    if item.get("type") == "relationship" or item.get("type") == "observed-data":
+    if item.get("type") == "relationship" or item.get("type") == "observed-data" or item.get("type") == "marking-definition":
         filename=item.get("type")+"/"+item.get("id")+".json"
     else:
         filename=item.get("type")+"/"+item.get("name")+".json"

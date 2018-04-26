@@ -83,7 +83,7 @@ class Editor(tk.Frame):
 
 
         #---Name---
-        if object != "observed-data":                                                   #Indicator's name can be optional according to docs but messes with the GUI understanding
+        if object != "observed-data" or object!= "marking-definition":                                                   #Indicator's name can be optional according to docs but messes with the GUI understanding
             self.nameLabel = tk.Label(self.mandatoryFrame, text="*Name:", font=("OpenSans", 12))
             self.nameLabel.grid(row=eRow, column=0, sticky=tk.E, padx=5)
             self.nameEntry = tk.Entry(self.mandatoryFrame, font=("OpenSans", 12))
@@ -395,6 +395,36 @@ class Editor(tk.Frame):
 
 
 
+        if(object=="marking-definition"):
+            def markdef():
+                print("")
+
+            self.definition_typeLabel = tk.Label(self.mandatoryFrame, text="*Definition Type:", font=("OpenSans", 12))
+            self.definition_typeLabel.grid(row=eRow, column=0, sticky=tk.E, padx=5)
+            self.definition_typeVar = tk.StringVar()
+            self.definition_typeVar.set("")
+            self.definition_typeOption = tk.OptionMenu(self.mandatoryFrame, self.definition_typeVar, "statement", "tlp", command=markdef)
+            self.definition_typeOption.grid(row=eRow, column=1, sticky=tk.W, pady=5)
+            eRow += 1
+
+            self.statementLabel = tk.Label(self.mandatoryFrame, text="*Statement:", font=("OpenSans", 12))
+            self.statementLabel.grid(row=eRow, column=0, sticky=tk.E, padx=5)
+
+            self.statementEntry = tk.Entry(self.mandatoryFrame, font=("OpenSans", 12))
+            self.statementEntry.grid(row=eRow, column=1, sticky=tk.W, padx=5)
+
+            eRow += 1
+
+            self.tlpLabel = tk.Label(self.mandatoryFrame, text="*TLP:", font=("OpenSans", 12))
+            self.tlpLabel.grid(row=eRow, column=0, sticky=tk.E, padx=5)
+            self.tlpVar = tk.StringVar()
+            self.tlpVar.set("")
+            self.tlpOption = tk.OptionMenu(self.mandatoryFrame, self.tlpVar, "statement", "tlp")
+            self.tlpOption.grid(row=eRow, column=1, sticky=tk.W, pady=5)
+            eRow += 1
+
+
+
 
 #-----------------------------------------------------Autofill Tab-----------------------------------------------------
 
@@ -426,11 +456,14 @@ class Editor(tk.Frame):
 
         afRow+=1
 
-        self.modifiedLabel = tk.Label(self.afFrame, text="Modified:", font=("OpenSans", 12), bg=self.COLOR_1)
-        self.modifiedLabel.grid(row=afRow, column=0, sticky=tk.E, padx=5)
-        self.modifiedEntry = tk.Entry(self.afFrame, font=("OpenSans", 12))
-        self.modifiedEntry.grid(row=afRow, column=1, sticky=tk.W, pady=5)
-        self.widget_list.append([self.modifiedEntry, "modified"])
+        if (object!="marking-definition"):
+            self.modifiedLabel = tk.Label(self.afFrame, text="Modified:", font=("OpenSans", 12), bg=self.COLOR_1)
+            self.modifiedLabel.grid(row=afRow, column=0, sticky=tk.E, padx=5)
+            self.modifiedEntry = tk.Entry(self.afFrame, font=("OpenSans", 12))
+            self.modifiedEntry.grid(row=afRow, column=1, sticky=tk.W, pady=5)
+            self.widget_list.append([self.modifiedEntry, "modified"])
+
+            afRow+=1
 
 
 
@@ -464,10 +497,11 @@ class Editor(tk.Frame):
 
         goRow+=1
 
-        self.revokedCheckButton=tk.Checkbutton(self.goFrame, text="Revoked?", font=("OpenSans", 12), bg=self.COLOR_1)#Add revoked management
-        self.revokedCheckButton.grid(row=goRow,column=0,sticky=tk.E, padx=5)
+        if (object != "marking-definition"):
+            self.revokedCheckButton=tk.Checkbutton(self.goFrame, text="Revoked?", font=("OpenSans", 12), bg=self.COLOR_1)#Add revoked management
+            self.revokedCheckButton.grid(row=goRow,column=0,sticky=tk.E, padx=5)
 
-        goRow+=1
+            goRow+=1
 
         self.external_referencesLabel = tk.Label(self.goFrame, text="External References:", font=("OpenSans", 12), bg=self.COLOR_1)
         self.external_referencesLabel.grid(row=goRow, column=0, sticky=tk.E, padx=5)
@@ -479,7 +513,39 @@ class Editor(tk.Frame):
         self.external_referencesButton.grid(row=goRow, column=1, sticky=tk.W, pady=5)
         self.widget_list.append([self.multiselect_external_references, "external_references"])
 
+        goRow+=1
 
+        self.object_marking_refsLabel = tk.Label(self.goFrame, text="Object Marking References:", font=("OpenSans", 12),
+                                                 bg=self.COLOR_1)
+        self.object_marking_refsLabel.grid(row=goRow, column=0, sticky=tk.E, padx=5)
+        #listitems = getMarkingDefs()
+        self.multiselect_object_marking_refs = Multiselect(self, self.goFrame, listitems, goRow, self.COLOR_1,
+                                                           self.COLOR_2, self.COLOR_3, flag="exref")
+        self.object_marking_refsButton = tk.Button(self.goFrame, font=("OpenSans", 12), text="Add...", command=lambda: [
+            self.multiselect_object_marking_refs.place(x=230, y=50),
+            self.multiselect_object_marking_refs.lift(),
+            self.multiselect_object_marking_refs.grab_set()])
+        self.object_marking_refsButton.grid(row=goRow, column=1, sticky=tk.W, pady=5)
+        self.widget_list.append([self.multiselect_object_marking_refs, "object_marking_refs"])
+        self.object_marking_refsButton.config(state=tk.DISABLED)
+
+        goRow+=1
+
+        self.granular_markingsLabel = tk.Label(self.goFrame, text="Granular Markings:", font=("OpenSans", 12),
+                                                 bg=self.COLOR_1)
+        self.granular_markingsLabel.grid(row=goRow, column=0, sticky=tk.E, padx=5)
+        # listitems = getGranularMarks()
+        self.multiselect_granular_markings = Multiselect(self, self.goFrame, listitems, goRow, self.COLOR_1,
+                                                           self.COLOR_2, self.COLOR_3, flag="exref")
+        self.granular_markingsButton = tk.Button(self.goFrame, font=("OpenSans", 12), text="Add...", command=lambda: [
+            self.multiselect_granular_markings.place(x=230, y=50),
+            self.multiselect_granular_markings.lift(),
+            self.multiselect_granular_markings.grab_set()])
+        self.granular_markingsButton.grid(row=goRow, column=1, sticky=tk.W, pady=5)
+        self.widget_list.append([self.multiselect_granular_markings, "granular_markings"])
+        self.granular_markingsButton.config(state=tk.DISABLED)
+
+        goRow += 1
 
 
         #add markings, object_marking_refs and granualr markings

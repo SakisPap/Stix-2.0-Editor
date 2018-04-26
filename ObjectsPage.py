@@ -234,8 +234,9 @@ class Objects(tk.Frame):
         self.displayall_Button = tk.Button(self.gridBody, image=self.displayall_img, bg=self.COLOR_3, activebackground=self.COLOR_3, relief=tk.FLAT, height=77, width=77, highlightthickness=0, highlightbackground=self.COLOR_3, command=lambda: [self.selector("nothing"), self.enlistall(), print(self.object), self.add_button.configure(state=tk.DISABLED), self.edit_button.configure(state=tk.DISABLED)])
         self.displayall_Button.grid(row=3, column=0, padx=PADX, pady=PADY, sticky="nsew")
 
-        self.marking_defsButton = tk.Button(self.gridBody, image=self.relationship_img, bg=self.COLOR_3, activebackground=self.COLOR_3, relief=tk.FLAT, height=77, width=77, highlightthickness=0, highlightbackground=self.COLOR_3, command=lambda: print("placeholder"))
+        self.marking_defsButton = tk.Button(self.gridBody, image=self.relationship_img, bg=self.COLOR_3, activebackground=self.COLOR_3, relief=tk.FLAT, height=77, width=77, highlightthickness=0, highlightbackground=self.COLOR_3, command=lambda: self.selector("marking-definition"))
         self.marking_defsButton.grid(row=3, column=1, padx=PADX, pady=PADY, sticky="nsew")
+        self.marking_defsButton.configure(state=tk.DISABLED) #Dreeeeeeee i disabled it here
 
         self.relationship_Button = tk.Button(self.gridBody, image=self.relationship_img, bg=self.COLOR_3, activebackground=self.COLOR_3, relief=tk.FLAT, height=77, width=77, highlightthickness=0, highlightbackground=self.COLOR_3, command=lambda: self.selector("relationship"))
         self.relationship_Button.grid(row=3, column=2, padx=PADX, pady=PADY, sticky="nsew")
@@ -394,6 +395,10 @@ class Objects(tk.Frame):
             self.infoLabel.configure(text="Vulnerability: A mistake in software that can be directly used by a hacker to gain access to a system or network.")
             self.topLabel.config(text="Selected Object: Vulnerability")
             self.listLabel.config(text="Existing Vulnerabilities in project")
+        elif object == "marking-definition":
+            self.infoLabel.configure(text="Marking Definition: The marking-definition object represents a specific marking. Data markings typically represent handling or sharing requirements for data.")
+            self.topLabel.config(text="Selected Object: Marking Definition")
+            self.listLabel.config(text="Existing Marking Definitions in project")
         elif object == "relationship":
             self.infoLabel.configure(text="Relationship: Used to link two SDOs and to describe how they are related to each other.")
             self.topLabel.config(text="Selected Object: Relationship")

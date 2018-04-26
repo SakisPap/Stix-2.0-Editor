@@ -2,7 +2,8 @@ High Priority:
 
 1.   Finish with Data Markings (markdefs,object_marking_refs,granular)
 2.   Implement Sightings
-3.   Implement Sightings
+3.   Add tips on hover with the official definition, datatype of property and an example
+4.   Add datatype quickhelp messagebox
 
 Medium Priority:
 

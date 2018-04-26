@@ -120,7 +120,7 @@ def setlastproject(ppath):
     file.close()
 
 def getFolderArray():
-    return ['attack-pattern', 'campaign', 'course-of-action', 'identity', 'indicator', 'intrusion-set', 'malware', 'observed-data', 'report', 'threat-actor', 'tool', 'vulnerability', 'relationship']
+    return ['attack-pattern', 'campaign', 'course-of-action', 'identity', 'indicator', 'intrusion-set', 'malware', 'observed-data', 'report', 'threat-actor', 'tool', 'vulnerability', 'relationship', 'marking-definition']
 
 def isProjectActive():
     for folder in getFolderArray():

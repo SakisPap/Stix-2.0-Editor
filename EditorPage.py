@@ -152,9 +152,11 @@ class Editor(tk.Frame):
             self.widget_list.append([self.multiselect_where_sighted_refs, "where_sighted_refs"])
             eRow += 1
 
+            self.summaryVar=tk.BooleanVar()
             self.summaryCheckButton = tk.Checkbutton(self.mandatoryFrame, text="Summary", font=("OpenSans", 12),
-                                                     bg=self.COLOR_1)
+                                                     bg=self.COLOR_1, variable=self.summaryVar)
             self.summaryCheckButton.grid(row=eRow, column=0, sticky=tk.E, padx=5)
+            self.widget_list.append([self.summaryVar, "summary"])
             eRow += 1
 
         if object ==  "observed-data":
@@ -583,8 +585,10 @@ class Editor(tk.Frame):
         goRow+=1
 
         if (object != "marking-definition"):
-            self.revokedCheckButton=tk.Checkbutton(self.goFrame, text="Revoked?", font=("OpenSans", 12), bg=self.COLOR_1)#Add revoked management
+            self.revokedVar=tk.BooleanVar()
+            self.revokedCheckButton=tk.Checkbutton(self.goFrame, text="Revoked?", font=("OpenSans", 12), bg=self.COLOR_1, variable=self.revokedVar)#Add revoked management
             self.revokedCheckButton.grid(row=goRow,column=0,sticky=tk.E, padx=5)
+            self.widget_list.append([self.revokedVar,"revoked"])
 
             goRow+=1
 

@@ -369,7 +369,7 @@ class ExternalReferenceMaker(tk.Toplevel):
         self.ext_idtext.grid(row=4, column=1, padx=5, pady=5, sticky=tk.W)
 
         self.hashesdesclaimer = tk.Label(self.frame, text="**Hashes will be omitted if URL is not present.", font=("OpenSans", 8))
-        self.hashesdesclaimer.grid(row=5, column=0, padx=5, pady=5, sticky=tk.E)
+        self.hashesdesclaimer.grid(row=5, column=0, columnspan=2, padx=5, pady=5, sticky=tk.W)
 
 
 
@@ -380,7 +380,7 @@ class ExternalReferenceMaker(tk.Toplevel):
         self.label.pack(fill=tk.X, padx=10)
 
         self.listview = tk.Listbox(self.btframe, font=("OpenSans", 10, "bold"), height=5)
-        self.listview.pack(fill=tk.X, expand=True, padx=10)
+        self.listview.pack(fill=tk.X, padx=10)
 
         self.getlist()
 

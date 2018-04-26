@@ -456,9 +456,11 @@ class Editor(tk.Frame):
             self.sighting_of_refButton.grid(row=eRow, column=1, sticky=tk.W, pady=5)
             self.widget_list.append([self.sighting_of_refLabel2, "sighting_of_ref"])
 
+
+
             self.observed_data_refsLabel = tk.Label(self.mandatoryFrame, text="Observed Data References:", font=("OpenSans", 12))
             self.observed_data_refsLabel.grid(row=eRow, column=0, sticky=tk.E, padx=5)
-            #WARNING: IMPLEMENT FUNC listitems=getObservedDataIDs()
+            listitems=getObjectIDs("observed-data")
             self.multiselect_observed_data_refs = Multiselect(self, self.mandatoryFrame, listitems, eRow, self.COLOR_1, self.COLOR_2,
                                                  self.COLOR_3)
             self.observed_data_refsButton = tk.Button(self.mandatoryFrame, font=("OpenSans", 12), text="...",
@@ -475,7 +477,7 @@ class Editor(tk.Frame):
 
             self.where_sighted_refsLabel = tk.Label(self.mandatoryFrame, text="Where Sighted References:", font=("OpenSans", 12))
             self.where_sighted_refsLabel.grid(row=eRow, column=0, sticky=tk.E, padx=5)
-            listitems=getIdentityIDs()
+            listitems=getObjectIDs("identity")
             self.multiselect_where_sighted_refs = Multiselect(self, self.mandatoryFrame, listitems, eRow, self.COLOR_1,
                                                               self.COLOR_2,
                                                               self.COLOR_3)

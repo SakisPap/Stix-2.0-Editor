@@ -167,13 +167,12 @@ def getIdentityRef():
         identitylist.append(identity.get("name")+" : "+identity.get("id"))
     return identitylist
 
-def getIdentityIDs():
-    identitylist=[]
-    folder="identity"
-    for file in getFilesJsonExt(folder, "alph"):
-        identity=filetoitem(os.path.join(folder, file))
-        identitylist.append(identity.get("id"))
-    return identitylist
+def getObjectIDs(type):
+    idlist=[]
+    for file in getFilesJsonExt(type, "alph"):
+        stix2obj=filetoitem(os.path.join(type, file))
+        idlist.append(stix2obj.get("id"))
+    return idlist
 
 def InitNewEnvironment(projectpath):
     if not (os.path.exists(projectpath)):

@@ -232,10 +232,13 @@ class Objects(tk.Frame):
 
         #Row=3
         self.displayall_Button = tk.Button(self.gridBody, image=self.displayall_img, bg=self.COLOR_3, activebackground=self.COLOR_3, relief=tk.FLAT, height=77, width=77, highlightthickness=0, highlightbackground=self.COLOR_3, command=lambda: [self.selector("nothing"), self.enlistall(), print(self.object), self.add_button.configure(state=tk.DISABLED), self.edit_button.configure(state=tk.DISABLED)])
-        self.displayall_Button.grid(row=3, column=0, columnspan=2, padx=PADX, pady=PADY, sticky="nsew")
+        self.displayall_Button.grid(row=3, column=0, padx=PADX, pady=PADY, sticky="nsew")
+
+        self.marking_defsButton = tk.Button(self.gridBody, image=self.relationship_img, bg=self.COLOR_3, activebackground=self.COLOR_3, relief=tk.FLAT, height=77, width=77, highlightthickness=0, highlightbackground=self.COLOR_3, command=lambda: print("placeholder"))
+        self.marking_defsButton.grid(row=3, column=1, padx=PADX, pady=PADY, sticky="nsew")
 
         self.relationship_Button = tk.Button(self.gridBody, image=self.relationship_img, bg=self.COLOR_3, activebackground=self.COLOR_3, relief=tk.FLAT, height=77, width=77, highlightthickness=0, highlightbackground=self.COLOR_3, command=lambda: self.selector("relationship"))
-        self.relationship_Button.grid(row=3, column=2, columnspan=2, padx=PADX, pady=PADY, sticky="nsew")
+        self.relationship_Button.grid(row=3, column=2, padx=PADX, pady=PADY, sticky="nsew")
 
 
         for i in range(4):

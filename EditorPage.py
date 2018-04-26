@@ -83,7 +83,7 @@ class Editor(tk.Frame):
 
 
         #---Name---
-        if (object != "observed-data" or object != "marking-definition"):                                                   #Indicator's name can be optional according to docs but messes with the GUI understanding
+        if (object != "observed-data" and object != "marking-definition"):                                                   #Indicator's name can be optional according to docs but messes with the GUI understanding
             self.nameLabel = tk.Label(self.mandatoryFrame, text="*Name:", font=("OpenSans", 12))
             self.nameLabel.grid(row=eRow, column=0, sticky=tk.E, padx=5)
             self.nameEntry = tk.Entry(self.mandatoryFrame, font=("OpenSans", 12))
@@ -211,7 +211,7 @@ class Editor(tk.Frame):
 
         ###########OBJECT SPECIFIC OPTIONALS----------#############################################OBJECT SPECIFIC OPTIONALS----------##################################
         #description (featured in all excpt)
-        if(object!="observed-data" or object!="marking-definition"):
+        if(object!="observed-data" and object!="marking-definition"):
             self.descriptionLabel = tk.Label(self.mandatoryFrame, text="Description:", font=("OpenSans", 12))
             self.descriptionLabel.grid(row=eRow, column=0, sticky=tk.E, padx=5)
             self.descriptionEntry = tk.Entry(self.mandatoryFrame, font=("OpenSans", 12), width=60)

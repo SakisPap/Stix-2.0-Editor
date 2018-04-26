@@ -236,7 +236,7 @@ mngmntMenu = tk.Menu(menubar)#
 toolsmenu.add_command(label="Convert STIX1 item to STIX2...", command=lambda : [Elevate()])
 #toolsmenu.add_command(label="Bundle Management...", command=lambda : [bundle_management_window()])
 toolsmenu.add_cascade(label="Bundle Management...", menu=mngmntMenu) #
-mngmntMenu.add_command(label="Import Bundle Objects into current Project", command= lambda : [BundleManage("import")])#
+mngmntMenu.add_command(label="Import Bundle Objects into current Project", command= lambda : [BundleManage("import"), objects_page.enlistall(), objects_page.selector("nothing")])#
 mngmntMenu.add_separator()#
 mngmntMenu.add_command(label="Extract Bundle Objects into a directory", command=lambda: [BundleManage("extract")])#
 mngmntMenu.add_separator()#

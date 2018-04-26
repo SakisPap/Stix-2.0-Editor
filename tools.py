@@ -424,7 +424,7 @@ class CreatedByRef():
     def callback(self):
         self.selected_value=self.listview.get(self.listview.curselection()).split(": ")[1]
         self.created_by_refLabel2 = tk.Label(self.goFrame, font=("OpenSans", 12))
-        self.created_by_refLabel2.grid(row=0, column=2, sticky=tk.W, pady=5)
+        self.created_by_refLabel2.grid(row=0, column=2, sticky="w", pady=5)
         self.created_by_refLabel2.configure(text=self.selected_value)
 
     def get(self):
@@ -435,7 +435,7 @@ class CreatedByRef():
 
     def set(self, item):
         self.created_by_refLabel2 = tk.Label(self.goFrame, font=("OpenSans", 12))
-        self.created_by_refLabel2.grid(row=0, column=2, sticky=tk.W, pady=5)
+        self.created_by_refLabel2.grid(row=0, column=2, sticky="w", pady=5)
         self.created_by_refLabel2.configure(text=item)
 
 

@@ -26,7 +26,7 @@ import tkinter as tk
 from ObjectsPage import Objects
 from PIL import Image, ImageTk
 import os
-from stix_io import OpenProject, LoadEnvironment, readfile, ImportFile, ExportProject, OpenInExplorer, NewProject, checkcfgfolder, LoadPrevious, getcfgfile, getcfgfile2
+from stix_io import OpenProject, LoadEnvironment, readfile, ImportFile, ExportProject, OpenInExplorer, NewProject, checkcfgfolder, LoadPrevious, getcfgfile, getcfgfile2, getcfgfile3
 from tkinter import messagebox
 from tools import Elevate, bugreport, BundleManage, KillChainPhaseMaker, ExternalReferenceMaker
 import pickle
@@ -156,6 +156,16 @@ except:
     pickle.dump(theme, theme_file)
     theme_file.close()
 
+try:
+    rez_file = open(getcfgfile3(), "rb")
+    resolution = pickle.load(rez_file)
+    theme_file.close()
+except:
+    rez_file = open(getcfgfile3(), "wb")
+    resolution = "800x480"
+    pickle.dump(resolution, rez_file)
+    theme_file.close()
+
 #--color decleration--
 if theme == "sea":
     COLOR_1 = "#AED1D6"
@@ -171,11 +181,18 @@ elif theme == "green":
     COLOR_1 = "#C3D898"
 
 root = tk.Tk()
-root.geometry("800x480")
+root.geometry(resolution)
 root.configure(background = COLOR_1)
 #root.resizable(width=False, height=False)
 root.minsize(800, 480)
 root.title("STIX 2.0 Editor")
+def save_rez(event):
+    rez_file = open(getcfgfile3(), "wb")
+    resolution = str(root.winfo_width())+"x"+str(root.winfo_height())
+    pickle.dump(resolution, rez_file)
+    theme_file.close()
+root.bind( "<Configure>", save_rez)
+
 
 try:
     root.iconbitmap(os.path.abspath("logo.ico"))

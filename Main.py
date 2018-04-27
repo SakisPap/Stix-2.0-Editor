@@ -63,6 +63,28 @@ def options_command():
             print("exception in options_command possibly bc of filesystem not being loaded")
 
 
+def datatypehelp(datatype):
+    if(datatype=="string"):
+        messagebox.showinfo("String", "A series of unicode characters. Text that can contain any character,whitespaces and symbols, with only exception the Name property.")
+    elif(datatype=="list"):
+        messagebox.showinfo("List",
+                            "A sequence of values ordered based on how they appear in the list. The phrasing “list of type <type>” is used to indicate that all values within the list MUST conform to the specified type.\n"
+                            "The most common encountered lists are of type string and identifier (ID).\nA single whitespace is used to seperate the strings in list. On any other occasion (e.g. identifier list or open-vocal list you only have to click one or multiple entries on the Multi-Selection feature of the GUI.")
+    elif(datatype=="open-vocab"):
+        messagebox.showinfo("Vocabulary", "open-vocab A value from a STIX open (open-vocab) or suggested vocabulary.\nIt is ultilized in a drop-down list, or a Multi-Selection with all the allowed values for the specific property. Selecting the blank option from the drop-down list ignores the specific property.")
+    elif(datatype=="identifier"):
+        messagebox.showinfo("Identifier", "An identifier universally and uniquely identifies a SDO, SRO, Bundle, or Marking Definition. Identifiers MUST follow the form object-type--UUIDv4, where object-type is the exact value (all type names are lowercase strings, by definition) from the type property of the object being identified or referenced and where the UUIDv4 is an RFC 4122-compliant Version 4 UUID. The UUID MUST be generated according to the algorithm(s) defined in RFC 4122.\n\nNOTE: By default the ID is automatically generated. It is located in the third page (auto generated properties) and it is recommended to leave this property blank. (auto-set)")
+    elif(datatype=="timestamp"):
+        tk.messagebox.showinfo("Timestamp", "A time value (date and time). The timestamp property MUST be a valid RFC 3339-formatted timestamp [RFC3339] using the format YYYY-MM-DDTHH:mm:ss[.s+]Z where the “s+” represents 1 or more sub-second values. The brackets denote that sub-second precision is optional, and that if no digits are provided, the decimal place MUST NOT be present. The timestamp MUST be represented in the UTC timezone and MUST use the “Z” designation to indicate this.\n\nAlternatively, for ease of access you can enter the timestamp in the format YYYY/MM/DD hh:mm:ss (please include the backslashes, whitespace and colon), for example 27/04/2018 18:44:22.")
+    elif(datatype=="boolean"):
+        tk.messagebox.showinfo("Boolean", "A value of true or false. All boolean values are presented with a checkbox.")
+    elif(datatype=="integer"):
+        tk.messagebox.showinfo("Integer", "A whole number, in the range of ([-(2**63)+1, (2**63)-1].")
+    elif(datatype=="external-reference"):
+        tk.messagebox.showinfo("External Reference", "A non-STIX identifier or reference to other related external content. Being non-STIX, its non-project related and it can be created from the Tools menu. Every constructed External Reference is accessible to any project.")
+    elif(datatype=="kill-chain-phase"):
+        tk.messagebox.showinfo("Kill Chain Phase", "The kill-chain-phase represents a phase in a kill chain, which describes the various phases an attacker may undertake in order to achieve their objectives. Not being a STIX object, its non-project related and it can be created from the Tools menu. Every constructed Kill Chain Phase is accessible to any project.")
+
 
 def about_window():
     window = tk.Toplevel(root, relief=tk.FLAT, highlightthickness=0)
@@ -240,6 +262,18 @@ mngmntMenu.add_command(label="Import Bundle Objects into current Project", comma
 mngmntMenu.add_separator()#
 mngmntMenu.add_command(label="Extract Bundle Objects into a directory", command=lambda: [BundleManage("extract")])#
 mngmntMenu.add_separator()#
+
+datatypesmenu=tk.Menu(menubar, tearoff=0)
+datatypesmenu.add_command(label="String", command = lambda : [datatypehelp("string")])
+datatypesmenu.add_command(label="List", command = lambda : [datatypehelp("list")])
+datatypesmenu.add_command(label="Open Vocabulary", command = lambda : [datatypehelp("open-vocab")])
+datatypesmenu.add_command(label="Identifier (ID)", command = lambda : [datatypehelp("identifier")])
+datatypesmenu.add_command(label="Boolean", command = lambda : [datatypehelp("boolean")])
+datatypesmenu.add_command(label="Integer", command = lambda : [datatypehelp("integer")])
+datatypesmenu.add_command(label="External Reference", command = lambda : [datatypehelp("external-reference")])
+datatypesmenu.add_command(label="Kill Chain Phase", command = lambda : [datatypehelp("kill-chain-phase")])
+menubar.add_cascade(label="Data Types Help", menu=datatypesmenu)
+
 
 def killchainStart():
     killchainphasemaker = KillChainPhaseMaker(root)

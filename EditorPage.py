@@ -786,21 +786,32 @@ class Editor(tk.Frame):
         else:
             try:
                 check = self.oname!=self.nameEntry.get()
+                changedvar="name"
             except:
                 check = self.oname!=self.idEntry.get()
+                changedvar="id"
 
             if (check):
-                ans=tk.messagebox.askyesno("Warning", "You have modified the name of the object. As a result, all data will be stored into another object and not into the current one. Would you like to revert the name back to default?")
+                ans=tk.messagebox.askyesno("Warning", "You have modified the name/id of the object. As a result, all data will be stored into another object and not into the current one. Would you like to revert the property back to default?")
                 if(ans):
-                    self.nameEntry.delete(0,tk.END)
-                    self.nameEntry.insert(0, self.oname)
+                    if(changedvar=="name"):
+                        self.nameEntry.delete(0,tk.END)
+                        self.nameEntry.insert(0, self.oname)
+                    else:
+                        self.idEntry.delete(0, tk.END)
+                        self.idEntry.insert(0, self.oname)
                 else:
                     ans2=tk.messagebox.askyesno("Replication", "Would you like to create a new object with the current properties?")
                     if(ans2):
                         flag, debug = getattr(sys.modules[__name__], "%s_maker" % object.replace("-", "_"))(**dict)
                         print(debug)
-                        tk.messagebox.showinfo("Object Replication Successfull!",
-                                                   object + " " + self.nameEntry.get() + " was created seccessfully, while "+ self.oname + " was left intact.",
+                        if(changedvar=="name"):
+                            tk.messagebox.showinfo("Object Replication Successfull!",
+                                                       object + " " + self.nameEntry.get() + " was created seccessfully, while "+ self.oname + " was left intact.",
+                                                       parent=self)
+                        else:
+                            tk.messagebox.showinfo("Object Replication Successfull!",
+                                                   object + " " + self.idEntry.get() + " was created seccessfully, while " + self.oname + " was left intact.",
                                                    parent=self)
                         self.editmode=False
                         pass

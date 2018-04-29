@@ -709,7 +709,7 @@ class Editor(tk.Frame):
 
 
     def edit(self):
-        if self.object!="sighting":
+        if self.object!="sighting" and self.object!="marking-definition":
             name = self.full_list[self.listbox.curselection()[0]]
             name = name.split(": ")
             stix2object = filestoarr2obj4edit(name[0], name[1])
@@ -728,7 +728,7 @@ class Editor(tk.Frame):
                     item[0].set(stix2object[item[1]])
 
         self.editmode=True
-        if self.object!="sighting":
+        if self.object!="sighting" and self.object!="marking-definition":
             self.oname=self.nameEntry.get()
         else:
             self.oname=stix2object.get("id")
@@ -773,12 +773,12 @@ class Editor(tk.Frame):
 
 
         if not self.editmode:
-            #try:
-            flag, debug = getattr(sys.modules[__name__], "%s_maker" % object.replace("-", "_"))(**dict)
-            print(debug)
-            #except Exception as e:
-                #tk.messagebox.showerror("Error", str(e), parent = self)
-                #return
+            try:
+                flag, debug = getattr(sys.modules[__name__], "%s_maker" % object.replace("-", "_"))(**dict)
+                print(debug)
+            except Exception as e:
+                tk.messagebox.showerror("Error", str(e), parent = self)
+                return
             if flag=="True":
                 tk.messagebox.showinfo("Object Creation Successfull!", object + " " + self.nameEntry.get() + " created seccessfully!", parent = self)
                 pass

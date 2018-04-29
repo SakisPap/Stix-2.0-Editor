@@ -442,7 +442,10 @@ class CreatedByRef():
         try:
             return self.selected_value
         except:
-            return self.created_by_refLabel2.cget("text")
+            try:
+                return self.created_by_refLabel2.cget("text")
+            except:
+                return ""
 
     def set(self, item):
         self.created_by_refLabel2 = tk.Label(self.goFrame, font=("OpenSans", 10))
@@ -484,7 +487,7 @@ class SightingOfRef():
 
     def pop(self, mandatoryFrame):
         self.top = tk.Toplevel(mandatoryFrame)
-        self.top.title("Identity Selection")
+        self.top.title("Object Selection")
         self.top.grab_set()
         self.top.attributes("-topmost", "true")
         #self.geometry("1900x950")
@@ -517,7 +520,6 @@ class SightingOfRef():
             return self.selected_value
         except:
             return self.sighting_of_refLabel2.cget("text")
-            #return ""
 
     def set(self, item):
         self.sighting_of_refLabel2 = tk.Label(self.mandatoryFrame, font=("OpenSans", 10))

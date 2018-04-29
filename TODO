@@ -1,11 +1,16 @@
 High Priority:
 
-1.   Finish with Data Markings (markdefs,object_marking_refs,granular)
-2.   Implement Sightings
-3.   Add tips on hover with the official definition, datatype of property and an example
-4.   Add datatype quickhelp messagebox
+1) Implement granular markings (which mark the end of the all object properties)
+2) Improve Hover class and add tips on mouse hover with the official definition, datatype of property and an example
+3) Fix a rare bug with editing GUI
 
 Medium Priority:
 
-1) Implement observables
+1) Implement observables (will most likely be done via a command line tool or user input)
+2) Fix a bug on sorting
+
+Low Priority:
+1) Add clarification popup on some settings (eg converted STIX1 object has to be >=1.2 version)
+2) Add an option to reset geometry
+3) Add an option to backup non STIX objects (killchains and extrefs)
 

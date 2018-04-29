@@ -248,7 +248,7 @@ class Objects(tk.Frame):
 
         self.sightingButton = tk.Button(self.gridBody, image=self.sighting_img, bg=self.COLOR_3, activebackground=self.COLOR_3, relief=tk.FLAT, height=77, width=77, highlightthickness=0, highlightbackground=self.COLOR_3, command=lambda: self.selector("sighting"))
         self.sightingButton.grid(row=3, column=3, padx=PADX, pady=PADY, sticky="nsew")
-        self.sightingButton.configure(state=tk.DISABLED)
+        #self.sightingButton.configure(state=tk.DISABLED)
 
 
         for i in range(4):

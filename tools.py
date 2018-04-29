@@ -407,6 +407,8 @@ class CreatedByRef():
     def pop(self, root, goFrame):
         self.top = tk.Toplevel(root)
         self.top.title("Identity Selection")
+        self.top.grab_set()
+        self.top.attributes("-topmost", "true")
         #self.geometry("1900x950")
         self.top.resizable(width=False, height=False)
         self.frame = tk.Frame(self.top)
@@ -456,6 +458,80 @@ class CreatedByRef():
         self.label.pack(fill=tk.X, padx=10)
 
         self.listview = tk.Listbox(self.frame, font=("OpenSans", 10, "bold"))
+        self.listview.pack(fill=tk.X, expand=True, padx=10)
+
+        self.getlist()
+
+        self.addbutton = tk.Button(self.frame, text="Select", font=("OpenSans", 12), fg="white", bg="#03AC13",
+                                   command=lambda: [self.callback(), self.top.destroy()])
+
+        self.addbutton.pack(side=tk.LEFT, fill=tk.X, expand=True, padx=5, pady=5)
+
+        self.cancelbutton = tk.Button(self.frame, text="Cancel", font=("OpenSans", 12), fg="white", bg="#FF3B30",
+                                      command=lambda: [self.top.destroy()])
+        self.cancelbutton.pack(side=tk.LEFT, fill=tk.X, expand=True, padx=5, pady=5)
+
+
+
+class SightingOfRef():
+    def __init__(self, mandatoryFrame, eRow):
+        self.mandatoryFrame=mandatoryFrame
+        self.eRow=eRow
+
+    def pop(self, mandatoryFrame):
+        self.top = tk.Toplevel(mandatoryFrame)
+        self.top.title("Identity Selection")
+        self.top.grab_set()
+        self.top.attributes("-topmost", "true")
+        #self.geometry("1900x950")
+        self.top.resizable(width=False, height=False)
+        self.frame = tk.Frame(self.top)
+        self.frame.pack(fill=tk.X,pady=5)
+        self.mandatoryFrame=mandatoryFrame
+
+        self.selected_value = ""
+
+
+        self.widgets()
+
+    def getlist(self):
+        self.listview.delete(0, tk.END)
+        for item in getAllIDs():
+            self.listview.insert(tk.END, item)
+
+    def callback(self):
+        try:
+            self.sighting_of_refLabel2.destroy()
+        except: pass
+        self.selected_value=self.listview.get(self.listview.curselection()).split(": ")[1]
+        self.sighting_of_refLabel2 = tk.Label(self.mandatoryFrame, font=("OpenSans", 10))
+        self.sighting_of_refLabel2.grid(row=self.eRow, column=1, pady=5)
+        self.sighting_of_refLabel2.configure(text=self.selected_value)
+
+    def get(self):
+        try:
+            return self.selected_value
+        except:
+            return ""
+
+    def set(self, item):
+        self.sighting_of_refLabel2 = tk.Label(self.mandatoryFrame, font=("OpenSans", 10))
+        self.sighting_of_refLabel2.grid(row=self.eRow, column=1, pady=5)
+        self.sighting_of_refLabel2.configure(text=item)
+
+
+    def widgets(self):
+
+        self.sightingofrefdesclaimer = tk.Label(self.frame, text="Please select the Identity that describes the entity that created the current object you are constructing.", font=("OpenSans", 10))
+        self.sightingofrefdesclaimer.pack()
+
+
+
+        self.label = tk.Label(self.frame, font=("OpenSans", 8, "bold"),
+                              text="Existing Identities into workspace: (Format <name> : <id>", bg="black", fg="white")
+        self.label.pack(fill=tk.X, padx=10)
+
+        self.listview = tk.Listbox(self.frame, font=("OpenSans", 10, "bold"), height=30)
         self.listview.pack(fill=tk.X, expand=True, padx=10)
 
         self.getlist()

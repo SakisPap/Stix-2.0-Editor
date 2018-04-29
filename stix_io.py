@@ -156,7 +156,10 @@ def getAllIDs():
     ids=[]
     for folder in getFolderArray():
         for file in getFilesJsonExt(folder,"alph"):
-            ids.append(filetoitem(os.path.join(folder,file)).get("id"))
+            stix2obj=filetoitem(os.path.join(folder,file))
+            if stix2obj.get("type") != "relationship" and stix2obj.get("type") != "marking-definition" and stix2obj.get("type") != "sighting":
+                ids.append(stix2obj.get("name")+": "+stix2obj.get("id"))
+
     return ids
 
 def getIdentityRef():

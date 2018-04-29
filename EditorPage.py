@@ -37,7 +37,7 @@ import stix2
 import sys
 import time
 from makers import *
-from tools import Multiselect, CreatedByRef, HoverManager
+from tools import Multiselect, CreatedByRef, HoverManager, SightingOfRef
 
 
 
@@ -96,16 +96,15 @@ class Editor(tk.Frame):
 
         if (object == "sighting"):
             # WARNING: Implement id selection toplevel OF ALL OBJECTS
+            self.mandatoryFrame.columnconfigure(1, weight=3)
             self.sighting_of_refLabel = tk.Label(self.mandatoryFrame, text="*Sighting of Reference:",
                                                  font=("OpenSans", 12))
             self.sighting_of_refLabel.grid(row=eRow, column=0, sticky=tk.E, padx=5)
+            self.sightingofref=SightingOfRef(self.mandatoryFrame, eRow)
             self.sighting_of_refButton = tk.Button(self.mandatoryFrame, font=("OpenSans", 12), text="Select...",
-                                                   command="Implement ID selection")
+                                                   command=lambda : self.sightingofref.pop(self.mandatoryFrame))
             self.sighting_of_refButton.grid(row=eRow, column=1, sticky=tk.W, pady=5)
-            self.sighting_of_refLabel2 = tk.Entry(self.mandatoryFrame, text="All object ids",
-                                                 font=("OpenSans", 12))
-            self.sighting_of_refLabel2.grid(row=eRow, column=2, sticky=tk.E, padx=5)
-            self.widget_list.append([self.sighting_of_refLabel2, "sighting_of_ref"])
+            self.widget_list.append([self.sightingofref, "sighting_of_ref"])
             eRow += 1
 
             self.countLabel = tk.Label(self.mandatoryFrame, text="Count:", font=("OpenSans", 12))  # integer
@@ -710,10 +709,16 @@ class Editor(tk.Frame):
 
 
     def edit(self):
-        name = self.full_list[self.listbox.curselection()[0]]
-        name = name.split(": ")
-        stix2object = filestoarr2obj4edit(name[0], name[1])
-        keys = getkeys(stix2object)
+        if self.object!="sighting":
+            name = self.full_list[self.listbox.curselection()[0]]
+            name = name.split(": ")
+            stix2object = filestoarr2obj4edit(name[0], name[1])
+            keys = getkeys(stix2object)
+        else:
+            name = self.full_list[self.listbox.curselection()[0]]
+            name = name.split(": ")
+            stix2object = filetoitem(os.path.join(name[0], name[1])+".json")
+            keys = getkeys(stix2object)
 
         for item in self.widget_list:
             if item[1] in keys: #keys
@@ -723,7 +728,10 @@ class Editor(tk.Frame):
                     item[0].set(stix2object[item[1]])
 
         self.editmode=True
-        self.oname=self.nameEntry.get()
+        if self.object!="sighting":
+            self.oname=self.nameEntry.get()
+        else:
+            self.oname=stix2object.get("id")
 #-----------------------------------------------------EDIT-END-----------------------------------------------------------------
 
 
@@ -776,7 +784,12 @@ class Editor(tk.Frame):
                 pass
             self.destroy()
         else:
-            if (self.oname!=self.nameEntry.get()):
+            try:
+                check = self.oname!=self.nameEntry.get()
+            except:
+                check = self.oname!=self.idEntry.get()
+
+            if (check):
                 ans=tk.messagebox.askyesno("Warning", "You have modified the name of the object. As a result, all data will be stored into another object and not into the current one. Would you like to revert the name back to default?")
                 if(ans):
                     self.nameEntry.delete(0,tk.END)

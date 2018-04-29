@@ -813,9 +813,11 @@ class Editor(tk.Frame):
                     tk.messagebox.showerror("Error", str(e), parent=self)
                     return
                 if flag == "True":
-                    tk.messagebox.showinfo("Object Edit Successfull!",
-                                           object + " " + self.nameEntry.get() + " was edited seccessfully!",
-                                           parent=self)
+                    if self.object!="sighting" and self.object!="marking-definition":
+                        msg=object + " " + self.nameEntry.get() + " was edited seccessfully!"
+                    else:
+                        msg=object + " " + self.idEntry.get() + " was edited seccessfully!"
+                    tk.messagebox.showinfo("Object Edit Successfull!", msg, parent=self)
                     self.editmode=False
                     pass
                 self.destroy()

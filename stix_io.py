@@ -48,7 +48,11 @@ def itemtofile(item):
         file.write(str(item))
         file.close()
     else:
-        ans = tk.messagebox.askyesno("Confirm Update?", item.get("type") + " " + item.get("name") +" was last modified at " +str(item.get("modified")) + "\n Would you like to update it?")
+        if item.get("type")!="marking-definition" and item.get("type")!="sighting":
+            ans = tk.messagebox.askyesno("Confirm Update?", item.get("type") + " " + item.get("name") +" was last modified at " +str(item.get("modified")) + "\n Would you like to update it?")
+        else:
+            ans = tk.messagebox.askyesno("Confirm Update?",item.get("id") + "Would you like to update it?")
+
         if ans ==  True:
             file = open(filename, "w")
             file.write(str(item))

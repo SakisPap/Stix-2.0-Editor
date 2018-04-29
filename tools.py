@@ -164,7 +164,11 @@ class Multiselect(tk.Frame):
         elif self.flag=="killchain":
             killchains=[]
             for item in self.selected_items:
-                killchains.append(json.load(open(os.path.join(getkcpfolder(), item+".kcp"))))
+                try:
+                    killchains.append(json.load(open(os.path.join(getkcpfolder(), item+".kcp"))))
+                except:
+                    killchains.append(stix2.KillChainPhase(kill_chain_name=item.split("_")[0], phase_name=item.split("_")[1]))
+                    tk.messagebox.showinfo("Notice", item+" is not present in the filesystem.")
             return killchains
         else:
             exrefs=[]
@@ -438,7 +442,7 @@ class CreatedByRef():
         try:
             return self.selected_value
         except:
-            return ""
+            return self.created_by_refLabel2.cget("text")
 
     def set(self, item):
         self.created_by_refLabel2 = tk.Label(self.goFrame, font=("OpenSans", 10))
@@ -512,7 +516,8 @@ class SightingOfRef():
         try:
             return self.selected_value
         except:
-            return ""
+            return self.sighting_of_refLabel2.cget("text")
+            #return ""
 
     def set(self, item):
         self.sighting_of_refLabel2 = tk.Label(self.mandatoryFrame, font=("OpenSans", 10))

@@ -363,9 +363,10 @@ def change(theme):
     theme_file = open(getcfgfile2(), "wb")
     pickle.dump(theme, theme_file)
     theme_file.close()
-    ans=tk.messagebox.askyesno("Info", "Theme changes will take place after you restart the application!\nWould you like to restart now?")
-    if(ans):
-        restart()
+    #ans=tk.messagebox.askyesno("Info", "Theme changes will take place after you restart the application!\nWould you like to restart now?")
+    #if(ans):
+        #restart()
+    tk.messagebox.showinfo("Info", "Theme changes will take place after you restart the application!")
 
 
 placeholder = tk.IntVar()

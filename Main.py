@@ -65,21 +65,23 @@ def options_command():
 
 def datatypehelp(datatype):
     if(datatype=="string"):
-        messagebox.showinfo("String", "A series of unicode characters. Text that can contain any character,whitespaces and symbols, with only exception the Name property.")
+        messagebox.showinfo("String", "A series of unicode characters. Text that can contain any character,whitespaces and symbols, with only exception the Name property.\n\n Example: \"This is a Threat Actor Object.\"")
     elif(datatype=="list"):
         messagebox.showinfo("List",
-                            "A sequence of values ordered based on how they appear in the list. The phrasing “list of type <type>” is used to indicate that all values within the list MUST conform to the specified type.\n"
-                            "The most common encountered lists are of type string and identifier (ID).\nA single whitespace is used to seperate the strings in list. On any other occasion (e.g. identifier list or open-vocal list you only have to click one or multiple entries on the Multi-Selection feature of the GUI.")
+                            "A sequence of values ordered based on how they appear in the list. The phrasing “list of type <type>” is used to indicate that all values within the list MUST conform to the specified type.\n\n"
+                            "The most common encountered lists are of type String and Identifier (ID).\nA single whitespace is used to seperate the strings in list. On any other occasion (e.g. identifier list or open-vocab list you only have to click one or multiple entries on the Multi-Selection feature of the GUI.\n\n"
+                            "String List Example (properties such as Labels, Aliases, Goals: \"damage fraud threat-actor\" will produce a list of 3 elements, damage, fraud and threat-actor. Please remember than multiple entries in String List are seperated with space, not with comma or any other character."
+                            "\n\nFinally, in any other case, you will have to ultilize Multi-Selection mechanic, as mentioned above. Please refer to the proper section in the Manual if you need help about it.")
     elif(datatype=="open-vocab"):
-        messagebox.showinfo("Vocabulary", "open-vocab A value from a STIX open (open-vocab) or suggested vocabulary.\nIt is ultilized in a drop-down list, or a Multi-Selection with all the allowed values for the specific property. Selecting the blank option from the drop-down list ignores the specific property.")
+        messagebox.showinfo("Vocabulary", "open-vocab A value from a STIX open (open-vocab) or suggested vocabulary.\n\nIt is ultilized in a drop-down list, or a Multi-Selection with all the allowed values for the specific property. User makes a selection instead of typing and manually inputting. \n\nSelecting the blank option from the drop-down list ignores the specific property, but please note that this is valid only for optional properties, on which there is an option for reset, (in case user selected a value but then wants to revert it) by selecting the first, blank option.")
     elif(datatype=="identifier"):
-        messagebox.showinfo("Identifier", "An identifier universally and uniquely identifies a SDO, SRO, Bundle, or Marking Definition. Identifiers MUST follow the form object-type--UUIDv4, where object-type is the exact value (all type names are lowercase strings, by definition) from the type property of the object being identified or referenced and where the UUIDv4 is an RFC 4122-compliant Version 4 UUID. The UUID MUST be generated according to the algorithm(s) defined in RFC 4122.\n\nNOTE: By default the ID is automatically generated. It is located in the third page (auto generated properties) and it is recommended to leave this property blank. (auto-set)")
+        messagebox.showinfo("Identifier", "An identifier universally and uniquely identifies a SDO, SRO, Bundle, or Marking Definition. Identifiers MUST follow the form object-type--UUIDv4, where object-type is the exact value (all type names are lowercase strings, by definition) from the type property of the object being identified or referenced and where the UUIDv4 is an RFC 4122-compliant Version 4 UUID. The UUID MUST be generated according to the algorithm(s) defined in RFC 4122.\n\nNOTE: By default the ID is automatically generated. It is located in the third page of Object Editor (auto generated properties) and it is recommended to non-advanced users to leave this property empty.")
     elif(datatype=="timestamp"):
-        tk.messagebox.showinfo("Timestamp", "A time value (date and time). The timestamp property MUST be a valid RFC 3339-formatted timestamp [RFC3339] using the format YYYY-MM-DDTHH:mm:ss[.s+]Z where the “s+” represents 1 or more sub-second values. The brackets denote that sub-second precision is optional, and that if no digits are provided, the decimal place MUST NOT be present. The timestamp MUST be represented in the UTC timezone and MUST use the “Z” designation to indicate this.\n\nAlternatively, for ease of access you can enter the timestamp in the format YYYY/MM/DD hh:mm:ss (please include the backslashes, whitespace and colon), for example 27/04/2018 18:44:22.")
+        tk.messagebox.showinfo("Timestamp", "A time value (date and time). The timestamp property MUST be a valid RFC 3339-formatted timestamp [RFC3339] using the format YYYY-MM-DDTHH:mm:ss[.s+]Z where the “s+” represents 1 or more sub-second values. The brackets denote that sub-second precision is optional, and that if no digits are provided, the decimal place MUST NOT be present. The timestamp MUST be represented in the UTC timezone and MUST use the “Z” designation to indicate this.\n\nA timestamp example of the above format would be:\n\"2018-04-30T14:10:31.661Z\"\n\nAlternatively, for ease of access, you could enter the timestamp in the format YYYY/MM/DD hh:mm:ss (please include the backslashes, whitespace and colon), for example \"27/04/2018 18:44:22\".")
     elif(datatype=="boolean"):
-        tk.messagebox.showinfo("Boolean", "A value of true or false. All boolean values are presented with a checkbox.")
+        tk.messagebox.showinfo("Boolean", "A value of true or false. All boolean values are presented with a checkbox.\n\nA ticked checkbox means that the property is True while an unticked, False.")
     elif(datatype=="integer"):
-        tk.messagebox.showinfo("Integer", "A whole number, in the range of ([-(2**63)+1, (2**63)-1].")
+        tk.messagebox.showinfo("Integer", "A whole number, in the range of ([-(2**63)+1, (2**63)-1].\n\nFor example, a valid integer is 48921 but not 3,9841 or 8421.421. It should contain numbers and only.")
     elif(datatype=="external-reference"):
         tk.messagebox.showinfo("External Reference", "A non-STIX identifier or reference to other related external content. Being non-STIX, its non-project related and it can be created from the Tools menu. Every constructed External Reference is accessible to any project.")
     elif(datatype=="kill-chain-phase"):
@@ -269,6 +271,7 @@ datatypesmenu.add_command(label="String", command = lambda : [datatypehelp("stri
 datatypesmenu.add_command(label="List", command = lambda : [datatypehelp("list")])
 datatypesmenu.add_command(label="Open Vocabulary", command = lambda : [datatypehelp("open-vocab")])
 datatypesmenu.add_command(label="Identifier (ID)", command = lambda : [datatypehelp("identifier")])
+datatypesmenu.add_command(label="Timestamp", command = lambda : [datatypehelp("timestamp")])
 datatypesmenu.add_command(label="Boolean", command = lambda : [datatypehelp("boolean")])
 datatypesmenu.add_command(label="Integer", command = lambda : [datatypehelp("integer")])
 datatypesmenu.add_command(label="External Reference", command = lambda : [datatypehelp("external-reference")])

@@ -158,7 +158,15 @@ class Multiselect(tk.Frame):
     def get(self):
         if not self.flag:
             if self.selected_items:
-                return self.selected_items
+                #----hotfix for report------
+                try:
+                    templist=[]
+                    for item in self.selected_items:
+                        templist.append(item.split(": ")[1])
+                    return templist
+                #----hotfix for report END--
+                except:
+                    return self.selected_items
             else:
                 return ""
         elif self.flag=="killchain":

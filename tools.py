@@ -603,6 +603,14 @@ class HoverManager():
             text = "The date that this Report object was officially published by the creator of this "+self.object_class.object+"."
         elif widget == "object_refs":
             text = "Specifies the STIX Objects that are referred to by this "+self.object_class.object+"."
+        elif widget == "sophistication":
+            text = "The skill, specific knowledge, special training, or expertise a "+self.object_class.object+" must have to perform the attack."
+        elif widget == "personal_motivations":
+            text = "The personal reasons, motivations, or purposes of the "+self.object_class.object+" regardless of organizational goals."
+        elif widget == "roles":
+            text = "A list of roles the "+self.object_class.object+" plays."
+
+        # POPULATE HERE...
 
         else:
             text = "!!Missing "+widget+" info for this "+self.object_class.object

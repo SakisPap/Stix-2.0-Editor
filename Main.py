@@ -169,7 +169,8 @@ def bundle_management_window():
 
 
 
-
+#*****************************BEGIN MAIN EXEC***********************************
+checkcfgfolder()
 try:
     theme_file = open(getcfgfile2(), "rb")
     theme = pickle.load(theme_file)
@@ -391,6 +392,5 @@ optionsmenu.add_command(label="Reset window geometry", command=lambda : root.geo
 menubar.add_cascade(label="Options", menu=optionsmenu)
 
 helpmenu.grab_release()
-checkcfgfolder()
 root.mainloop()
 

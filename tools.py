@@ -559,6 +559,10 @@ class HoverManager():
 
     def show(self, event, widget):
         print(str(widget))
+        try:
+            self.object_class.configure(cursor="question_arrow")
+        except:
+            print("Cursor not compatible with OS!")
         if widget == "name":
             text="Name: A name used to identify the "+self.object_class.object
         elif widget == "labels":
@@ -589,6 +593,16 @@ class HoverManager():
             text = "The time from which this "+self.object_class.object+" should no longer be considered valuable intelligence."
         elif widget == "goals":
             text = "The high level goals of this Intrusion Set, namely, what are they trying to do."
+        elif widget == "resource_level":
+            text = "This defines the organizational level at which this "+self.object_class.object+" typically works, which in turn determines the resources available to this "+self.object_class.object+" for use in an attack."
+        elif widget == "primary_motivation":
+            text = "The primary reason, motivation, or purpose behind this "+self.object_class.object+". The motivation is why the "+self.object_class.object+" wishes to achieve the goal (what they are trying to achieve)."
+        elif widget == "secondary_motivations":
+            text = "The secondary reasons, motivations, or purposes behind this "+self.object_class.object+". These motivations can exist as an equal or near-equal cause to the primary motivation. However, it does not replace or necessarily magnify the primary motivation, but it might indicate additional context."
+        elif widget == "published":
+            text = "The date that this Report object was officially published by the creator of this "+self.object_class.object+"."
+        elif widget == "object_refs":
+            text = "Specifies the STIX Objects that are referred to by this "+self.object_class.object+"."
 
         else:
             text = "!!Missing "+widget+" info for this "+self.object_class.object

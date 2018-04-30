@@ -716,7 +716,7 @@ class Editor(tk.Frame):
             i+=1
 
         for item in self.hover_labels_list:
-            item.bind("<Leave>", lambda _: object_class.selector(self.object))
+            item.bind("<Leave>", lambda _: [object_class.selector(self.object), object_class.configure(cursor="")])
 
 
 

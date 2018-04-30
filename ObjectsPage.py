@@ -110,7 +110,7 @@ class Objects(tk.Frame):
         self.infoBody.pack_propagate(0)
         self.infoBody.grid_propagate(0)
 
-        self.infoLabel = tk.Label(self.infoBody, fg="white", bg=self.COLOR_2, text="This is the info tab, click on an Object to learn more", font=("OpenSans", 12, "bold"), wraplength=800)
+        self.infoLabel = tk.Label(self.infoBody, fg="white", bg=self.COLOR_2, text="This is the info tab, click on an Object to learn more", font=("OpenSans", 12, "bold"), wraplength=950)
         self.infoLabel.pack(fill=tk.BOTH, expand=True)
 
 

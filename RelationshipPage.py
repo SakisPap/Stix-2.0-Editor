@@ -78,7 +78,7 @@ class Relationship(tk.Frame):
         # -----------LISTING FOR RELATIONSHIP TAB-----------------------------
 
         for itemname in filestoarr2("alph"):
-            if itemname.get("type") != "relationship" and itemname.get("type") != "marking-definition":
+            if itemname.get("type") != "relationship" and itemname.get("type") != "marking-definition" and itemname.get("type") != "sighting":
                 self.listboxLeft.insert(tk.END, itemname.get("type") + ": " + itemname.get("name"))
             # stix2obj.get("type") + "-> " + stix2obj.get("name")
 

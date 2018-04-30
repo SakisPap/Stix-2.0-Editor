@@ -288,7 +288,7 @@ class Objects(tk.Frame):
         relationship.pack(fill=tk.BOTH, expand=True)
 
     def start_Editor(self, type_of_editor):
-        try:
+        #try:
             if self.object == "nothing" and type_of_editor == 1:
                 # set object for when in display all
                 self.object = self.full_list[self.listbox.curselection()[0]].split(": ")[0]
@@ -297,10 +297,10 @@ class Objects(tk.Frame):
             else:
                 editor = Editor(self, self.masterBody, self.object, type_of_editor)
             editor.pack(fill=tk.BOTH, expand=True)
-        except:
-            self.packer(0)
-            tk.messagebox.showwarning("Warning",
-                                      "Relationship Objects are not editable, however feel free to recreate them!")
+        #except:
+           # self.packer(0)
+           # tk.messagebox.showwarning("Warning",
+                                   #   "Relationship Objects are not editable, however feel free to recreate them!")
 
 
 

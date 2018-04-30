@@ -557,7 +557,8 @@ class HoverManager():
     def __init__(self, object_class):
         self.object_class=object_class
 
-    def show(self, widget):
+    def show(self, event, widget):
+        print(str(widget))
         if widget == "name":
             text="Name: A name used to identify the "+self.object_class.object
         elif widget == "labels":
@@ -566,6 +567,8 @@ class HoverManager():
             text="Pattern: The detection pattern for this Indicator is a STIX Pattern as specified in STIX Patterning Docs.\n Format Example: [ipv4:value='192.168.1.1'] "
         elif widget == "valid_from":
             text = "Valid From: The time from which this Indicator should be considered valuable intelligence."
+        else:
+            text = "Placeholder"
 
         self.object_class.infoLabel.configure(text=text)
 

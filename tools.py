@@ -567,8 +567,31 @@ class HoverManager():
             text="Pattern: The detection pattern for this Indicator is a STIX Pattern as specified in STIX Patterning Docs.\n Format Example: [ipv4:value='192.168.1.1'] "
         elif widget == "valid_from":
             text = "Valid From: The time from which this Indicator should be considered valuable intelligence."
+        elif widget == "description":
+            text = "A description that provides more details and context about the "+self.object_class.object+", potentially including its purpose and its key characteristics."
+        elif widget == "kill_chain_phases":
+            text = "The list of Kill Chain Phases for which this "+self.object_class.object+" is used."
+        elif widget == "aliases":
+            text = "Alternative names used to identify this "+self.object_class.object+"."
+        elif widget == "first_seen":
+            text = "The time that this "+self.object_class.object+" was first seen.\n Format example: 1/1/1995"
+        elif widget == "last_seen":
+            text = "The time that this "+self.object_class.object+" was last seen.\n Format example: 1/1/1995"
+        elif widget == "objective":
+            text = "This property defines the Campaign’s primary goal, objective, desired outcome, or intended effect — what the Threat Actor hopes to accomplish with this Campaign."
+        elif widget == "sectors":
+            text = "The list of industry sectors that this "+self.object_class.object+" belongs to."
+        elif widget == "contact_information":
+            text = "The contact information (e-mail, phone number, etc.) for this "+self.object_class.object+"."
+        elif widget == "valid_from":
+            text = "The time from which this "+self.object_class.object+" should be considered valuable intelligence."
+        elif widget == "valid_until":
+            text = "The time from which this "+self.object_class.object+" should no longer be considered valuable intelligence."
+        elif widget == "goals":
+            text = "The high level goals of this Intrusion Set, namely, what are they trying to do."
+
         else:
-            text = "Placeholder"
+            text = "!!Missing "+widget+" info for this "+self.object_class.object
 
         self.object_class.infoLabel.configure(text=text)
 

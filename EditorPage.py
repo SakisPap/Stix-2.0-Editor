@@ -414,7 +414,7 @@ class Editor(tk.Frame):
             self.resource_levelLabel.grid(row=eRow, column=0, sticky=tk.E, padx=5)
             self.resource_levelVar = tk.StringVar()
             self.resource_levelVar.set("")
-            self.resource_levelOption = tk.OptionMenu(self.mandatoryFrame, self.resource_levelVar, "individual", "club", "contest", "team", "organization", "government")
+            self.resource_levelOption = tk.OptionMenu(self.mandatoryFrame, self.resource_levelVar, "", "individual", "club", "contest", "team", "organization", "government")
             self.resource_levelOption.grid(row=eRow, column=1, sticky=tk.W, pady=5)
             self.widget_list.append([self.resource_levelVar, "resource_level"])
             self.hover_labels_list.append(self.resource_levelLabel) #hover
@@ -425,7 +425,7 @@ class Editor(tk.Frame):
             self.primary_motivationLabel.grid(row=eRow, column=0, sticky=tk.E, padx=5)
             self.primary_motivationVar = tk.StringVar()
             self.primary_motivationVar.set("")
-            self.primary_motivationOption = tk.OptionMenu(self.mandatoryFrame, self.primary_motivationVar, "accidental", "coercion", "dominance", "ideology", "notoriety", "organizational-gain", "personal-gain",
+            self.primary_motivationOption = tk.OptionMenu(self.mandatoryFrame, self.primary_motivationVar, "", "accidental", "coercion", "dominance", "ideology", "notoriety", "organizational-gain", "personal-gain",
 "personal-satisfaction", "revenge", "unpredictable")
             self.primary_motivationOption.grid(row=eRow, column=1, sticky=tk.W, pady=5)
             self.widget_list.append([self.primary_motivationVar, "primary_motivation"])
@@ -494,7 +494,7 @@ class Editor(tk.Frame):
             self.sophisticationLabel.grid(row=eRow, column=0, sticky=tk.E, padx=5)
             self.sophisticationVar = tk.StringVar()
             self.sophisticationVar.set("")
-            self.sophisticationOption = tk.OptionMenu(self.mandatoryFrame, self.sophisticationVar, "none", "minimal", "intermediate", "advanced", "expert", "innovator", "strategic")
+            self.sophisticationOption = tk.OptionMenu(self.mandatoryFrame, self.sophisticationVar, "", "none", "minimal", "intermediate", "advanced", "expert", "innovator", "strategic")
             self.sophisticationOption.grid(row=eRow, column=1, sticky=tk.W, pady=5)
             self.widget_list.append([self.sophisticationVar, "sophistication"])
             self.hover_labels_list.append(self.sophisticationLabel) #hover

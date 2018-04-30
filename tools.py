@@ -609,6 +609,8 @@ class HoverManager():
             text = "The personal reasons, motivations, or purposes of the "+self.object_class.object+" regardless of organizational goals."
         elif widget == "roles":
             text = "A list of roles the "+self.object_class.object+" plays."
+        elif widget == "tool_version":
+            text = "The version identifier associated with the Tool."
 
         # POPULATE HERE...
 

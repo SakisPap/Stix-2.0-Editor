@@ -211,6 +211,7 @@ root.title("STIX 2.0 Editor")
 def save_rez(event):
     rez_file = open(getcfgfile3(), "wb")
     resolution = str(root.winfo_width())+"x"+str(root.winfo_height())
+    #print(resolution)
     pickle.dump(resolution, rez_file)
     theme_file.close()
 root.bind( "<Configure>", save_rez)
@@ -326,20 +327,18 @@ viewbyMenu = tk.Menu(menubar)
 sortbyMenu = tk.Menu(menubar)
 themeMenu = tk.Menu(menubar)
 
-optionsmenu.add_separator()
+
 optionsmenu.add_checkbutton(label="Display objects type", onvalue=True, offvalue=False, variable=displaytype, command=lambda : options_command())
-optionsmenu.add_separator()
 
 optionsmenu.add_cascade(label="View by", menu=viewbyMenu)
 viewbyMenu.add_radiobutton(label="Name", variable=view, value="name", command=lambda : options_command())
 viewbyMenu.add_radiobutton(label="Id", variable=view, value="id", command=lambda : options_command())
-optionsmenu.add_separator()
 
 
 optionsmenu.add_cascade(label="Sort by", menu=sortbyMenu)
 sortbyMenu.add_radiobutton(label="Alphabetical ▲", variable=sort, value="alph", command=lambda : options_command())
 sortbyMenu.add_radiobutton(label="Alphabetical ▼", variable=sort, value="alphdesc", command=lambda : options_command())
-sortbyMenu.add_separator()
+
 sortbyMenu.add_radiobutton(label="Date Modified ▲", variable=sort, value="lm", command=lambda : options_command())
 sortbyMenu.add_radiobutton(label="Date Modified ▼", variable=sort, value="lmdesc", command=lambda : options_command())
 optionsmenu.add_separator()
@@ -378,6 +377,9 @@ themeMenu.add_radiobutton(label="Semidark", variable=placeholder, value="semidar
 themeMenu.add_radiobutton(label="Dark", variable=placeholder, value="dark", command=lambda : change("dark"))
 themeMenu.add_radiobutton(label="Bordeu", variable=placeholder, value="bordeu", command=lambda : change("bordeu"))
 themeMenu.add_radiobutton(label="Green", variable=placeholder, value="green", command=lambda : change("green"))
+
+optionsmenu.add_command(label="Reset window geometry", command=lambda : root.geometry("1050x600"))
+
 
 
 

@@ -27,7 +27,7 @@ stix2-elevator
 
 3. install dependencies (**py -m pip install stix2 stix2-elevator Pillow-PIL**)
 
-4. enter the application folder and run the app (**python3 Main.py**)
+4. enter the application folder and run the app (**py Main.py**)
 
 
 **Early Access Disclaimer:** *This project is in constant development thus some of its feautures may not be fully functional. We are constantly working on those issues and striving towards improvement. Thank you very much for your understanding.*

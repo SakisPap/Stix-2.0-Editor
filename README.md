@@ -31,3 +31,5 @@ stix2-elevator
 
 
 **Early Access Disclaimer:** *This project is in constant development thus some of its feautures may not be fully functional. We are constantly working on those issues and striving towards improvement. Thank you very much for your understanding.*
+
+**A crucial bug has been fixed, and the Editor should be working if it didn't. Please report any bugs or problems directly onto GitHub by opening an issue to help us, thanks.

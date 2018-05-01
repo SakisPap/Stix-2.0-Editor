@@ -257,7 +257,7 @@ def ImportFile():
                                                   file + " is a Bundle. Please use Bundle Management from Tools to import it.")
 
                 except:
-                    tk.messagebox.showwarning("Error",file + " does not seem to be a valid STIX1 object. Import failed.")
+                    tk.messagebox.showwarning("Error",file + " does not seem to be a valid STIX1 object or version missmatch. Import failed.")
         tk.messagebox.showinfo("Imports", "There have been "+str(imports)+" successful imports.")
 
 

@@ -10,7 +10,6 @@ Medium Priority:
 2) Fix a bug on sorting
 
 Low Priority:
-1) Add clarification popup on some settings (eg converted STIX1 object has to be >=1.2 version)
-2) Add an option to reset geometry
-3) Add an option to backup non STIX objects (killchains and extrefs)
+-
+
 

@@ -34,11 +34,14 @@ from urllib.request import *
 from urllib.response import *
 from stix_io import *
 import json
+import zipfile
 
 
 def Elevate():
     #disclaminer, show once add config ...
-    tk.messagebox.showinfo("Elevation", "Please note that this function is non-project related. If you would like to import a STIX1 xml into a project just use the Import function and the elevation will be carried out automatically.")
+    tk.messagebox.showinfo("Elevation", "Please note that this function is non-project related. If you would like to import a STIX1 xml into a project just use the Import function and the elevation will be carried out automatically.\n\nNote: Convertion depends on the version of \"python-stix\" dependency. By default, \"stix2-elevator\" installs the latest version which is 1.2 and therefore the STIX1 XML file should be on version 1.2."
+                                        " If you need to support older STIX 1.1.1 content, remove stix2-elavtor and install python-stix 1.1.1.x:"
+                           "\n\npip uninstall stix2-elevator\npip install 'stix<1.2'\npip install stix2-elevator")
     fpath = tk.filedialog.askopenfilename(initialdir="/", title="Please select a STIX1 xml file to elevate.",
                                           filetypes=[("xml files (STIX1)", "*.xml")])
     if fpath:
@@ -54,7 +57,7 @@ def Elevate():
                 file.close()
                 tk.messagebox.showinfo("Success", "Converted file has been saved.")
         except:
-            tk.messagebox.showwarning("Error", "Selected file does not seem to be a valid STIX1 object. Import failed.")
+            tk.messagebox.showwarning("Error", "Selected file does not seem to be a valid STIX1 object or version missmatch. Import failed.")
 
 
 def BundleManage(mode):
@@ -101,7 +104,32 @@ def bugreport(parent, msg):
     parent.destroy()
 
 
+def backup():
+    ans = tk.messagebox.askyesno("Backup", "There might be a need to run the Editor into a different user or machine. In this case, your settings as well as any non project related entities (Kill Chain Phases and External References) will not be present even if you have exported then imported a project.\n\n"
+                                     "In this case you can create a single backup archive and then restore it to the target environment to keep the above data.\n\n"
+                                     "Note: This has nothing to do with anything project-related. A matching feature for a project would be Exporting or backing up manually the project directory.\n\n"
+                                           "Proceed?")
+    if(ans):
+        bpath = tk.filedialog.asksaveasfilename(initialdir="/",
+                                                title="Please select where would you like to store the backup archive.",
+                                                filetypes=[("zip file", "*.zip")])
+        if bpath:
+            shutil.make_archive(bpath, 'zip', getcfgfolder())
+            tk.messagebox.showinfo("Success", "Backup has been created.")
 
+
+def restore():
+    bpath = tk.filedialog.askopenfilename(initialdir="/",
+                                            title="Please select a backup archive.",
+                                            filetypes=[("zip file", "*.zip")])
+    if bpath:
+        b=zipfile.ZipFile(bpath)
+        if any(x.startswith("%s/" % "kill-chain-phases".rstrip("/")) for x in b.namelist()) and any(x.startswith("%s/" % "external-references".rstrip("/")) for x in b.namelist()):
+            with zipfile.ZipFile(bpath, "r") as backzip:
+                backzip.extractall(getcfgfolder())
+            tk.messagebox.showinfo("Success", "Backup was restored, please restart the Editor.")
+        else:
+            tk.messagebox.showwarning("Error", "Selected archive does not seem to be a valid STIX2-Editor backup.")
 
 
 class Multiselect(tk.Frame):

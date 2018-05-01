@@ -28,7 +28,7 @@ from PIL import Image, ImageTk
 import os
 from stix_io import OpenProject, LoadEnvironment, readfile, ImportFile, ExportProject, OpenInExplorer, NewProject, checkcfgfolder, LoadPrevious, getcfgfile, getcfgfile2, getcfgfile3
 from tkinter import messagebox
-from tools import Elevate, bugreport, BundleManage, KillChainPhaseMaker, ExternalReferenceMaker
+from tools import *
 import pickle
 import webbrowser
 import sys, subprocess
@@ -267,6 +267,7 @@ mngmntMenu.add_separator()#
 mngmntMenu.add_command(label="Extract Bundle Objects into a directory", command=lambda: [BundleManage("extract")])#
 mngmntMenu.add_separator()#
 
+
 datatypesmenu=tk.Menu(menubar, tearoff=0)
 datatypesmenu.add_command(label="String", command = lambda : [datatypehelp("string")])
 datatypesmenu.add_command(label="List", command = lambda : [datatypehelp("list")])
@@ -294,6 +295,12 @@ def externalStart():
 
 toolsmenu.add_command(label="Manage Kill Chain Phases...", command=lambda : [killchainStart()])
 toolsmenu.add_command(label="Manage External References...", command=lambda : [externalStart()])
+backupMenu = tk.Menu(menubar)
+toolsmenu.add_cascade(label="Backup", menu=backupMenu)
+backupMenu.add_command(label="Create...", command= lambda : [backup()])#
+
+backupMenu.add_command(label="Restore...", command=lambda: [restore()])#
+
 
 menubar.add_cascade(label="Tools", menu=toolsmenu)
 

@@ -546,7 +546,7 @@ class Editor(tk.Frame):
 
             self.statementEntry = tk.Entry(self.mandatoryFrame, font=("OpenSans", 12), state=tk.DISABLED)
             self.statementEntry.grid(row=eRow, column=1, sticky=tk.W, padx=5)
-
+            #self.widget_list.append([self.statementEntry, "definition"])
 
             eRow += 1
 
@@ -557,6 +557,8 @@ class Editor(tk.Frame):
             self.tlpOption = tk.OptionMenu(self.mandatoryFrame, self.tlpVar, "white", "green", "amber", "red")
             self.tlpOption.grid(row=eRow, column=1, sticky=tk.W, pady=5)
             self.tlpOption.config(state=tk.DISABLED)
+            #self.widget_list.append([self.tlpVar, "definition"])
+
             eRow += 1
 
             self.markdefdesclaimerLabel=tk.Label(self.mandatoryFrame, text="**You can only choose one\n based on Definition Type", font=("OpenSans", 8))
@@ -792,6 +794,24 @@ class Editor(tk.Frame):
                     item[0].insert(tk.END, stix2object[item[1]])
                 except:
                     item[0].set(stix2object[item[1]])
+
+        if "definition" in keys:
+            temp = stix2object["definition"]
+            temp = json.loads(str(temp))
+            try:
+                self.statementEntry.configure(state=tk.NORMAL)
+                self.statementLabel.configure(state=tk.NORMAL)
+                self.statementEntry.insert(tk.END, temp["statement"])
+                self.tlpOption.configure(state=tk.DISABLED)
+                self.tlpLabel.configure(state=tk.DISABLED)
+            except:
+                self.tlpOption.configure(state=tk.NORMAL)
+                self.tlpLabel.configure(state=tk.NORMAL)
+                self.tlpVar.set(temp["tlp"])
+                self.statementEntry.configure(state=tk.DISABLED)
+                self.statementLabel.configure(state=tk.DISABLED)
+
+
 
         self.editmode=True
         if self.object!="sighting" and self.object!="marking-definition":

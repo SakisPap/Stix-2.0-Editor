@@ -222,7 +222,9 @@ root.bind( "<Configure>", save_rez)
 
 try:
     root.iconbitmap(os.path.abspath("logo.ico"))
-except: Exception
+except:
+    img = tkinter.PhotoImage(file='logo.gif')
+    root.tk.call('wm', 'iconphoto', root._w, img)
 
 
 img = Image.open(os.path.abspath("images/welcome_page.png"))

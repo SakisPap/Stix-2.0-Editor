@@ -263,7 +263,7 @@ class Objects(tk.Frame):
 
         self.listbox = tk.Listbox(self.listBody, exportselection=0, font=("OpenSans", 12, "bold"), bd=0, width=50, relief=tk.FLAT, highlightthickness=0, bg=self.COLOR_1, fg=self.COLOR_3)
         self.listbox.pack(fill=tk.Y, expand=True, padx=10, pady=5)
-        self.listbox.bind('<Button-1>', lambda _: [self.edit_button.configure(state=tk.NORMAL) if self.object!="relationship" else print(""), self.delete_button.configure(state=tk.NORMAL)])
+        self.listbox.bind('<Button-1>', lambda _: [self.delete_button.configure(state=tk.NORMAL)])
         #self.scrollbar = tk.Scrollbar(self.listBody, orient="vertical")
         #self.scrollbar.configure(command=self.listbox.yview)
         #self.scrollbar.pack(side=tk.LEFT, fill=tk.Y)
@@ -359,7 +359,7 @@ class Objects(tk.Frame):
         self.add_button.configure(state=tk.NORMAL)
         self.object=object
         self.add_button.configure(command=lambda: self.start_Editor(0))
-        self.edit_button.configure(state=tk.DISABLED)
+        self.edit_button.configure(state=tk.NORMAL)
         self.delete_button.configure(state=tk.DISABLED)
         if object=="attack-pattern":
             self.infoLabel.configure(text="Attack Pattern: A type of Tactics, Techniques, and Procedures (TTP) that describes ways threat actors attempt to compromise targets.")
@@ -427,6 +427,7 @@ class Objects(tk.Frame):
             self.listLabel.config(text="Existing Objects in project")
             self.topLabel.configure(text="Please choose an Object to begin interraction")
             self.object="nothing"
+            self.edit_button.configure(state=tk.DISABLED)
 
         #---Show in Main-list specific objects
         try:

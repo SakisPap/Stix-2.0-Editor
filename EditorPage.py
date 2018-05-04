@@ -81,8 +81,8 @@ class Editor(tk.Frame):
         self.mandatoryFrame = tk.Frame(self)
         self.mandatoryFrame.pack(fill=tk.X)
 
-        Xsize=320
-        Ysize=50
+        Xsize = 320
+        Ysize = 50
 
         Xsize2 = 250
         Ysize2 = 50

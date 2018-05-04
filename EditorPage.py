@@ -93,7 +93,7 @@ class Editor(tk.Frame):
         if (object != "observed-data" and object != "marking-definition" and object!= "sighting"):                                                   #Indicator's name can be optional according to docs but messes with the GUI understanding
             self.nameLabel = tk.Label(self.mandatoryFrame, text="*Name:", font=("OpenSans", 12))
             self.nameLabel.grid(row=eRow, column=0, sticky=tk.E, padx=5)
-            self.nameEntry = tk.Entry(self.mandatoryFrame, font=("OpenSans", 12))
+            self.nameEntry = tk.Entry(self.mandatoryFrame, font=("OpenSans", 12), width=60)
             self.nameEntry.grid(row=eRow, column=1, sticky=tk.W, pady=5)
             self.nameEntry.bind('<KeyPress>', self.keyPress)
             self.widget_list.append([self.nameEntry, "name"])
@@ -229,7 +229,7 @@ class Editor(tk.Frame):
         if object == "indicator" or object == "malware" or object == "report" or object == "threat-actor" or object == "tool":
             self.labels_reqLabel = tk.Label(self.mandatoryFrame, text="*Labels:", font=("OpenSans", 12))
             self.labels_reqLabel.grid(row=eRow, column=0, sticky=tk.E, padx=5)
-            self.labels_reqEntry = tk.Entry(self.mandatoryFrame, font=("OpenSans", 12), width=50) #---Please also add vocab options (Toplevel with radiobuttons)
+            self.labels_reqEntry = tk.Entry(self.mandatoryFrame, font=("OpenSans", 12), width=70) #---Please also add vocab options (Toplevel with radiobuttons)
             self.labels_reqEntry.grid(row=eRow, column=1, sticky=tk.W, pady=5)
             self.labels_reqEntry.bind('<KeyPress>', self.keyPress)
 
@@ -307,7 +307,7 @@ class Editor(tk.Frame):
         if(object!="observed-data" and object!="marking-definition" and object!="sighting"):
             self.descriptionLabel = tk.Label(self.mandatoryFrame, text="Description:", font=("OpenSans", 12))
             self.descriptionLabel.grid(row=eRow, column=0, sticky=tk.E, padx=5)
-            self.descriptionEntry = tk.Entry(self.mandatoryFrame, font=("OpenSans", 12), width=60)
+            self.descriptionEntry = tk.Text(self.mandatoryFrame, font=("OpenSans", 12), width=80, height=3, wrap=tk.WORD)
             self.descriptionEntry.grid(row=eRow, column=1, sticky=tk.W, pady=5)
             self.widget_list.append([self.descriptionEntry,"description"])
             self.hover_labels_list.append(self.descriptionLabel) #hover
@@ -333,7 +333,7 @@ class Editor(tk.Frame):
         if (object=="campaign" or object=="intrusion-set" or object=="threat-actor"):
             self.aliasesLabel = tk.Label(self.mandatoryFrame, text="Aliases:", font=("OpenSans", 12))
             self.aliasesLabel.grid(row=eRow, column=0, sticky=tk.E, padx=5)
-            self.aliasesEntry = tk.Entry(self.mandatoryFrame, font=("OpenSans", 12))
+            self.aliasesEntry = tk.Entry(self.mandatoryFrame, font=("OpenSans", 12), width=60)
             self.aliasesEntry.grid(row=eRow, column=1, sticky=tk.W, pady=5)
             self.widget_list.append([self.aliasesEntry, "aliases"])
             self.hover_labels_list.append(self.aliasesLabel) #hover
@@ -409,7 +409,7 @@ class Editor(tk.Frame):
             #GOALS, array str
             self.goalsLabel = tk.Label(self.mandatoryFrame, text="Goals:", font=("OpenSans", 12))
             self.goalsLabel.grid(row=eRow, column=0, sticky=tk.E, padx=5)
-            self.goalsEntry = tk.Entry(self.mandatoryFrame, font=("OpenSans", 12))
+            self.goalsEntry = tk.Entry(self.mandatoryFrame, font=("OpenSans", 12), width=60)
             self.goalsEntry.grid(row=eRow, column=1, sticky=tk.W, pady=5)
             self.widget_list.append([self.goalsEntry, "goals"])
             self.hover_labels_list.append(self.goalsLabel) #hover
@@ -785,19 +785,23 @@ class Editor(tk.Frame):
     def edit(self):
         if self.object!="sighting" and self.object!="marking-definition":
             name = self.full_list[self.listbox.curselection()[0]]
-            name = name.split(": ")
+            name = name.split(".:. ")
             stix2object = filestoarr2obj4edit(name[0], name[1])
             keys = getkeys(stix2object)
         else:
             name = self.full_list[self.listbox.curselection()[0]]
-            name = name.split(": ")
+            name = name.split(".:. ")
             stix2object = filetoitem(os.path.join(name[0], name[1])+".json")
             keys = getkeys(stix2object)
 
         for item in self.widget_list:
             if item[1] in keys: #keys
                 try:
-                    item[0].insert(tk.END, stix2object[item[1]])
+                    try:
+                        item[0].insert("1.0", stix2object[item[1]])
+                    except:
+                        item[0].insert(tk.END, stix2object[item[1]])
+
                 except:
                     item[0].set(stix2object[item[1]])
 
@@ -844,7 +848,14 @@ class Editor(tk.Frame):
                 dict2.update({self.definition_typeVar.get() : self.tlpVar.get()})
                 dict.update({"definition": dict2})
         for item in self.widget_list:
-            temp = item[0].get()
+            if isinstance(item[0], tk.Text):
+                temp = item[0].get("1.0", "end-1c")
+            else:
+                temp = item[0].get()
+
+
+
+
 
 
             if item[1] == "labels" or item[1] == "aliases" or item[1] == "goals":
@@ -884,7 +895,7 @@ class Editor(tk.Frame):
                 changedvar="id"
 
             if (check):
-                ans=tk.messagebox.askyesno("Warning", "You have modified the name/id of the object. As a result, all data will be stored into another object and not into the current one. Would you like to revert the property back to default?")
+                ans=tk.messagebox.askyesno("Warning", "You have modified the name/id of the object. As a result, all data will be stored into another object and not into the current one. Would you like to revert the property back to default?", parent=self)
                 if(ans):
                     if(changedvar=="name"):
                         self.nameEntry.delete(0,tk.END)
@@ -893,7 +904,7 @@ class Editor(tk.Frame):
                         self.idEntry.delete(0, tk.END)
                         self.idEntry.insert(0, self.oname)
                 else:
-                    ans2=tk.messagebox.askyesno("Replication", "Would you like to create a new object with the current properties?")
+                    ans2=tk.messagebox.askyesno("Replication", "Would you like to create a new object with the current properties?", parent=self)
                     if(ans2):
                         flag, debug = getattr(sys.modules[__name__], "%s_maker" % object.replace("-", "_"))(**dict)
                         print(debug)

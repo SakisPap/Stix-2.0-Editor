@@ -263,7 +263,7 @@ class Objects(tk.Frame):
 
         self.listbox = tk.Listbox(self.listBody, exportselection=0, font=("OpenSans", 12, "bold"), bd=0, width=50, relief=tk.FLAT, highlightthickness=0, bg=self.COLOR_1, fg=self.COLOR_3)
         self.listbox.pack(fill=tk.Y, expand=True, padx=10, pady=5)
-        self.listbox.bind('<Button-1>', lambda _: [self.edit_button.configure(state=tk.NORMAL) if self.object not in ("relationship", "nothing") else print(""), self.delete_button.configure(state=tk.NORMAL)])
+        self.listbox.bind('<Button-1>', lambda _: [self.display_rel_info(), self.edit_button.configure(state=tk.NORMAL) if self.object not in ("relationship", "nothing") else print(""), self.delete_button.configure(state=tk.NORMAL)])
         #self.scrollbar = tk.Scrollbar(self.listBody, orient="vertical")
         #self.scrollbar.configure(command=self.listbox.yview)
         #self.scrollbar.pack(side=tk.LEFT, fill=tk.Y)
@@ -278,7 +278,7 @@ class Objects(tk.Frame):
         self.edit_button = tk.Button(self.listbody_bottomFrame, text="Edit",font=("OpenSans", 12, "bold"), fg="white", bg="#FF9500", relief=tk.FLAT, highlightthickness=0, command=lambda : [self.start_Editor(1)])
         self.edit_button.pack(side=tk.LEFT, fill=tk.X, expand=True)
         self.edit_button.configure(state=tk.DISABLED)
-        self.delete_button = tk.Button(self.listbody_bottomFrame, text="Delete", font=("OpenSans", 12, "bold"), fg="white", bg="#FF3B30", relief=tk.FLAT, highlightthickness=0, command=lambda : [delete(self.full_list[self.listbox.curselection()[0]].split(": ")[0], self.full_list[self.listbox.curselection()[0]].split(": ")[1]), self.updatelist(self.object)if self.object != "nothing" else self.enlistall()])
+        self.delete_button = tk.Button(self.listbody_bottomFrame, text="Delete", font=("OpenSans", 12, "bold"), fg="white", bg="#FF3B30", relief=tk.FLAT, highlightthickness=0, command=lambda : [delete(self.full_list[self.listbox.curselection()[0]].split(".:. ")[0], self.full_list[self.listbox.curselection()[0]].split(".:. ")[1]), self.updatelist(self.object)if self.object != "nothing" else self.enlistall()])
         self.delete_button.pack(side=tk.LEFT, fill=tk.X, expand=True)
         self.delete_button.configure(state=tk.DISABLED)
 
@@ -291,8 +291,8 @@ class Objects(tk.Frame):
         #try:
             if self.object == "nothing" and type_of_editor == 1:
                 # set object for when in display all
-                self.object = self.full_list[self.listbox.curselection()[0]].split(": ")[0]
-                editor = Editor(self, self.masterBody, self.full_list[self.listbox.curselection()[0]].split(": ")[0],
+                self.object = self.full_list[self.listbox.curselection()[0]].split(".:. ")[0]
+                editor = Editor(self, self.masterBody, self.full_list[self.listbox.curselection()[0]].split(".:. ")[0],
                                 type_of_editor)
             else:
                 editor = Editor(self, self.masterBody, self.object, type_of_editor)
@@ -301,6 +301,18 @@ class Objects(tk.Frame):
            # self.packer(0)
            # tk.messagebox.showwarning("Warning",
                                    #   "Relationship Objects are not editable, however feel free to recreate them!")
+    def display_rel_info(self):
+        if self.object=="relationship":
+            name = self.listbox.get(tk.ACTIVE)
+            print(name)
+            stix2object = filestoarr2obj4editRel("relationship", name)
+            source=stix2object.get("source_ref")
+            target=stix2object.get("target_ref")
+            source_s=source.split("--")
+            target_s = target.split("--")
+            source_name = filestoarr2obj4editRel(source_s[0], source).get("name")
+            target_name = filestoarr2obj4editRel(target_s[0], target).get("name")
+            self.infoLabel.configure(text=str(source_name+" ➡ ["+stix2object.get("relationship_type").upper()+"] ➡ "+target_name))
 
 
 
@@ -311,11 +323,11 @@ class Objects(tk.Frame):
         self.full_list =[]
         for itemname in filestoarr2(self.sortby.get()):
             if itemname.get("type") != "relationship" and itemname.get("type") != "marking-definition" and itemname.get("type")!="sighting":
-                self.full_list.append(itemname.get("type")+": "+itemname.get("name")+": "+itemname.get("id"))
+                self.full_list.append(itemname.get("type")+".:. "+itemname.get("name")+".:. "+itemname.get("id"))
             else:
-                self.full_list.append(itemname.get("type") + ": "+itemname.get("id"))
+                self.full_list.append(itemname.get("type") + ".:. "+itemname.get("id"))
         for itemname in self.full_list:
-            itemname=itemname.split(": ")
+            itemname=itemname.split(".:. ")
             if (itemname[0] != "relationship" and itemname[0] != "marking-definition" and itemname[0]!="sighting" and self.viewby.get() == "name"):
                 if self.display_type.get():
                     self.listbox.insert(tk.END, itemname[0] + ": " + itemname[1])
@@ -335,12 +347,12 @@ class Objects(tk.Frame):
         self.full_list =[]
         for itemname in filestoarr2obj(object, self.sortby.get()):
             if itemname.get("type") != "relationship" and itemname.get("type") != "marking-definition" and itemname.get("type")!="sighting":
-                self.full_list.append(itemname.get("type")+": "+itemname.get("name")+": "+itemname.get("id"))
+                self.full_list.append(itemname.get("type")+".:. "+itemname.get("name")+".:. "+itemname.get("id"))
             else:
-                self.full_list.append(itemname.get("type") + ": "+itemname.get("id"))
+                self.full_list.append(itemname.get("type") + ".:. "+itemname.get("id"))
 
         for itemname in self.full_list:
-            itemname=itemname.split(": ")
+            itemname=itemname.split(".:. ")
             if (itemname[0] != "relationship" and itemname[0] != "marking-definition" and itemname[0] !="sighting" and self.viewby.get() == "name"):
                 if self.display_type.get():
                     self.listbox.insert(tk.END, itemname[0] + ": " + itemname[1])

@@ -171,7 +171,7 @@ class Multiselect(tk.Frame):
         self.grab_release()
 
     def widgets(self):
-        self.showlabel = tk.Label(self.labelparent, font=("OpenSans", 10), bg=self.COLOR_1, wraplength=500)
+        self.showlabel = tk.Label(self.labelparent, height=3, font=("OpenSans", 10), bg=self.COLOR_1, wraplength=500)
         self.listview = tk.Listbox(self, exportselection=0, font=("OpenSans", 10, "bold"), bd=1, height=15,
                               relief=tk.FLAT, highlightthickness=0, fg=self.COLOR_3, selectmode='multiple')
         self.listview.pack()
@@ -209,7 +209,11 @@ class Multiselect(tk.Frame):
         else:
             exrefs=[]
             for item in self.selected_items:
-                exrefs.append(json.load(open(os.path.join(getexreffolder(),item+".ext"))))
+                try:
+                    exrefs.append(json.load(open(os.path.join(getexreffolder(),item+".ext"))))
+                except:
+                    exrefs=[]
+                    tk.messagebox.showinfo("Notice", item + " is not present in the filesystem.")
             return exrefs
 
     def set(self, list):
@@ -233,6 +237,10 @@ class Multiselect(tk.Frame):
         self.showlabel.grid(row=self.eRow, column=1)
 
         for item in self.list_items:
+            try:
+                item = item.split(": ")[1]
+            except: Exception
+
             if item in list:
                 self.listview.select_set(i)
             i+=1

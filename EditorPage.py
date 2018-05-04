@@ -81,6 +81,12 @@ class Editor(tk.Frame):
         self.mandatoryFrame = tk.Frame(self)
         self.mandatoryFrame.pack(fill=tk.X)
 
+        Xsize=320
+        Ysize=50
+
+        Xsize2 = 250
+        Ysize2 = 50
+
 
 
         #---Name---
@@ -127,7 +133,7 @@ class Editor(tk.Frame):
                                                               self.COLOR_3)
             self.observed_data_refsButton = tk.Button(self.mandatoryFrame, font=("OpenSans", 12), text="...",
                                                       command=lambda: [
-                                                          self.multiselect_observed_data_refs.place(x=225, y=5),
+                                                          self.multiselect_observed_data_refs.place(x=Xsize2, y=Ysize2),
                                                           self.mandatoryFrame.lift(),
                                                           self.multiselect_observed_data_refs.lift(),
                                                           self.multiselect_observed_data_refs.grab_set()])
@@ -148,7 +154,7 @@ class Editor(tk.Frame):
             self.where_sighted_refsButton = tk.Button(self.mandatoryFrame, font=("OpenSans", 12),
                                                       text="Select Identity IDs",
                                                       command=lambda: [
-                                                          self.multiselect_where_sighted_refs.place(x=225, y=5),
+                                                          self.multiselect_where_sighted_refs.place(x=Xsize2, y=Ysize2),
                                                           self.mandatoryFrame.lift(),
                                                           self.multiselect_where_sighted_refs.lift(),
                                                           self.multiselect_where_sighted_refs.grab_set()])
@@ -286,7 +292,7 @@ class Editor(tk.Frame):
             self.multiselect_object_refs = Multiselect(self, self.mandatoryFrame, listitems, eRow, self.COLOR_1, self.COLOR_2, self.COLOR_3)
             #WARNING!! FIX MULTISELECT LOCATION
             self.object_refsButton = tk.Button(self.mandatoryFrame, font=("OpenSans", 12), text="...",
-                                           command=lambda: [self.multiselect_object_refs.place(x=225, y=5),
+                                           command=lambda: [self.multiselect_object_refs.place(x=Xsize2, y=Ysize2),
                                                             self.mandatoryFrame.lift(), self.multiselect_object_refs.lift(),
                                                             self.multiselect_object_refs.grab_set()])
             self.object_refsButton.grid(row=eRow, column=1, sticky=tk.W, pady=5)
@@ -314,7 +320,7 @@ class Editor(tk.Frame):
             self.kill_chain_phasesLabel.grid(row=eRow, column=0, sticky=tk.E, padx=5)
             listitems=getKillChainPhases()
             self.multiselect_kill_chain_phases= Multiselect(self, self.mandatoryFrame, listitems, eRow, self.COLOR_1, self.COLOR_2, self.COLOR_3, flag="killchain")
-            self.kill_chain_phasesButton = tk.Button(self.mandatoryFrame, font = ("OpenSans", 12), text="Add...", command=lambda: [self.multiselect_kill_chain_phases.place(x=230, y=50),
+            self.kill_chain_phasesButton = tk.Button(self.mandatoryFrame, font = ("OpenSans", 12), text="Add...", command=lambda: [self.multiselect_kill_chain_phases.place(x=Xsize2, y=Ysize2),
                                                             self.multiselect_kill_chain_phases.lift(),
                                                             self.multiselect_kill_chain_phases.grab_set()])
             self.kill_chain_phasesButton.grid(row=eRow, column=1, sticky=tk.W, pady=5)
@@ -373,7 +379,7 @@ class Editor(tk.Frame):
             self.multiselect_sectors = Multiselect(self, self.mandatoryFrame, listitems, eRow, self.COLOR_1, self.COLOR_2, self.COLOR_3)
             self.sectorsLabel = tk.Label(self.mandatoryFrame, text="Sectors:", font=("OpenSans", 12))
             self.sectorsLabel.grid(row=eRow, column=0, sticky=tk.E, padx=5)
-            self.sectorsButton = tk.Button(self.mandatoryFrame, font = ("OpenSans", 12), text="...", command=lambda : [self.multiselect_sectors.place(x=230, y=50), self.multiselect_sectors.grab_set(), self.multiselect_sectors.lift()])
+            self.sectorsButton = tk.Button(self.mandatoryFrame, font = ("OpenSans", 12), text="...", command=lambda : [self.multiselect_sectors.place(x=Xsize, y=Ysize), self.multiselect_sectors.grab_set(), self.multiselect_sectors.lift()])
             self.sectorsButton.grid(row=eRow, column=1, sticky=tk.W, pady=5)
             self.widget_list.append([self.multiselect_sectors, "sectors"])
             self.hover_labels_list.append(self.sectorsLabel) #hover
@@ -439,7 +445,7 @@ class Editor(tk.Frame):
 "personal-satisfaction", "revenge", "unpredictable"]
             self.multiselect_secondary_motivations = Multiselect(self, self.mandatoryFrame, listitems, eRow, self.COLOR_1, self.COLOR_2, self.COLOR_3)
             self.secondary_motivationsButton = tk.Button(self.mandatoryFrame, font=("OpenSans", 12), text="...",
-                                           command=lambda: [self.multiselect_secondary_motivations.place(x=225, y=5),
+                                           command=lambda: [self.multiselect_secondary_motivations.place(x=Xsize2, y=Ysize2),
                                                             self.mandatoryFrame.lift(), self.multiselect_secondary_motivations.lift(),
                                                             self.multiselect_secondary_motivations.grab_set()])
             self.secondary_motivationsButton.grid(row=eRow, column=1, sticky=tk.W, pady=5)
@@ -461,7 +467,7 @@ class Editor(tk.Frame):
                                                                  self.COLOR_2, self.COLOR_3)
             self.personal_motivationsButton = tk.Button(self.mandatoryFrame, font=("OpenSans", 12), text="...",
                                                          command=lambda: [
-                                                             self.multiselect_personal_motivations.place(x=225, y=5),
+                                                             self.multiselect_personal_motivations.place(x=Xsize2, y=Ysize2),
                                                              self.mandatoryFrame.lift(),
                                                              self.multiselect_personal_motivations.lift(),
                                                              self.multiselect_personal_motivations.grab_set()])
@@ -479,7 +485,7 @@ class Editor(tk.Frame):
             self.multiselect_roles = Multiselect(self, self.mandatoryFrame, listitems, eRow, self.COLOR_1, self.COLOR_2, self.COLOR_3)
             self.rolesButton = tk.Button(self.mandatoryFrame, font=("OpenSans", 12), text="...",
                                                          command=lambda: [
-                                                             self.multiselect_roles.place(x=225, y=5),
+                                                             self.multiselect_roles.place(x=Xsize2, y=Ysize2),
                                                              self.mandatoryFrame.lift(),
                                                              self.multiselect_roles.lift(),
                                                              self.multiselect_roles.grab_set()])
@@ -663,7 +669,7 @@ class Editor(tk.Frame):
         self.external_referencesLabel.grid(row=goRow, column=0, sticky=tk.E, padx=5)
         listitems=getExternalRefs()
         self.multiselect_external_references= Multiselect(self, self.goFrame, listitems, goRow, self.COLOR_1, self.COLOR_2, self.COLOR_3, flag="exref")
-        self.external_referencesButton = tk.Button(self.goFrame, font = ("OpenSans", 12), text="Add...", command=lambda: [self.multiselect_external_references.place(x=230, y=50),
+        self.external_referencesButton = tk.Button(self.goFrame, font = ("OpenSans", 12), text="Add...", command=lambda: [self.multiselect_external_references.place(x=Xsize, y=Ysize),
                                                         self.multiselect_external_references.lift(),
                                                         self.multiselect_external_references.grab_set()])
         self.external_referencesButton.grid(row=goRow, column=1, sticky=tk.W, pady=5)
@@ -679,7 +685,7 @@ class Editor(tk.Frame):
         self.multiselect_object_marking_refs = Multiselect(self, self.goFrame, listitems, goRow, self.COLOR_1,
                                                            self.COLOR_2, self.COLOR_3)
         self.object_marking_refsButton = tk.Button(self.goFrame, font=("OpenSans", 12), text="Add...", command=lambda: [
-            self.multiselect_object_marking_refs.place(x=230, y=50),
+            self.multiselect_object_marking_refs.place(x=Xsize, y=Ysize),
             self.multiselect_object_marking_refs.lift(),
             self.multiselect_object_marking_refs.grab_set()])
         self.object_marking_refsButton.grid(row=goRow, column=1, sticky=tk.W, pady=5)
@@ -695,7 +701,7 @@ class Editor(tk.Frame):
         self.multiselect_granular_markings = Multiselect(self, self.goFrame, listitems, goRow, self.COLOR_1,
                                                            self.COLOR_2, self.COLOR_3, flag="exref")
         self.granular_markingsButton = tk.Button(self.goFrame, font=("OpenSans", 12), text="Add...", command=lambda: [
-            self.multiselect_granular_markings.place(x=230, y=50),
+            self.multiselect_granular_markings.place(x=Xsize, y=Ysize),
             self.multiselect_granular_markings.lift(),
             self.multiselect_granular_markings.grab_set()])
         self.granular_markingsButton.grid(row=goRow, column=1, sticky=tk.W, pady=5)

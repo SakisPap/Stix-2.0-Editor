@@ -54,6 +54,8 @@ class Editor(tk.Frame):
         self.listbox = object_class.listbox
         self.editmode = object_class.editmode
 
+        self.configure(bg=self.COLOR_1)
+
         self.grid_propagate(0)
         self.pack_propagate(0)
         self.object = object
@@ -78,8 +80,9 @@ class Editor(tk.Frame):
         eRow=0
 
         object=object_class.object
-        self.mandatoryFrame = tk.Frame(self)
+        self.mandatoryFrame = tk.Frame(self, bg=self.COLOR_1)
         self.mandatoryFrame.pack(fill=tk.X)
+        self.mandatoryFrame.columnconfigure(1, weight=3)
 
         Xsize = 320
         Ysize = 50
@@ -547,7 +550,7 @@ class Editor(tk.Frame):
 
             eRow += 1
 
-            self.statementLabel = tk.Label(self.mandatoryFrame, text="**Statement:", font=("OpenSans", 12), state=tk.DISABLED)
+            self.statementLabel = tk.Label(self.mandatoryFrame, text="**Statement:", font=("OpenSans", 12), bg=self.COLOR_1, state=tk.DISABLED)
             self.statementLabel.grid(row=eRow, column=0, sticky=tk.E, padx=5)
 
             self.statementEntry = tk.Entry(self.mandatoryFrame, font=("OpenSans", 12), state=tk.DISABLED)
@@ -556,7 +559,7 @@ class Editor(tk.Frame):
 
             eRow += 1
 
-            self.tlpLabel = tk.Label(self.mandatoryFrame, text="**TLP:", font=("OpenSans", 12), state=tk.DISABLED)
+            self.tlpLabel = tk.Label(self.mandatoryFrame, text="**TLP:", font=("OpenSans", 12), bg=self.COLOR_1, state=tk.DISABLED)
             self.tlpLabel.grid(row=eRow, column=0, sticky=tk.E, padx=5)
             self.tlpVar = tk.StringVar()
             self.tlpVar.set("")
@@ -567,7 +570,7 @@ class Editor(tk.Frame):
 
             eRow += 1
 
-            self.markdefdesclaimerLabel=tk.Label(self.mandatoryFrame, text="**You can only choose one\n based on Definition Type", font=("OpenSans", 8))
+            self.markdefdesclaimerLabel=tk.Label(self.mandatoryFrame, text="**You can only choose one\n based on Definition Type",bg=self.COLOR_1, font=("OpenSans", 8))
             self.markdefdesclaimerLabel.grid(row=eRow,column=0, sticky=tk.E,padx=5)
             eRow += 1
 
@@ -647,7 +650,7 @@ class Editor(tk.Frame):
         self.created_by_refLabel = tk.Label(self.goFrame, text="Created by Reference:", font=("OpenSans", 12), bg=self.COLOR_1)
         self.created_by_refLabel.grid(row=goRow, column=0, sticky=tk.E, padx=5)
 
-        self.createdbyref = CreatedByRef(self.goFrame, goRow)
+        self.createdbyref = CreatedByRef(self.goFrame, goRow, self.COLOR_1)
         self.created_by_refButton = tk.Button(self.goFrame, font=("OpenSans", 12), text="Select Identity...", command= lambda : [self.createdbyref.pop(self.mandatoryFrame, self.goFrame)])
         self.created_by_refButton.grid(row=goRow, column=1, sticky=tk.W, pady=5)
         self.widget_list.append([self.createdbyref, "created_by_ref"])
@@ -725,6 +728,7 @@ class Editor(tk.Frame):
 
         for item in self.hover_labels_list:
             item.bind("<Leave>", lambda _: [object_class.selector(self.object), object_class.configure(cursor="")])
+            item.configure(bg=self.COLOR_1)
 
 
 

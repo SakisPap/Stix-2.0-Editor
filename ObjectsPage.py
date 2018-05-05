@@ -87,7 +87,7 @@ class Objects(tk.Frame):
 
         # Paging header
         self.exit = tk.Button(self.gridHeader, text="⌫", font=("OpenSans", 12, "bold"), fg="white", bg="#FF3B30", highlightthickness=0, relief=tk.FLAT, command = lambda : [self.grab_release(), self.place_forget()])
-        self.exit.pack(side=tk.RIGHT, fill=tk.Y)
+        #self.exit.pack(side=tk.RIGHT, fill=tk.Y)
         self.topLabel = tk.Label(self.gridHeader, fg="white", bg=self.COLOR_2, text="Please choose an Object to begin interraction", font=("OpenSans", 17, "bold"))
         self.topLabel.pack(fill=tk.BOTH, expand=True)
 
@@ -261,8 +261,8 @@ class Objects(tk.Frame):
         self.listLabel = tk.Label(self.listBody, text="Existing Objects in project", font=("OpenSans", 12, "bold"), fg=self.COLOR_3, relief=tk.SOLID, bd=0)
         self.listLabel.pack(fill=tk.X)
 
-        self.listbox = tk.Listbox(self.listBody, exportselection=0, font=("OpenSans", 12, "bold"), bd=0, width=50, relief=tk.FLAT, highlightthickness=0, bg=self.COLOR_1, fg=self.COLOR_3)
-        self.listbox.pack(fill=tk.Y, expand=True, padx=10, pady=5)
+        self.listbox = tk.Listbox(self.listBody, exportselection=0, font=("OpenSans", 12, "bold"), bd=0, relief=tk.FLAT, highlightthickness=0, bg=self.COLOR_1, fg=self.COLOR_3)
+        self.listbox.pack(fill=tk.BOTH, expand=True, padx=20)
         self.listbox.bind('<Button-1>', lambda _: [self.display_rel_info(), self.edit_button.configure(state=tk.NORMAL) if self.object not in ("relationship", "nothing") else print(""), self.delete_button.configure(state=tk.NORMAL)])
         #self.scrollbar = tk.Scrollbar(self.listBody, orient="vertical")
         #self.scrollbar.configure(command=self.listbox.yview)
@@ -304,7 +304,6 @@ class Objects(tk.Frame):
     def display_rel_info(self):
         if self.object=="relationship":
             name = self.listbox.get(tk.ACTIVE)
-            print(name)
             stix2object = filestoarr2obj4editRel("relationship", name)
             source=stix2object.get("source_ref")
             target=stix2object.get("target_ref")

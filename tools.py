@@ -171,8 +171,8 @@ class Multiselect(tk.Frame):
         self.grab_release()
 
     def widgets(self):
-        self.showlabel = tk.Label(self.labelparent, height=3, font=("OpenSans", 10), bg=self.COLOR_1, wraplength=500)
-        self.listview = tk.Listbox(self, exportselection=0, font=("OpenSans", 10, "bold"), bd=1, height=15,
+        self.showlabel = tk.Label(self.labelparent, height=2, font=("OpenSans", 10, "bold"), bg=self.COLOR_1, wraplength=900)
+        self.listview = tk.Listbox(self, exportselection=0, width=60, font=("OpenSans", 10, "bold"), bd=1, height=15,
                               relief=tk.FLAT, highlightthickness=0, fg=self.COLOR_3, selectmode='multiple')
         self.listview.pack()
 
@@ -448,9 +448,10 @@ class ExternalReferenceMaker(tk.Toplevel):
 
 
 class CreatedByRef():
-    def __init__(self, goFrame, goRow):
+    def __init__(self, goFrame, goRow, color):
         self.goFrame=goFrame
         self.goRow=goRow
+        self.COLOR_1=color
 
     def pop(self, root, goFrame):
         self.top = tk.Toplevel(root)
@@ -478,7 +479,7 @@ class CreatedByRef():
             self.created_by_refLabel2.destroy()
         except: pass
         self.selected_value=self.listview.get(self.listview.curselection()).split(": ")[1]
-        self.created_by_refLabel2 = tk.Label(self.goFrame, font=("OpenSans", 10))
+        self.created_by_refLabel2 = tk.Label(self.goFrame, font=("OpenSans", 10, "bold"), bg=self.COLOR_1)
         self.created_by_refLabel2.grid(row=self.goRow, column=1, pady=5)
         self.created_by_refLabel2.configure(text=self.selected_value)
 
@@ -492,7 +493,7 @@ class CreatedByRef():
                 return ""
 
     def set(self, item):
-        self.created_by_refLabel2 = tk.Label(self.goFrame, font=("OpenSans", 10))
+        self.created_by_refLabel2 = tk.Label(self.goFrame, font=("OpenSans", 10, "bold"), bg=self.COLOR_1)
         self.created_by_refLabel2.grid(row=self.goRow, column=1, pady=5)
         self.created_by_refLabel2.configure(text=item)
 

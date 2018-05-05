@@ -126,19 +126,19 @@ class Relationship(tk.Frame):
         self.listboxRight.bind('<<ListboxSelect>>', lambda _: self.ok_button.configure(
             state=tk.NORMAL) if self.rel_type_var.get() != "null" else self.ok_button.configure(state=tk.DISABLED))
 
-        self.ok_button = tk.Button(self.radioFrame, text="Relate", font=("OpenSans", 12, "bold"), fg="white", width=5,
+        self.ok_button = tk.Button(self.radioFrame, text="Relate", font=("OpenSans", 12, "bold"), fg="white",
                                    bg="#03AC13", relief=tk.FLAT, highlightthickness=0, height=1,
                                    command=lambda: [self.createRelationship(), self.grab_release(),
                                                     self.destroy(), object_class.packer(0),
                                                     object_class.selector(self.object)])
-        self.ok_button.pack(side=tk.LEFT, pady=20, padx=5)
+        self.ok_button.pack(side=tk.LEFT, fill=tk.X, expand=True, pady=20)
 
         self.cancel_button = tk.Button(self.radioFrame, text="Abort", font=("OpenSans", 12, "bold"), fg="white",
-                                       width=5, bg="#FF3B30", relief=tk.FLAT, highlightthickness=0, height=1,
+                                     bg="#FF3B30", relief=tk.FLAT, highlightthickness=0, height=1,
                                        command=lambda: [self.grab_release(),
                                                         self.destroy(), object_class.packer(0),
                                                         object_class.selector(self.object)])
-        self.cancel_button.pack(side=tk.LEFT, pady=20, padx=5)
+        self.cancel_button.pack(side=tk.LEFT, fill=tk.X, expand=True, pady=20)
 
         self.ok_button.configure(state=tk.DISABLED)
 

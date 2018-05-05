@@ -244,7 +244,7 @@ class Editor(tk.Frame):
         if object == "indicator":
             self.patternLabel = tk.Label(self.mandatoryFrame, text="*Pattern:", font=("OpenSans", 12))
             self.patternLabel.grid(row=eRow, column=0, sticky=tk.E, padx=5)
-            self.patternEntry = tk.Entry(self.mandatoryFrame, font=("OpenSans", 12), width=50)
+            self.patternEntry = tk.Entry(self.mandatoryFrame, font=("OpenSans", 12), width=80)
             self.patternEntry.grid(row=eRow, column=1, sticky=tk.W, pady=5)
             #self.patternEntry.bind('<KeyPress>', self.keyPress)
 
@@ -553,7 +553,7 @@ class Editor(tk.Frame):
             self.statementLabel = tk.Label(self.mandatoryFrame, text="**Statement:", font=("OpenSans", 12), bg=self.COLOR_1, state=tk.DISABLED)
             self.statementLabel.grid(row=eRow, column=0, sticky=tk.E, padx=5)
 
-            self.statementEntry = tk.Entry(self.mandatoryFrame, font=("OpenSans", 12), state=tk.DISABLED)
+            self.statementEntry = tk.Entry(self.mandatoryFrame, font=("OpenSans", 12), state=tk.DISABLED, width=80)
             self.statementEntry.grid(row=eRow, column=1, sticky=tk.W, padx=5)
             #self.widget_list.append([self.statementEntry, "definition"])
 

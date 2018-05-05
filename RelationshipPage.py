@@ -43,7 +43,7 @@ from tools import Multiselect
 
 class Relationship(tk.Frame):
     def __init__(self, object_class, parent):
-        tk.Frame.__init__(self, parent, bg="#97ADA9")
+        tk.Frame.__init__(self, parent)
         self.grid_propagate(0)
         self.pack_propagate(0)
         object_class.packer(1)
@@ -53,6 +53,8 @@ class Relationship(tk.Frame):
         self.COLOR_2 = object_class.COLOR_2
         self.COLOR_3 = object_class.COLOR_3
         self.object = object_class.object
+
+        self.configure(bg=self.COLOR_3)
 
         PADX = 20
         PADY = 10
@@ -66,7 +68,7 @@ class Relationship(tk.Frame):
         self.topLabel.config(text="Select an Object from the left list to relate it")
 
 
-        self.radioFrame = tk.Frame(self, bg="#97ADA9")
+        self.radioFrame = tk.Frame(self, bg=self.COLOR_3)
 
         self.listboxLeft = tk.Listbox(self, exportselection=0, font=("OpenSans", 10, "bold"), bd=0,
                                       width=30, height=23, relief=tk.FLAT, highlightthickness=0, bg=self.COLOR_1,

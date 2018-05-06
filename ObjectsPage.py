@@ -309,8 +309,14 @@ class Objects(tk.Frame):
             target=stix2object.get("target_ref")
             source_s=source.split("--")
             target_s = target.split("--")
-            source_name = filestoarr2obj4editRel(source_s[0], source).get("name")
-            target_name = filestoarr2obj4editRel(target_s[0], target).get("name")
+            try:
+                source_name = filestoarr2obj4editRel(source_s[0], source).get("name")
+            except:
+                source_name = "<Missing from fs>"
+            try:
+                target_name = filestoarr2obj4editRel(target_s[0], target).get("name")
+            except:
+                target_name = "<Missing from fs>"
             self.infoLabel.configure(text=str(source_name+" ➡ ["+stix2object.get("relationship_type").upper()+"] ➡ "+target_name))
 
 

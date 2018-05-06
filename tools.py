@@ -604,6 +604,31 @@ class SightingOfRef():
 class GranularMarkings(tk.Frame):
     def __init__(self, parent, editor_class):
         tk.Frame.__init__(self, parent, bg=editor_class.COLOR_1, highlightthickness=3, highlightbackground=editor_class.COLOR_2, bd=3)
+        self.editor_class=editor_class
+        col=0
+        row=0
+        self.a={}
+        for item in editor_class.widget_list:
+            if item[1] != "granular_markings":
+                self.a[item[1]+"var"] = tk.IntVar()
+                self.a[item[1]+"var"].set(1)
+                self.checkbutton =  tk.Checkbutton(self, text=item[1], onvalue=0, offvalue=1, variable=self.a[item[1]+"var"], bg=editor_class.COLOR_1, highlightthickness=0)
+                self.checkbutton.grid(row=col, column=row, sticky=tk.W, padx=2, pady=1)
+                col+=1
+                if col==11:
+                    row=2
+                    col=0
+
+    def get(self):
+        itemlist = []
+        for item in self.editor_class.widget_list:
+            if item[1]!="granular_markings":
+                if self.a[item[1]+"var"].get()==1:
+                    itemlist.append(item[1])
+        return itemlist
+
+
+
 
 
 

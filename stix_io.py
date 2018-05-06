@@ -38,10 +38,15 @@ from stix2elevator.options import *
 
 
 def itemtofile(item):
+    illegal_chars=[":","|","?", "<", ">", "*", "\""]
     if item.get("type") == "relationship" or item.get("type") == "observed-data" or item.get("type") == "marking-definition" or item.get("type")=="sighting":
         filename=item.get("type")+"/"+item.get("id")+".json"
     else:
-        filename=item.get("type")+"/"+item.get("name")+".json"
+        fname = item.get("name")
+        for x in illegal_chars:
+            if x in fname:
+                fname = fname.replace(x, "_")
+        filename=item.get("type")+"/"+fname+".json"
 
     if not (os.path.isfile(filename)):
         file = open(filename, "w")

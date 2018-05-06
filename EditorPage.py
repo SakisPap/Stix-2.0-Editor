@@ -697,7 +697,7 @@ class Editor(tk.Frame):
 
         goRow+=1
 
-        self.granular_markigs = GranularMarkings(self, self)
+        self.granular_markings = GranularMarkings(self, self)
 
         self.granular_markingsLabel = tk.Label(self.goFrame, text="Granular Markings:", font=("OpenSans", 12),
                                                  bg=self.COLOR_1)
@@ -708,12 +708,12 @@ class Editor(tk.Frame):
         self.granular_markingsButton = tk.Button(self.goFrame, font=("OpenSans", 12), text="Add...", command=lambda: [
             self.multiselect_granular_markings.place(x=Xsize, y=Ysize),
             self.multiselect_granular_markings.lift(),
-            self.multiselect_granular_markings.grab_set(), self.granular_markigs.pack(fill=tk.BOTH, expand=True)])
+            self.multiselect_granular_markings.grab_set(), self.granular_markings.pack(fill=tk.BOTH, expand=True)])
         self.granular_markingsButton.grid(row=goRow, column=1, sticky=tk.W, pady=5)
-        self.widget_list.append([self.multiselect_granular_markings, "granular_markings"])
+        self.widget_list.append([self.granular_markings, "granular_markings"])
         self.hover_labels_list.append(self.granular_markingsLabel)  # hover
 
-        #self.granular_markingsButton.config(state=tk.DISABLED)
+        self.granular_markingsButton.config(state=tk.DISABLED)
 
         goRow += 1
 

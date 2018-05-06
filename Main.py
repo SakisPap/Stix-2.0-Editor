@@ -94,6 +94,11 @@ def about_window():
     window.resizable(width=False, height=False)
     window.title("About")
     window.attributes('-topmost', 'true')
+    try:
+        window.iconbitmap(os.path.join(getExecPath(), "logo.ico"))
+    except:
+        img = tkinter.PhotoImage(file=os.path.join(getExecPath(), "logo.gif"))
+        window.tk.call('wm', 'iconphoto', window._w, img)
     window.grab_set()
 
     text = tk.Label(window, text="\nSTIX 2.0 UoM Editor  Copyright (C) 2018  InfoSec Research Group UoM\n\n"
@@ -110,6 +115,11 @@ def contact_window():
     window.resizable(width=False, height=False)
     window.title("Contact")
     window.attributes('-topmost', 'true')
+    try:
+        window.iconbitmap(os.path.join(getExecPath(), "logo.ico"))
+    except:
+        img = tkinter.PhotoImage(file=os.path.join(getExecPath(), "logo.gif"))
+        window.tk.call('wm', 'iconphoto', window._w, img)
     window.grab_set()
 
     labelframe = tk.LabelFrame(window, text="Andreas Stavropoulos", font=("OpenSans", 9, "bold"))
@@ -141,6 +151,11 @@ def bugreport_window():
     window.resizable(width=False, height=False)
     window.title("Report Bug")
     window.attributes('-topmost', 'true')
+    try:
+        window.iconbitmap(os.path.join(getExecPath(), "logo.ico"))
+    except:
+        img = tkinter.PhotoImage(file=os.path.join(getExecPath(), "logo.gif"))
+        window.tk.call('wm', 'iconphoto', window._w, img)
     window.grab_set()
 
     label = tk.Label(window, text="Please describe the issue with as many details as possible,\nprovide your contact info if you want us to reach you back.")

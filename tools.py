@@ -256,6 +256,13 @@ class KillChainPhaseMaker(tk.Toplevel):
         tk.Toplevel.__init__(self, root)
         self.title("Manage Kill Chain Phases...")
         #self.geometry("400x110")
+        try:
+            sFile = os.path.dirname(os.path.abspath(sys.modules['__main__'].__file__))
+            self.iconbitmap(os.path.join(sFile, "logo.ico"))
+        except:
+            sFile = os.path.dirname(os.path.abspath(sys.modules['__main__'].__file__))
+            img = tkinter.PhotoImage(file=os.path.join(sFile, "logo.gif"))
+            self.tk.call('wm', 'iconphoto', self._w, img)
         self.resizable(width=False, height=False)
         self.frame = tk.Frame(self)
         self.frame.pack()
@@ -320,6 +327,13 @@ class ExternalReferenceMaker(tk.Toplevel):
         tk.Toplevel.__init__(self, root)
         self.title("Manage External References...")
         # self.geometry("400x110")
+        try:
+            sFile = os.path.dirname(os.path.abspath(sys.modules['__main__'].__file__))
+            self.iconbitmap(os.path.join(sFile, "logo.ico"))
+        except:
+            sFile = os.path.dirname(os.path.abspath(sys.modules['__main__'].__file__))
+            img = tkinter.PhotoImage(file=os.path.join(sFile, "logo.gif"))
+            self.tk.call('wm', 'iconphoto', self._w, img)
         self.resizable(width=False, height=False)
         self.frame = tk.Frame(self)
         self.frame.pack()
@@ -459,6 +473,13 @@ class CreatedByRef():
         self.top.grab_set()
         self.top.attributes("-topmost", "true")
         #self.geometry("1900x950")
+        try:
+            sFile = os.path.dirname(os.path.abspath(sys.modules['__main__'].__file__))
+            self.top.iconbitmap(os.path.join(sFile, "logo.ico"))
+        except:
+            sFile = os.path.dirname(os.path.abspath(sys.modules['__main__'].__file__))
+            img = tkinter.PhotoImage(file=os.path.join(sFile, "logo.gif"))
+            self.top.tk.call('wm', 'iconphoto', self.top._w, img)
         self.top.resizable(width=False, height=False)
         self.frame = tk.Frame(self.top)
         self.frame.pack(fill=tk.X,pady=5)
@@ -535,6 +556,13 @@ class SightingOfRef():
         self.top.title("Object Selection")
         self.top.grab_set()
         self.top.attributes("-topmost", "true")
+        try:
+            sFile = os.path.dirname(os.path.abspath(sys.modules['__main__'].__file__))
+            self.top.iconbitmap(os.path.join(sFile, "logo.ico"))
+        except:
+            sFile = os.path.dirname(os.path.abspath(sys.modules['__main__'].__file__))
+            img = tkinter.PhotoImage(file=os.path.join(sFile, "logo.gif"))
+            self.top.tk.call('wm', 'iconphoto', self.top._w, img)
         #self.geometry("1900x950")
         self.top.resizable(width=False, height=False)
         self.frame = tk.Frame(self.top)

@@ -598,12 +598,24 @@ class SightingOfRef():
         self.cancelbutton.pack(side=tk.LEFT, fill=tk.X, expand=True, padx=5, pady=5)
 
 
+
+
+
+class GranularMarkings(tk.Frame):
+    def __init__(self, parent, editor_class):
+        tk.Frame.__init__(self, parent, bg=editor_class.COLOR_1, highlightthickness=3, highlightbackground=editor_class.COLOR_2, bd=3)
+
+
+
+
+
+
 class HoverManager():
     def __init__(self, object_class):
         self.object_class=object_class
 
     def show(self, event, widget):
-        print(str(widget))
+        #print(str(widget))
         try:
             self.object_class.configure(cursor="question_arrow")
         except:
@@ -680,5 +692,6 @@ class HoverManager():
         else:
             text = "!!Missing "+widget+" info for this "+self.object_class.object
 
+        self.object_class.infoLabel.configure(font=("OpenSans", 9, "bold"))
         self.object_class.infoLabel.configure(text=text)
 

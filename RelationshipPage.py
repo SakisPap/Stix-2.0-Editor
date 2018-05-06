@@ -133,7 +133,7 @@ class Relationship(tk.Frame):
                                                     object_class.selector(self.object)])
         self.ok_button.pack(side=tk.LEFT, fill=tk.X, expand=True, pady=20)
 
-        self.cancel_button = tk.Button(self.radioFrame, text="Abort", font=("OpenSans", 12, "bold"), fg="white",
+        self.cancel_button = tk.Button(self.radioFrame, text="Abort ", font=("OpenSans", 12, "bold"), fg="white",
                                      bg="#FF3B30", relief=tk.FLAT, highlightthickness=0, height=1,
                                        command=lambda: [self.grab_release(),
                                                         self.destroy(), object_class.packer(0),

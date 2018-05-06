@@ -110,7 +110,7 @@ class Objects(tk.Frame):
         self.infoBody.pack_propagate(0)
         self.infoBody.grid_propagate(0)
 
-        self.infoLabel = tk.Label(self.infoBody, fg="white", bg=self.COLOR_2, text="This is the info tab, click on an Object to learn more", font=("OpenSans", 12, "bold"), wraplength=950)
+        self.infoLabel = tk.Label(self.infoBody, fg="white", bg=self.COLOR_2, text="This is the info tab, click on an Object to learn more", font=("OpenSans", 12, "bold"), wraplength=1050)
         self.infoLabel.pack(fill=tk.BOTH, expand=True)
 
 
@@ -372,6 +372,7 @@ class Objects(tk.Frame):
         self.add_button.configure(command=lambda: self.start_Editor(0))
         self.edit_button.configure(state=tk.DISABLED)
         self.delete_button.configure(state=tk.DISABLED)
+        self.infoLabel.configure(font=("OpenSans", 12, "bold"))
         if object=="attack-pattern":
             self.infoLabel.configure(text="Attack Pattern: A type of Tactics, Techniques, and Procedures (TTP) that describes ways threat actors attempt to compromise targets.")
             self.topLabel.config(text="Selected Object: Attack Pattern")

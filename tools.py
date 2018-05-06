@@ -609,53 +609,71 @@ class HoverManager():
         except:
             print("Cursor not compatible with OS!")
         if widget == "name":
-            text="Name: A name used to identify the "+self.object_class.object
+            text="Name: A name used to identify the "+self.object_class.object+"\nProperty name in STIX2: "+widget+"\nType: String"
         elif widget == "labels":
-            text="Labels: This property is an Open Vocabulary that specifies the type of "+self.object_class.object
+            text="Labels: This property is an Open Vocabulary that specifies the type of "+self.object_class.object+"\nFormat Example: \"label1 label2 label3\"... (seperate entries with spacebar) for multiple labels or just \"label\" for a single entry"+"\nProperty name in STIX2: "+widget+"\nType: List String"
         elif widget == "pattern":
-            text="Pattern: The detection pattern for this Indicator is a STIX Pattern as specified in STIX Patterning Docs.\n Format Example: [ipv4:value='192.168.1.1'] "
+            text="Pattern: The detection pattern for this Indicator is a STIX Pattern as specified in STIX Patterning Docs.\n Format Example: [ipv4:value='192.168.1.1']"+"\nProperty name in STIX2: "+widget+"\nType: String"
         elif widget == "valid_from":
-            text = "Valid From: The time from which this Indicator should be considered valuable intelligence."
+            text = "Valid From: The time from which this Indicator should be considered valuable intelligence.\n Format example: 1/1/1995"+"\nProperty name in STIX2: "+widget+"\nType: Timestamp"
         elif widget == "description":
-            text = "A description that provides more details and context about the "+self.object_class.object+", potentially including its purpose and its key characteristics."
+            text = "A description that provides more details and context about the "+self.object_class.object+", potentially including its purpose and its key characteristics."+"\nProperty name in STIX2: "+widget+"\nType: String"
         elif widget == "kill_chain_phases":
-            text = "The list of Kill Chain Phases for which this "+self.object_class.object+" is used."
+            text = "The list of Kill Chain Phases for which this "+self.object_class.object+" is used."+"\nProperty name in STIX2: "+widget+"\nType: List of Kill Chain Phases\nPlease manage any Kill Chain Phases from Tools menu."
         elif widget == "aliases":
-            text = "Alternative names used to identify this "+self.object_class.object+"."
+            text = "Alternative names used to identify this "+self.object_class.object+"."+"\nFormat Example: \"alias1 alias2 alias3\"... (seperate entries with spacebar) for multiple labels or just \"alias\" for a single entry"+"\nProperty name in STIX2: "+widget+"\nType: List String"
         elif widget == "first_seen":
-            text = "The time that this "+self.object_class.object+" was first seen.\n Format example: 1/1/1995"
+            text = "The time that this "+self.object_class.object+" was first seen.\n Format example: 1/1/1995"+"\nProperty name in STIX2: "+widget+"\nType: Timestamp"
         elif widget == "last_seen":
-            text = "The time that this "+self.object_class.object+" was last seen.\n Format example: 1/1/1995"
+            text = "The time that this "+self.object_class.object+" was last seen.\n Format example: 1/1/1995"+"\nProperty name in STIX2: "+widget+"\nType: Timestamp"
         elif widget == "objective":
-            text = "This property defines the Campaign’s primary goal, objective, desired outcome, or intended effect — what the Threat Actor hopes to accomplish with this Campaign."
+            text = "This property defines the Campaign’s primary goal, objective, desired outcome, or intended effect — what the Threat Actor hopes to accomplish with this Campaign."+"\nProperty name in STIX2: "+widget+"\nType: String"
         elif widget == "sectors":
-            text = "The list of industry sectors that this "+self.object_class.object+" belongs to."
+            text = "The list of industry sectors that this "+self.object_class.object+" belongs to."+"\nProperty name in STIX2: "+widget+"\nType: List of Open Vocabulary"
         elif widget == "contact_information":
-            text = "The contact information (e-mail, phone number, etc.) for this "+self.object_class.object+"."
+            text = "The contact information (e-mail, phone number, etc.) for this "+self.object_class.object+"."+"\nProperty name in STIX2: "+widget+"\nType: String"
         elif widget == "valid_from":
-            text = "The time from which this "+self.object_class.object+" should be considered valuable intelligence."
+            text = "The time from which this "+self.object_class.object+" should be considered valuable intelligence.\n Format example: 1/1/1995"+"\nProperty name in STIX2: "+widget+"\nType: Timestamp"
         elif widget == "valid_until":
-            text = "The time from which this "+self.object_class.object+" should no longer be considered valuable intelligence."
+            text = "The time from which this "+self.object_class.object+" should no longer be considered valuable intelligence.\n Format example: 1/1/1995"+"\nProperty name in STIX2: "+widget+"\nType: Timestamp"
         elif widget == "goals":
-            text = "The high level goals of this Intrusion Set, namely, what are they trying to do."
+            text = "The high level goals of this Intrusion Set, namely, what are they trying to do.""\nFormat Example: \"goal1 goal2 goal3\"... (seperate entries with spacebar) for multiple labels or just \"goal\" for a single entry"+"\nProperty name in STIX2: "+widget+"\nType: List String"
         elif widget == "resource_level":
-            text = "This defines the organizational level at which this "+self.object_class.object+" typically works, which in turn determines the resources available to this "+self.object_class.object+" for use in an attack."
+            text = "This defines the organizational level at which this "+self.object_class.object+" typically works, which in turn determines the resources available to this "+self.object_class.object+" for use in an attack."+"\nProperty name in STIX2: "+widget+"\nType: Open Vocabulary"
         elif widget == "primary_motivation":
-            text = "The primary reason, motivation, or purpose behind this "+self.object_class.object+". The motivation is why the "+self.object_class.object+" wishes to achieve the goal (what they are trying to achieve)."
+            text = "The primary reason, motivation, or purpose behind this "+self.object_class.object+". The motivation is why the "+self.object_class.object+" wishes to achieve the goal (what they are trying to achieve)."+"\nProperty name in STIX2: "+widget+"\nType: Open Vocabulary"
         elif widget == "secondary_motivations":
-            text = "The secondary reasons, motivations, or purposes behind this "+self.object_class.object+". These motivations can exist as an equal or near-equal cause to the primary motivation. However, it does not replace or necessarily magnify the primary motivation, but it might indicate additional context."
+            text = "The secondary reasons, motivations, or purposes behind this "+self.object_class.object+". These motivations can exist as an equal or near-equal cause to the primary motivation. However, it does not replace or necessarily magnify the primary motivation, but it might indicate additional context."+"\nProperty name in STIX2: "+widget+"\nType: List of Open Vocabulary"
         elif widget == "published":
-            text = "The date that this Report object was officially published by the creator of this "+self.object_class.object+"."
+            text = "The date that this Report object was officially published by the creator of this "+self.object_class.object+"."+"\n Format example: 1/1/1995"+"\nProperty name in STIX2: "+widget+"\nType: Timestamp"
         elif widget == "object_refs":
-            text = "Specifies the STIX Objects that are referred to by this "+self.object_class.object+"."
+            text = "Specifies the STIX Objects that are referred to by this "+self.object_class.object+"."+"\nProperty name in STIX2: "+widget+"\nType: List of Identifier"
         elif widget == "sophistication":
-            text = "The skill, specific knowledge, special training, or expertise a "+self.object_class.object+" must have to perform the attack."
+            text = "The skill, specific knowledge, special training, or expertise a "+self.object_class.object+" must have to perform the attack."+"\nProperty name in STIX2: "+widget+"\nType: Open Vocabulary"
         elif widget == "personal_motivations":
-            text = "The personal reasons, motivations, or purposes of the "+self.object_class.object+" regardless of organizational goals."
+            text = "The personal reasons, motivations, or purposes of the "+self.object_class.object+" regardless of organizational goals."+"\nProperty name in STIX2: "+widget+"\nType: Open Vocabulary"
         elif widget == "roles":
-            text = "A list of roles the "+self.object_class.object+" plays."
+            text = "A list of roles the "+self.object_class.object+" plays.""\nProperty name in STIX2: "+widget+"\nType: List of Open Vocabulary"
         elif widget == "tool_version":
-            text = "The version identifier associated with the Tool."
+            text = "The version identifier associated with the Tool."+"\nProperty name in STIX2: "+widget+"\nType: String"
+
+
+        elif widget == "created_by_ref":
+            text = "The ID of the Identity object that describes the entity that created this object." + "\nProperty name in STIX2: " + widget + "\nType: Identifier (of Identity)"
+        elif widget =="created":
+            text = "The time at which the first version of this object was created. It should not be changed when editing the object." + "\nProperty name in STIX2: " + widget + "\nType: Timestamp"
+        elif widget == "modified":
+            text ="The time that this particular version of the object was created. Must be later or equal to created property and should be changed when the object gets edited."+ "\nProperty name in STIX2: " + widget + "\nType: Identifier"
+        elif widget == "id":
+            text ="The ID universally and uniquely identifies this object."+ "\nProperty name in STIX2: " + widget + "\nType: Identifier"
+        elif widget =="external_references":
+            text="A list of external references which refers to non-STIX information. This property is used to provide one or more URLs, descriptions, or IDs to records in other systems."+"\nProperty name in STIX2: " + widget + "\nType: List of External References"+"\nPlease manage any External References from Tools menu."
+        elif widget=="object_marking_refs":
+            text="A list of IDs of Marking Definition objects that apply to this object."+"\nProperty name in STIX2: " + widget + "\nType: List of Identifier (of Marking Definition)"
+        elif widget=="granular_markings":
+            text="A list of granular markings applied to this object."+"\nProperty name in STIX2: " + widget + "\nType: List of Granular Markings"
+        elif widget=="revoked":
+            text="Indicates whether the object has been revoked. Revoked objects are no longer considered valid by the object creator. Revoking an object is permanent. It is recommended to leave this option as-is."+"\nProperty name in STIX2: " + widget + "\nType: Boolean"
 
         # POPULATE HERE...
 

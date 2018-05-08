@@ -67,6 +67,8 @@ class Editor(tk.Frame):
         self.columnconfigure(1, weight=4)
         self.widget_list = []
         self.hover_labels_list = []
+        self.buttons_list = []
+        self.option_menu_list = []
         self.type_of_editor = type_of_editor
         self.current_page = 1
 
@@ -115,6 +117,8 @@ class Editor(tk.Frame):
             self.sighting_of_refButton.grid(row=eRow, column=1, sticky=tk.W, pady=5)
             self.widget_list.append([self.sightingofref, "sighting_of_ref"])
             self.hover_labels_list.append(self.sighting_of_refLabel) #hover
+            self.buttons_list.append(self.sighting_of_refButton)
+
             eRow += 1
 
             self.countLabel = tk.Label(self.mandatoryFrame, text="Count:", font=("OpenSans", 12))  # integer
@@ -144,6 +148,7 @@ class Editor(tk.Frame):
 
             self.widget_list.append([self.multiselect_observed_data_refs, "observed_data_refs"])
             self.hover_labels_list.append(self.observed_data_refsLabel) #hover
+            self.buttons_list.append(self.observed_data_refsButton)
 
             eRow += 1
 
@@ -164,6 +169,7 @@ class Editor(tk.Frame):
             self.where_sighted_refsButton.grid(row=eRow, column=1, sticky=tk.W, pady=5)
             self.widget_list.append([self.multiselect_where_sighted_refs, "where_sighted_refs"])
             self.hover_labels_list.append(self.where_sighted_refsLabel) #hover
+            self.buttons_list.append(self.where_sighted_refsButton)
 
             eRow += 1
 
@@ -210,6 +216,8 @@ class Editor(tk.Frame):
             self.objectsButton.grid(row=eRow, column=1, sticky=tk.W, pady=5)
             self.widget_list.append([self.number_observedEntry, "number_observed"])
             self.hover_labels_list.append(self.objectsLabel) #hover
+            self.buttons_list.append(self.objectsButton)
+
 
             eRow += 1
 
@@ -226,6 +234,7 @@ class Editor(tk.Frame):
 
             self.widget_list.append([self.identity_classVar, "identity_class"])
             self.hover_labels_list.append(self.identity_classLabel) #hover
+            self.option_menu_list.append(self.identity_classOption)
 
             eRow+=1
 
@@ -301,6 +310,8 @@ class Editor(tk.Frame):
             self.object_refsButton.grid(row=eRow, column=1, sticky=tk.W, pady=5)
             self.widget_list.append([self.multiselect_object_refs, "object_refs"])
             self.hover_labels_list.append(self.object_refsLabel) #hover
+            self.buttons_list.append(self.object_refsButton)
+
 
             eRow += 1
 
@@ -310,8 +321,11 @@ class Editor(tk.Frame):
         if(object!="observed-data" and object!="marking-definition" and object!="sighting"):
             self.descriptionLabel = tk.Label(self.mandatoryFrame, text="Description:", font=("OpenSans", 12))
             self.descriptionLabel.grid(row=eRow, column=0, sticky=tk.E, padx=5)
-            self.descriptionEntry = tk.Text(self.mandatoryFrame, font=("OpenSans", 12), width=80, height=3, wrap=tk.WORD)
+            self.descriptionEntry = tk.Text(self.mandatoryFrame, font=("OpenSans", 12), width=80, height=6, wrap=tk.WORD)
+            self.descriptionEntry.bind('<KeyPress>', lambda event, type="description": self.keyPressDict(event, type))
             self.descriptionEntry.grid(row=eRow, column=1, sticky=tk.W, pady=5)
+            if object=="threat-actor":
+                self.descriptionEntry.configure(height=3)
             self.widget_list.append([self.descriptionEntry,"description"])
             self.hover_labels_list.append(self.descriptionLabel) #hover
 
@@ -329,6 +343,8 @@ class Editor(tk.Frame):
             self.kill_chain_phasesButton.grid(row=eRow, column=1, sticky=tk.W, pady=5)
             self.widget_list.append([self.multiselect_kill_chain_phases, "kill_chain_phases"])
             self.hover_labels_list.append(self.kill_chain_phasesLabel) #hover
+            self.buttons_list.append(self.kill_chain_phasesButton)
+
 
             eRow+=1
 
@@ -386,12 +402,14 @@ class Editor(tk.Frame):
             self.sectorsButton.grid(row=eRow, column=1, sticky=tk.W, pady=5)
             self.widget_list.append([self.multiselect_sectors, "sectors"])
             self.hover_labels_list.append(self.sectorsLabel) #hover
+            self.buttons_list.append(self.sectorsButton)
+
 
             eRow += 1
 
             self.contant_informationLabel = tk.Label(self.mandatoryFrame, text="Contant Information:", font=("OpenSans", 12))
             self.contant_informationLabel.grid(row=eRow, column=0, sticky=tk.E, padx=5)
-            self.contant_informationEntry = tk.Entry(self.mandatoryFrame, font=("OpenSans", 12))
+            self.contant_informationEntry = tk.Entry(self.mandatoryFrame, font=("OpenSans", 12), width=60)
             self.contant_informationEntry.grid(row=eRow, column=1, sticky=tk.W, pady=5)
             self.widget_list.append([self.contant_informationEntry, "contact_information"])
             self.hover_labels_list.append(self.contant_informationLabel) #hover
@@ -427,6 +445,8 @@ class Editor(tk.Frame):
             self.resource_levelOption.grid(row=eRow, column=1, sticky=tk.W, pady=5)
             self.widget_list.append([self.resource_levelVar, "resource_level"])
             self.hover_labels_list.append(self.resource_levelLabel) #hover
+            self.option_menu_list.append(self.resource_levelOption)
+
 
             eRow += 1
 
@@ -439,6 +459,8 @@ class Editor(tk.Frame):
             self.primary_motivationOption.grid(row=eRow, column=1, sticky=tk.W, pady=5)
             self.widget_list.append([self.primary_motivationVar, "primary_motivation"])
             self.hover_labels_list.append(self.primary_motivationLabel) #hover
+            self.option_menu_list.append(self.primary_motivationOption)
+
 
             eRow +=1
 
@@ -455,6 +477,8 @@ class Editor(tk.Frame):
 
             self.widget_list.append([self.multiselect_secondary_motivations, "secondary_motivations"])
             self.hover_labels_list.append(self.secondary_motivationsLabel) #hover
+            self.buttons_list.append(self.secondary_motivationsButton)
+
 
             eRow += 1
 
@@ -478,6 +502,8 @@ class Editor(tk.Frame):
 
             self.widget_list.append([self.multiselect_personal_motivations, "personal_motivations"])
             self.hover_labels_list.append(self.personal_motivationsLabel) #hover
+            self.buttons_list.append(self.personal_motivationsButton)
+
 
             eRow += 1
 
@@ -496,6 +522,8 @@ class Editor(tk.Frame):
 
             self.widget_list.append([self.multiselect_roles, "roles"])
             self.hover_labels_list.append(self.rolesLabel) #hover
+            self.buttons_list.append(self.rolesButton)
+
 
             eRow+=1
 
@@ -507,6 +535,8 @@ class Editor(tk.Frame):
             self.sophisticationOption.grid(row=eRow, column=1, sticky=tk.W, pady=5)
             self.widget_list.append([self.sophisticationVar, "sophistication"])
             self.hover_labels_list.append(self.sophisticationLabel) #hover
+            self.option_menu_list.append(self.sophisticationOption)
+
 
             eRow += 1
 
@@ -547,6 +577,8 @@ class Editor(tk.Frame):
             self.definition_typeOption.grid(row=eRow, column=1, sticky=tk.W, pady=5)
             self.widget_list.append([self.definition_typeVar, "definition_type"])
             self.hover_labels_list.append(self.definition_typeLabel) #hover
+            self.option_menu_list.append(self.definition_typeOption)
+
 
             eRow += 1
 
@@ -567,6 +599,8 @@ class Editor(tk.Frame):
             self.tlpOption.grid(row=eRow, column=1, sticky=tk.W, pady=5)
             self.tlpOption.config(state=tk.DISABLED)
             #self.widget_list.append([self.tlpVar, "definition"])
+            self.option_menu_list.append(self.tlpOption)
+
 
             eRow += 1
 
@@ -655,6 +689,7 @@ class Editor(tk.Frame):
         self.created_by_refButton.grid(row=goRow, column=1, sticky=tk.W, pady=5)
         self.widget_list.append([self.createdbyref, "created_by_ref"])
         self.hover_labels_list.append(self.created_by_refLabel)  # hover
+        self.buttons_list.append(self.created_by_refButton)
 
         goRow+=1
 
@@ -678,6 +713,7 @@ class Editor(tk.Frame):
         self.external_referencesButton.grid(row=goRow, column=1, sticky=tk.W, pady=5)
         self.widget_list.append([self.multiselect_external_references, "external_references"])
         self.hover_labels_list.append(self.external_referencesLabel)  # hover
+        self.buttons_list.append(self.external_referencesButton)
 
         goRow+=1
 
@@ -694,6 +730,7 @@ class Editor(tk.Frame):
         self.object_marking_refsButton.grid(row=goRow, column=1, sticky=tk.W, pady=5)
         self.widget_list.append([self.multiselect_object_marking_refs, "object_marking_refs"])
         self.hover_labels_list.append(self.object_marking_refsLabel)  # hover
+        self.buttons_list.append(self.object_marking_refsButton)
 
         goRow+=1
 
@@ -712,6 +749,7 @@ class Editor(tk.Frame):
         self.granular_markingsButton.grid(row=goRow, column=1, sticky=tk.W, pady=5)
         self.widget_list.append([self.multiselect_granular_markings, "granular_markings"])
         self.hover_labels_list.append(self.granular_markingsLabel)  # hover
+        self.buttons_list.append(self.granular_markingsButton)
 
         self.granular_markingsButton.config(state=tk.DISABLED)
 
@@ -728,9 +766,15 @@ class Editor(tk.Frame):
             item.bind("<Enter>", lambda evnt=None, val=self.widget_list[i][1] : self.hovermngr.show(evnt, val))
             i+=1
 
+#---------Aesthetic mods
         for item in self.hover_labels_list:
             item.bind("<Leave>", lambda _: [object_class.selector(self.object), object_class.configure(cursor="")])
             item.configure(bg=self.COLOR_1)
+        for item in self.buttons_list:
+            item.configure(bg=self.COLOR_2, fg="white", highlightthickness=0, padx=5)
+        for item in self.option_menu_list:
+            item.configure(bg=self.COLOR_2, fg="white", font=("OpenSans", 11), highlightthickness=0, padx=5)
+
 
 
 
@@ -969,8 +1013,15 @@ class Editor(tk.Frame):
     def keyPressDict(self, event, type):
         if type == "timestamp":
             chars = ("0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "/", ":", " ")
-        elif type == "something else":
-            chars = ("0", "1", "2", "3", "4", "5", "6", "7", "8", "9", ":")
+        elif type == "description":
+            chars = ("0", "1", "2", "3", "4", "5", "6", "7", "8", "9", ":",
+                "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S",
+                "T", "U",
+                "V", "W", "X", "Y", "Z",
+                "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s",
+                "t", "u",
+                "v", "w", "x", "y", "z",
+                "-", " ", ".")
         if event.char in chars:
             print
             event.char

@@ -270,7 +270,7 @@ editmenu.add_command(label="Import", command=lambda: [ImportFile()])
 editmenu.add_command(label="Export Project", command=lambda: [ExportProject()])
 editmenu.add_command(label="Open in Explorer", command=lambda: [OpenInExplorer()])
 editmenu.add_separator()
-editmenu.add_command(label="Exit", command=lambda : [sys.exit(0)])
+editmenu.add_command(label="Exit", command=lambda : [exiting()])
 
 disableOptions()
 

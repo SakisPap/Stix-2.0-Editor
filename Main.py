@@ -95,9 +95,9 @@ def about_window():
     window.title("About")
     window.attributes('-topmost', 'true')
     try:
-        window.iconbitmap(os.path.join(getExecPath(), "logo.ico"))
+        window.iconbitmap(os.path.join(sPath, "logo.ico"))
     except:
-        img = tkinter.PhotoImage(file=os.path.join(getExecPath(), "logo.gif"))
+        img = tkinter.PhotoImage(file=os.path.join(sPath, "logo.gif"))
         window.tk.call('wm', 'iconphoto', window._w, img)
     window.grab_set()
 
@@ -116,9 +116,9 @@ def contact_window():
     window.title("Contact")
     window.attributes('-topmost', 'true')
     try:
-        window.iconbitmap(os.path.join(getExecPath(), "logo.ico"))
+        window.iconbitmap(os.path.join(sPath, "logo.ico"))
     except:
-        img = tkinter.PhotoImage(file=os.path.join(getExecPath(), "logo.gif"))
+        img = tkinter.PhotoImage(file=os.path.join(sPath, "logo.gif"))
         window.tk.call('wm', 'iconphoto', window._w, img)
     window.grab_set()
 
@@ -152,9 +152,9 @@ def bugreport_window():
     window.title("Report Bug")
     window.attributes('-topmost', 'true')
     try:
-        window.iconbitmap(os.path.join(getExecPath(), "logo.ico"))
+        window.iconbitmap(os.path.join(sPath, "logo.ico"))
     except:
-        img = tkinter.PhotoImage(file=os.path.join(getExecPath(), "logo.gif"))
+        img = tkinter.PhotoImage(file=os.path.join(sPath, "logo.gif"))
         window.tk.call('wm', 'iconphoto', window._w, img)
     window.grab_set()
 
@@ -186,6 +186,7 @@ def bundle_management_window():
 
 #*****************************BEGIN MAIN EXEC***********************************
 checkcfgfolder()
+sPath=os.path.dirname(os.path.realpath(__file__))
 try:
     theme_file = open(getcfgfile2(), "rb")
     theme = pickle.load(theme_file)
@@ -371,17 +372,11 @@ sortbyMenu.add_radiobutton(label="Date Modified ▲", variable=sort, value="lm",
 sortbyMenu.add_radiobutton(label="Date Modified ▼", variable=sort, value="lmdesc", command=lambda : options_command())
 optionsmenu.add_separator()
 
-def getExecPath():
-    try:
-        sFile = os.path.abspath(sys.modules['__main__'].__file__)
-    except:
-        sFile = sys.executable
-    return os.path.dirname(sFile)
 
 def restart():
-    os.chdir(getExecPath())
+    os.chdir(sPath)
     python = sys.executable
-    script = os.path.join(getExecPath(), "Main.py")
+    script = os.path.join(sPath, "Main.py")
     subprocess.Popen([python, script])
     sys.exit(0)
 
@@ -390,10 +385,10 @@ def change(theme):
     theme_file = open(getcfgfile2(), "wb")
     pickle.dump(theme, theme_file)
     theme_file.close()
-    #ans=tk.messagebox.askyesno("Info", "Theme changes will take place after you restart the application!\nWould you like to restart now?")
-    #if(ans):
-        #restart()
-    tk.messagebox.showinfo("Info", "Theme changes will take place after you restart the application!")
+    ans=tk.messagebox.askyesno("Info", "Theme changes will take place after you restart the application!\nWould you like to restart now?")
+    if(ans):
+        restart()
+
 
 
 placeholder = tk.IntVar()

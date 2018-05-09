@@ -67,29 +67,30 @@ def BundleManage(mode):
             return
     bundle=tk.filedialog.askopenfilename(initialdir="/", title="Please select a STIX2 Bundle file.",
                                           filetypes=[("json files (STIX2)", "*.json")])
-    try:
-        stix2bundle = stix2.parse(filetoitem(bundle))
-        type = stix2bundle.get("type")
-        if not (type=="bundle"):
-            tk.messagebox.showwarning("Error", "Selected STIX2 object is not a Bundle.")
-            return
-        else:
-            if (mode=="import"):
-                for o in stix2bundle.get("objects"):
-                    itemtofile(o)
-                tk.messagebox.showinfo("Success", "Selected Bundle was successfully imported into current project.")
-            else:#mode=="extract"
-                dest = tk.filedialog.askdirectory(initialdir="/",
-                                                  title="Please select a folder to extract the Bundle to.")
-                if dest:
-                    backupcwd = os.getcwd()
-                    InitNewEnvironment(dest)
+    if bundle:
+        try:
+            stix2bundle = stix2.parse(filetoitem(bundle))
+            type = stix2bundle.get("type")
+            if not (type=="bundle"):
+                tk.messagebox.showwarning("Error", "Selected STIX2 object is not a Bundle.")
+                return
+            else:
+                if (mode=="import"):
                     for o in stix2bundle.get("objects"):
                         itemtofile(o)
-                    os.chdir(backupcwd)
-                    tk.messagebox.showinfo("Success", "Selected Bundle was successfully extracted to the selected directory.")
-    except:
-        tk.messagebox.showwarning("Error", "This does not seem to be a valid STIX2 object. Import failed.")
+                    tk.messagebox.showinfo("Success", "Selected Bundle was successfully imported into current project.")
+                else:#mode=="extract"
+                    dest = tk.filedialog.askdirectory(initialdir="/",
+                                                      title="Please select a folder to extract the Bundle to.")
+                    if dest:
+                        backupcwd = os.getcwd()
+                        InitNewEnvironment(dest)
+                        for o in stix2bundle.get("objects"):
+                            itemtofile(o)
+                        os.chdir(backupcwd)
+                        tk.messagebox.showinfo("Success", "Selected Bundle was successfully extracted to the selected directory.")
+        except:
+            tk.messagebox.showwarning("Error", "This does not seem to be a valid STIX2 object. Import failed.")
 
 
 def bugreport(parent, msg):

@@ -243,6 +243,11 @@ except:
     root.tk.call('wm', 'iconphoto', root._w, img)
 
 
+def exiting():
+    if messagebox.askyesno("Exit", "Are you sure that you want to exit?"):
+        root.destroy()
+
+
 img = Image.open(os.path.abspath("images/welcome_page.png"))
 welcome_page = ImageTk.PhotoImage(img)
 welcomeLabel = tk.Label(root, image= welcome_page, bg=COLOR_1)
@@ -264,6 +269,8 @@ editmenu.add_separator()
 editmenu.add_command(label="Import", command=lambda: [ImportFile()])
 editmenu.add_command(label="Export Project", command=lambda: [ExportProject()])
 editmenu.add_command(label="Open in Explorer", command=lambda: [OpenInExplorer()])
+editmenu.add_separator()
+editmenu.add_command(label="Exit", command=lambda : [sys.exit(0)])
 
 disableOptions()
 
@@ -411,5 +418,6 @@ optionsmenu.add_command(label="Reset window geometry", command=lambda : root.geo
 menubar.add_cascade(label="Options", menu=optionsmenu)
 
 helpmenu.grab_release()
+root.protocol("WM_DELETE_WINDOW", exiting)
 root.mainloop()
 

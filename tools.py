@@ -254,15 +254,14 @@ class Multiselect(tk.Frame):
 
 class KillChainPhaseMaker(tk.Toplevel):
     def __init__(self, root):
+        sPath = os.path.dirname(os.path.realpath(__file__))
         tk.Toplevel.__init__(self, root)
         self.title("Manage Kill Chain Phases...")
         #self.geometry("400x110")
         try:
-            sFile = os.path.dirname(os.path.abspath(sys.modules['__main__'].__file__))
-            self.iconbitmap(os.path.join(sFile, "logo.ico"))
+            self.iconbitmap(os.path.join(sPath, "logo.ico"))
         except:
-            sFile = os.path.dirname(os.path.abspath(sys.modules['__main__'].__file__))
-            img = tkinter.PhotoImage(file=os.path.join(sFile, "logo.gif"))
+            img = tkinter.PhotoImage(file=os.path.join(sPath, "logo.gif"))
             self.tk.call('wm', 'iconphoto', self._w, img)
         self.resizable(width=False, height=False)
         self.frame = tk.Frame(self)
@@ -325,15 +324,14 @@ class KillChainPhaseMaker(tk.Toplevel):
 
 class ExternalReferenceMaker(tk.Toplevel):
     def __init__(self, root):
+        sPath = os.path.dirname(os.path.realpath(__file__))
         tk.Toplevel.__init__(self, root)
         self.title("Manage External References...")
         # self.geometry("400x110")
         try:
-            sFile = os.path.dirname(os.path.abspath(sys.modules['__main__'].__file__))
-            self.iconbitmap(os.path.join(sFile, "logo.ico"))
+            self.iconbitmap(os.path.join(sPath, "logo.ico"))
         except:
-            sFile = os.path.dirname(os.path.abspath(sys.modules['__main__'].__file__))
-            img = tkinter.PhotoImage(file=os.path.join(sFile, "logo.gif"))
+            img = tkinter.PhotoImage(file=os.path.join(sPath, "logo.gif"))
             self.tk.call('wm', 'iconphoto', self._w, img)
         self.resizable(width=False, height=False)
         self.frame = tk.Frame(self)
@@ -469,17 +467,16 @@ class CreatedByRef():
         self.COLOR_1=color
 
     def pop(self, root, goFrame):
+        sPath = os.path.dirname(os.path.realpath(__file__))
         self.top = tk.Toplevel(root)
         self.top.title("Identity Selection")
         self.top.grab_set()
         self.top.attributes("-topmost", "true")
         #self.geometry("1900x950")
         try:
-            sFile = os.path.dirname(os.path.abspath(sys.modules['__main__'].__file__))
-            self.top.iconbitmap(os.path.join(sFile, "logo.ico"))
+            self.iconbitmap(os.path.join(sPath, "logo.ico"))
         except:
-            sFile = os.path.dirname(os.path.abspath(sys.modules['__main__'].__file__))
-            img = tkinter.PhotoImage(file=os.path.join(sFile, "logo.gif"))
+            img = tkinter.PhotoImage(file=os.path.join(sPath, "logo.gif"))
             self.top.tk.call('wm', 'iconphoto', self.top._w, img)
         self.top.resizable(width=False, height=False)
         self.frame = tk.Frame(self.top)
@@ -553,16 +550,15 @@ class SightingOfRef():
         self.eRow=eRow
 
     def pop(self, mandatoryFrame):
+        sPath = os.path.dirname(os.path.realpath(__file__))
         self.top = tk.Toplevel(mandatoryFrame)
         self.top.title("Object Selection")
         self.top.grab_set()
         self.top.attributes("-topmost", "true")
         try:
-            sFile = os.path.dirname(os.path.abspath(sys.modules['__main__'].__file__))
-            self.top.iconbitmap(os.path.join(sFile, "logo.ico"))
+            self.top.iconbitmap(os.path.join(sPath, "logo.ico"))
         except:
-            sFile = os.path.dirname(os.path.abspath(sys.modules['__main__'].__file__))
-            img = tkinter.PhotoImage(file=os.path.join(sFile, "logo.gif"))
+            img = tkinter.PhotoImage(file=os.path.join(sPath, "logo.gif"))
             self.top.tk.call('wm', 'iconphoto', self.top._w, img)
         #self.geometry("1900x950")
         self.top.resizable(width=False, height=False)

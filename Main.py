@@ -32,6 +32,8 @@ from tools import *
 import pickle
 import webbrowser
 import sys, subprocess
+import ctypes
+
 
 
 def enableOptions():
@@ -235,6 +237,11 @@ def save_rez(event):
     theme_file.close()
 root.bind( "<Configure>", save_rez)
 
+try:
+    myappid = 'ISACA.UOM.Stix2Editor'
+    ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(myappid)
+except:
+    pass
 
 try:
     root.iconbitmap(os.path.abspath("logo.ico"))

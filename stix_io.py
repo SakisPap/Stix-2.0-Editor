@@ -305,7 +305,7 @@ def InitTempEnvironment():
     os.chdir(tmpdir)
 
 def filetoitem(file):
-    jsonfile = open(file, "r")
+    jsonfile = open(file, "r", encoding="utf-8")
     item=stix2.parse(jsonfile)
     return item
 

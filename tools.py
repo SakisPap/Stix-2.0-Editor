@@ -302,6 +302,8 @@ class KillChainPhaseMaker(tk.Toplevel):
 
         self.phasetext = tk.Entry(self.frame, font=("OpenSans", 12))
         self.phasetext.grid(row=1, column=1, padx=5, pady=5)
+        self.killchaintext.bind('<KeyPress>', lambda event : self.keyPress(event))
+
 
         self.label = tk.Label(self.btframe, font=("OpenSans", 8, "bold"), text="Existing Kill Chain Phase into workspace:", bg="black", fg="white")
         self.label.pack(fill=tk.X, padx=10)
@@ -311,7 +313,7 @@ class KillChainPhaseMaker(tk.Toplevel):
 
         self.getlist()
 
-        self.addbutton = tk.Button(self.btframe, text="Create", font=("OpenSans", 12), fg="white", bg="#03AC13", command=lambda : [(killchainphasetofile(self.killchaintext.get()+"_"+self.phasetext.get(), stix2.KillChainPhase(kill_chain_name=self.killchaintext.get(), phase_name=self.phasetext.get())), self.getlist(), tk.messagebox.showinfo("Success", "Kill Chain Phase created successfully!", parent=self)) if self.killchaintext.get()!="" and self.phasetext.get()!="" else tk.messagebox.showerror("Error", "Input fields cannot be empty!", parent=self)])
+        self.addbutton = tk.Button(self.btframe, text="Create", font=("OpenSans", 12), fg="white", bg="#03AC13", command=lambda : [(killchainphasetofile(self.killchaintext.get()+"_"+self.phasetext.get(), stix2.KillChainPhase(kill_chain_name=self.killchaintext.get(), phase_name=self.phasetext.get())), self.getlist(), tk.messagebox.showinfo("Success", "Kill Chain Phase created successfully!", parent=self), self.killchaintext.delete(0, tk.END), self.phasetext.delete(0, tk.END)) if self.killchaintext.get()!="" and self.phasetext.get()!="" else tk.messagebox.showerror("Error", "Input fields cannot be empty!", parent=self)])
         self.addbutton.pack(side=tk.LEFT, fill=tk.X, expand=True, padx=5, pady=5)
 
         self.cancelbutton = tk.Button(self.btframe, text="Delete", font=("OpenSans", 12), fg="white", bg="#FF3B30", command=lambda : [(killchainphasedelete(self.listview.get(tk.ACTIVE), self), self.getlist()) if self.listview.get(tk.ACTIVE)!="" else print("")])
@@ -393,6 +395,11 @@ class ExternalReferenceMaker(tk.Toplevel):
             return
         self.getlist()
         tk.messagebox.showinfo("Success", "External Reference created successfully!", parent=self)
+        self.sourcetext.delete(0, tk.END)
+        self.desctext.delete(0, tk.END)
+        self.urltext.delete(0, tk.END)
+        self.hashestext.delete(0, tk.END)
+        self.ext_idtext.delete(0, tk.END)
 
 
 

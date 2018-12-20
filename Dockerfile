@@ -1,7 +1,7 @@
-FROM python:alpine3.7
+FROM python:3.6
 
-ADD ./ /Stix-2.0-Editor
+ADD ./ /
 
-RUN pip3 install -r /Stix-2.0-Editor/requirements.txt
+RUN pip install  -r /requirements.txt
 
-CMD ["python3 /Stix-2.0-Editor/Main.py"]
+CMD ["python3", "-u", "/Main.py"]
